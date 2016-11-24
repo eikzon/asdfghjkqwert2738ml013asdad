@@ -27,7 +27,7 @@
                     <td>{{ $name[$i] }}</td>
                     <td>{{ str_replace(' ', '', $name[$i]) . '@hotmail.com' }}</td>
                     <td>10-7-2016</td>
-                    <td> <span class="label label-success font-weight-100">Paid</span> </td>
+                    <td> <span class="label label-success font-weight-100">Active</span> </td>
                     <td>
                       <a href="{{ action('SiteControl\OrderController@show', ['id' => 1]) }}" class="text-inverse p-r-10" data-toggle="tooltip" title="Edit">
                         <i class="ti-eye"></i>
