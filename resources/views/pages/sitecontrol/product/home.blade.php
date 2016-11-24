@@ -12,26 +12,27 @@
           <table class="table product-overview" id="myTable">
               <thead>
                 <tr>
-                    <th>Customer</th>
-                    <th>Order ID</th>
-                    <th>Photo</th>
-                    <th>Product</th>
-                    <th>Quantity</th>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Image</th>
+                    <th>Price</th>
+                    <th>Stock</th>
                     <th>Date</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
+                @php $name = ['Boot 1', 'Boot 2', 'Boot 3', 'Boot 4', 'Boot 5', 'Boot 6']; @endphp
                 @for($i = 1; $i <= 5; $i++)
                   <tr>
-                    <td>Steave Jobs</td>
-                    <td>#85457898</td>
+                    <td>#{{ rand(1,9999) }}</td>
+                    <td>{{ $name[$i] }}</td>
                     <td> <img src="../plugins/images/chair.jpg" alt="iMac" width="80"> </td>
-                    <td>Rounded Chair</td>
-                    <td>20</td>
+                    <td>{{ number_format(rand(1,1200)) }}</td>
+                    <td>{{ rand(1,100) }}</td>
                     <td>10-7-2016</td>
-                    <td> <span class="label label-success font-weight-100">Paid</span> </td>
+                    <td> <span class="label label-success font-weight-100">Active</span> </td>
                     <td>
                       <a href="{{ action('SiteControl\ProductController@edit', ['id' => 1]) }}" class="text-inverse p-r-10" data-toggle="tooltip" title="Edit">
                         <i class="ti-marker-alt"></i>
@@ -44,6 +45,17 @@
                 @endfor
               </tbody>
           </table>
+          <div class="text-right">
+            <ul class="pagination pagination-sm m-b-0">
+              <li class="disabled"> <a href="#"><i class="fa fa-angle-left"></i></a> </li>
+              <li class="active"> <a href="#">1</a> </li>
+              <li> <a href="#">2</a> </li>
+              <li> <a href="#">3</a> </li>
+              <li> <a href="#">4</a> </li>
+              <li> <a href="#">5</a> </li>
+              <li> <a href="#"><i class="fa fa-angle-right"></i></a> </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
