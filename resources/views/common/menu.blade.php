@@ -29,7 +29,7 @@
               </div>
           </li>
           <li>
-            <a href="{{ action('SiteControl\HomeController@index') }}" class="waves-effect active">
+            <a href="{{ action('SiteControl\HomeController@index') }}" class="waves-effect">
               <i class="linea-icon linea-basic fa-fw" data-icon="Q"></i>
               <span class="hide-menu">
                 Dashboard
@@ -37,7 +37,7 @@
             </a>
           </li>
           <li>
-            <a href="{{ action('SiteControl\ProductController@index') }}" class="waves-effect active">
+            <a href="{{ action('SiteControl\ProductController@index') }}" class="waves-effect">
               <i class="linea-icon linea-basic fa-fw" data-icon="&#xe001;"></i>
               <span class="hide-menu">
                 Product
@@ -46,7 +46,7 @@
             </a>
           </li>
           <li>
-            <a href="{{ action('SiteControl\OrderController@index') }}" class="waves-effect active">
+            <a href="{{ action('SiteControl\OrderController@index') }}" class="waves-effect">
               <i class="linea-icon linea-basic fa-fw" data-icon="a"></i>
               <span class="hide-menu">
                 Order
@@ -55,7 +55,7 @@
             </a>
           </li>
           <li>
-            <a href="{{ action('SiteControl\MemberController@index') }}" class="waves-effect active">
+            <a href="{{ action('SiteControl\MemberController@index') }}" class="waves-effect">
               <i class="linea-icon linea-basic fa-fw" data-icon="&#xe028;"></i>
               <span class="hide-menu">
                 Member
@@ -69,7 +69,7 @@
               </div>
           </li>
           <li>
-            <a href="{{ action('SiteControl\MemberController@index') }}" class="waves-effect active">
+            <a href="{{ action('SiteControl\MemberController@index') }}" class="waves-effect">
               <i class="linea-icon linea-aerrow" data-icon="&#xe078;"></i>
               <span class="hide-menu">
                 Variant Product
