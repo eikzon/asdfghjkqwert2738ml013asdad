@@ -30,7 +30,7 @@
           </li>
           <li>
             <a href="{{ action('SiteControl\HomeController@index') }}" class="waves-effect active">
-              <i class="linea-icon linea-basic fa-fw" data-icon="v"></i>
+              <i class="linea-icon linea-basic fa-fw" data-icon="Q"></i>
               <span class="hide-menu">
                 Dashboard
               </span>
@@ -38,7 +38,7 @@
           </li>
           <li>
             <a href="{{ action('SiteControl\ProductController@index') }}" class="waves-effect active">
-              <i class="linea-icon linea-basic fa-fw" data-icon="v"></i>
+              <i class="linea-icon linea-basic fa-fw" data-icon="&#xe001;"></i>
               <span class="hide-menu">
                 Product <span class="fa arrow"></span>
                 <span class="label label-rouded label-custom pull-right"> 1,230 </span>
@@ -47,19 +47,19 @@
           </li>
           <li>
             <a href="{{ action('SiteControl\OrderController@index') }}" class="waves-effect active">
-              <i class="linea-icon linea-basic fa-fw" data-icon="v"></i>
+              <i class="linea-icon linea-basic fa-fw" data-icon="a"></i>
               <span class="hide-menu">
                 Order <span class="fa arrow"></span>
-                <span class="label label-rouded label-custom pull-right"> 1,230 </span>
+                <span class="label label-rouded label-danger pull-right"> 1,230 </span>
               </span>
             </a>
           </li>
           <li>
             <a href="{{ action('SiteControl\MemberController@index') }}" class="waves-effect active">
-              <i class="linea-icon linea-basic fa-fw" data-icon="v"></i>
+              <i class="linea-icon linea-basic fa-fw" data-icon="&#xe028;"></i>
               <span class="hide-menu">
                 Member <span class="fa arrow"></span>
-                <span class="label label-rouded label-custom pull-right"> 1,230 </span>
+                <span class="label label-rouded label-info pull-right"> 1,230 </span>
               </span>
             </a>
           </li>

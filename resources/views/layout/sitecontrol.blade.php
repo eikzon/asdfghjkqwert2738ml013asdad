@@ -54,7 +54,7 @@
       <ul class="nav navbar-top-links navbar-left hidden-xs">
         <li><a href="javascript:void(0)" class="open-close hidden-xs waves-effect waves-light"><i class="icon-arrow-left-circle ti-menu"></i></a></li>
         <li>
-            Hello Administrator System !!
+          <h2 class="page-title" style="color: #fff; font-size: 16px;">Hello Administrator System !!</h2>
         </li>
       </ul>
     </div>
@@ -64,7 +64,7 @@
 
   <div id="page-wrapper">
     @yield('content')
-    <footer class="footer text-center"> 2016 &copy; Elite Admin brought to you by themedesigner.in </footer>
+    <footer class="footer text-center"> 2016 &copy; all-we-design.com </footer>
   </div>
 </div>
 <!-- /#wrapper -->
