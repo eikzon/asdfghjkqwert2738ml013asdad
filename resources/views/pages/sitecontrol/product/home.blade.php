@@ -28,7 +28,7 @@
                   <tr>
                     <td>#{{ rand(1,9999) }}</td>
                     <td>{{ $name[$i] }}</td>
-                    <td> <img src="../plugins/images/chair.jpg" alt="iMac" width="80"> </td>
+                    <td> <img width="60" src="{{ asset('images/products/img-' . $i . '.jpg') }}"> </td>
                     <td>{{ number_format(rand(1,1200)) }}</td>
                     <td>{{ rand(1,100) }}</td>
                     <td>10-7-2016</td>

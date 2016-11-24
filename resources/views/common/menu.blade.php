@@ -3,9 +3,9 @@
     <div class="user-profile">
       <div class="dropdown user-pro-body">
         <div>
-          <img src="../plugins/images/users/varun.jpg" alt="user-img" class="img-circle">
+          <img src="{{ asset('images/component/sitecontrol/varun.jpg') }}" alt="user-img" class="img-circle">
         </div>
-        <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Steave Gection <span class="caret"></span>
+        <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administrator <span class="caret"></span>
         </a>
         <ul class="dropdown-menu animated flipInY">
           <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
@@ -40,7 +40,7 @@
             <a href="{{ action('SiteControl\ProductController@index') }}" class="waves-effect active">
               <i class="linea-icon linea-basic fa-fw" data-icon="&#xe001;"></i>
               <span class="hide-menu">
-                Product <span class="fa arrow"></span>
+                Product
                 <span class="label label-rouded label-custom pull-right"> 1,230 </span>
               </span>
             </a>
@@ -49,8 +49,8 @@
             <a href="{{ action('SiteControl\OrderController@index') }}" class="waves-effect active">
               <i class="linea-icon linea-basic fa-fw" data-icon="a"></i>
               <span class="hide-menu">
-                Order <span class="fa arrow"></span>
-                <span class="label label-rouded label-danger pull-right"> 1,230 </span>
+                Order
+                <span class="label label-rouded label-danger pull-right"> 190 </span>
               </span>
             </a>
           </li>
@@ -58,8 +58,21 @@
             <a href="{{ action('SiteControl\MemberController@index') }}" class="waves-effect active">
               <i class="linea-icon linea-basic fa-fw" data-icon="&#xe028;"></i>
               <span class="hide-menu">
-                Member <span class="fa arrow"></span>
-                <span class="label label-rouded label-info pull-right"> 1,230 </span>
+                Member
+                <span class="label label-rouded label-info pull-right"> 987 </span>
+              </span>
+            </a>
+          </li>
+          <li>
+              <div class="hide-menu t-earning">
+                <small class="db">Optional</small>
+              </div>
+          </li>
+          <li>
+            <a href="{{ action('SiteControl\MemberController@index') }}" class="waves-effect active">
+              <i class="linea-icon linea-aerrow" data-icon="&#xe078;"></i>
+              <span class="hide-menu">
+                Variant Product
               </span>
             </a>
           </li>

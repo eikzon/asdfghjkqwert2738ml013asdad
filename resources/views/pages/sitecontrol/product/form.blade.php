@@ -15,13 +15,13 @@
                                     <div class="col-md-6">
                                       <div class="form-group">
                                         <label class="control-label">Product Name</label>
-                                        <input type="text" id="firstName" class="form-control" placeholder="Rounded Chair">
+                                        <input type="text" id="firstName" class="form-control" placeholder="Name">
                                       </div>
                                     </div>
                                     <div class="col-md-6">
                                       <div class="form-group">
                                         <label class="control-label">Short Description</label>
-                                        <input type="text" id="lastName" class="form-control" placeholder="globe type chair for rest">
+                                        <input type="text" id="lastName" class="form-control" placeholder="...">
                                       </div>
                                     </div>
                                   </div>
@@ -29,7 +29,7 @@
                                   <div class="row">
                                       <div class="col-md-12 ">
                                           <div class="form-group">
-                                              <textarea class="form-control" rows="4">Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. but the majority have suffered alteration in some form, by injected humour</textarea>
+                                              <textarea class="form-control" rows="4" placeholder="Description ..."></textarea>
                                           </div>
                                       </div>
                                   </div>
@@ -39,7 +39,7 @@
                                         <label class="control-label">Original Price</label>
                                         <div class="input-group">
                                           <div class="input-group-addon"><i class="ti-money"></i></div>
-                                          <input type="text" class="form-control" id="exampleInputuname" placeholder="153">
+                                          <input type="text" class="form-control" id="exampleInputuname" placeholder="x,xxx.xx">
                                         </div>
                                       </div>
                                     </div>
@@ -50,14 +50,14 @@
                                         <label class="control-label">Discount Price</label>
                                         <div class="input-group">
                                           <div class="input-group-addon"><i class="ti-cut"></i></div>
-                                          <input type="text" class="form-control" id="exampleInputuname" placeholder="153">
+                                          <input type="text" class="form-control" id="exampleInputuname" placeholder="x,xxx.xx">
                                         </div>
                                       </div>
                                     </div>
                                     <div class="col-md-6">
                                       <div class="form-group">
                                         <label class="control-label">Discount Text</label>
-                                        <input type="text" id="lastName" class="form-control" placeholder="globe type chair for rest">
+                                        <input type="text" id="lastName" class="form-control" placeholder="xx%">
                                       </div>
                                     </div>
                                   </div>
@@ -101,26 +101,6 @@
                                       <!--/span-->
                                   </div>
                                   <!--/row-->
-                                  <div class="row">
-                                      <div class="col-md-6">
-                                          <div class="form-group">
-                                              <label>Price</label>
-                                              <div class="input-group">
-                                                  <div class="input-group-addon"><i class="ti-money"></i></div>
-                                                  <input type="text" class="form-control" id="exampleInputuname" placeholder="153"> </div>
-                                          </div>
-                                      </div>
-                                      <!--/span-->
-                                      <div class="col-md-6">
-                                          <div class="form-group">
-                                              <label>Discount</label>
-                                              <div class="input-group">
-                                                  <div class="input-group-addon"><i class="ti-cut"></i></div>
-                                                  <input type="text" class="form-control" id="exampleInputuname" placeholder="36%"> </div>
-                                          </div>
-                                      </div>
-                                      <!--/span-->
-                                  </div>
                                   <!--/row-->
                                   <div class="row">
                                       <div class="col-md-3">
@@ -154,7 +134,7 @@
                                     <div class="col-md-6">
                                       <div class="form-group">
                                         <label class="control-label">Stock</label>
-                                        <input type="text" id="lastName" class="form-control" placeholder="globe type chair for rest">
+                                        <input type="text" id="lastName" class="form-control" placeholder="Quantity Per Stock">
                                       </div>
                                     </div>
                                   </div>

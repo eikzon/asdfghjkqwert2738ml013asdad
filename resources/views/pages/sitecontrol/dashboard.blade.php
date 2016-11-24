@@ -13,28 +13,24 @@
           'title'   => 'Order Receive',
           'short_desc' => 'Todays Order',
           'percent' => '20%',
-          'summary' => '12,000'
+          'summary' => '12,000',
+          'icon' => 'shopping-cart'
         ])
         @include('common.column.three', [
           'color'   => 'danger',
           'title'   => 'Member Register',
           'short_desc' => 'Todays Register',
-          'percent' => '20%',
-          'summary' => '12,000'
+          'percent' => '2%',
+          'summary' => '19',
+          'icon' => 'user'
         ])
         @include('common.column.three', [
           'color'   => 'info',
           'title'   => 'Summary Product',
           'short_desc'   => 'All Product',
-          'percent' => '20%',
-          'summary' => '12,000'
-        ])
-        @include('common.column.three', [
-          'color'   => 'muted',
-          'title'   => 'Order Receive',
-          'short_desc'   => 'Todays Order',
-          'percent' => '20%',
-          'summary' => '12,000'
+          'percent' => '100%',
+          'summary' => '45',
+          'icon' => 'gift'
         ])
       </div>
       <!-- row -->
@@ -67,7 +63,7 @@
                     <td>
                       <span class="label label-warning font-weight-100">Waiting</span>
                     </td>
-                    <td><a href="javascript:void(0)" class="text-inverse p-r-10" data-toggle="tooltip" title="Edit" ><i class="ti-eye"></i></a> <a href="javascript:void(0)" class="text-inverse" title="Delete" data-toggle="tooltip"><i class="ti-trash"></i></a></td>
+                    <td><a href="{{ action('SiteControl\OrderController@show', ['id' => 1]) }}" class="text-inverse p-r-10" data-toggle="tooltip" title="Edit" ><i class="ti-eye"></i></a> <a href="javascript:void(0)" class="text-inverse" title="Delete" data-toggle="tooltip"><i class="ti-trash"></i></a></td>
                   </tr>
                   @endfor
                 </tbody>

@@ -42,12 +42,11 @@
       <div class="top-left-part">
         <a class="logo" href="{{ route('st-home') }}">
           <b>
-            <img src="../plugins/images/eliteadmin-logo.png" alt="home" class="dark-logo" />
-            <img src="../plugins/images/eliteadmin-logo-dark.png" alt="home" class="light-logo" />
+            <img src="{{ asset('images/component/sitecontrol/logo.png') }}" alt="home" class="light-logo" />
           </b>
           <span class="hidden-xs">
-            <img src="../plugins/images/eliteadmin-text.png" alt="home" class="dark-logo" />
-            <img src="../plugins/images/eliteadmin-text-dark.png" alt="home" class="light-logo" />
+            <img src="{{ asset('images/component/sitecontrol/logo_text.png') }}" alt="home" class="light-logo" />
+            {{-- <img src="{{ asset('images/component/sitecontrol/logo_width.png') }}" alt="home" class="light-logo" /> --}}
           </span>
         </a>
       </div>

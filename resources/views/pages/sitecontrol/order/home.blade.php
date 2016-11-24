@@ -11,27 +11,31 @@
                 <tr>
                     <th>Customer</th>
                     <th>Order ID</th>
-                    <th>Photo</th>
-                    <th>Product</th>
+                    <th>Total Price</th>
                     <th>Quantity</th>
+                    <th>Order Flow</th>
                     <th>Date</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
+                @php
+                  $name = ['Elsa', 'Martin', 'Minizon', 'Rider', 'Banky', 'Rolla'];
+                  $status = ['Waiting Payment', 'Cancel', 'Receive', 'Confirmed', 'Delivery', 'Processing'];
+                @endphp
                 @for($i = 1; $i <= 5; $i++)
                   <tr>
-                    <td>Steave Jobs</td>
-                    <td>#85457898</td>
-                    <td> <img src="../plugins/images/chair.jpg" alt="iMac" width="80"> </td>
-                    <td>Rounded Chair</td>
-                    <td>20</td>
+                    <td>{{ $name[$i] }}</td>
+                    <td>#{{ rand(99, 9999) }}</td>
+                    <td>{{ number_format(rand(1000, 9999), 2) }}</td>
+                    <td>{{ rand(1, 50) }}</td>
+                    <td>{{ $status[$i] }}</td>
                     <td>10-7-2016</td>
-                    <td> <span class="label label-success font-weight-100">Paid</span> </td>
+                    <td> <span class="label label-success font-weight-100">Active</span> </td>
                     <td>
                       <a href="{{ action('SiteControl\OrderController@show', ['id' => 1]) }}" class="text-inverse p-r-10" data-toggle="tooltip" title="Edit">
-                        <i class="ti-marker-alt"></i>
+                        <i class="ti-eye"></i>
                       </a>
                       <a href="javascript:void(0)" class="text-inverse" title="Delete" data-toggle="tooltip">
                         <i class="ti-trash"></i>
@@ -41,6 +45,17 @@
                 @endfor
               </tbody>
           </table>
+          <div class="text-right">
+            <ul class="pagination pagination-sm m-b-0">
+              <li class="disabled"> <a href="#"><i class="fa fa-angle-left"></i></a> </li>
+              <li class="active"> <a href="#">1</a> </li>
+              <li> <a href="#">2</a> </li>
+              <li> <a href="#">3</a> </li>
+              <li> <a href="#">4</a> </li>
+              <li> <a href="#">5</a> </li>
+              <li> <a href="#"><i class="fa fa-angle-right"></i></a> </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
