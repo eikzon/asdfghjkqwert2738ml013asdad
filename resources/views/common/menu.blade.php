@@ -32,7 +32,7 @@
             <a href="{{ action('SiteControl\HomeController@index') }}" class="waves-effect active">
               <i class="linea-icon linea-basic fa-fw" data-icon="v"></i>
               <span class="hide-menu">
-                Dashboard <span class="fa arrow"></span>
+                Dashboard
               </span>
             </a>
           </li>
