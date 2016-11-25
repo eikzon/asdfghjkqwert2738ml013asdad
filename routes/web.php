@@ -22,6 +22,7 @@ Route::group(['prefix' => 'sitecontrol', 'namespace' => 'SiteControl'], function
   // Route::get('product', 'ProductController@index')->name('st-product');
   Route::resource('product', 'ProductController', ['except' => 'show']);
   Route::resource('order', 'OrderController');
+  Route::resource('member', 'MemberController');
 
   // Route::group(['prefix' => 'product'], function(){
   //   Route::get('edit', 'ProductController@edit')->name('st-product');
