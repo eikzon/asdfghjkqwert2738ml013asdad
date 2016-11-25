@@ -29,7 +29,7 @@
                     <td>10-7-2016</td>
                     <td> <span class="label label-success font-weight-100">Active</span> </td>
                     <td>
-                      <a href="{{ action('SiteControl\OrderController@show', ['id' => 1]) }}" class="text-inverse p-r-10" data-toggle="tooltip" title="Order History">
+                      <a href="{{ action('SiteControl\OrderController@index') }}" class="text-inverse p-r-10" data-toggle="tooltip" title="Order History">
                         <i class="ti-eye"></i>
                       </a>
                       <a href="javascript:void(0)" class="text-inverse" title="Delete" data-toggle="tooltip">
