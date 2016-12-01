@@ -1,12 +1,10 @@
 @extends('layout.sitecontrol')
 @section('content')
-
   <div class="container-fluid">
       @include('common.sitecontrol.breadcrumb', [
         'page'        => 'Dashboard Statistic',
         'displayTime' => true
       ])
-      <!-- /.row -->
       <div class="row">
         @include('common.column.three', [
           'color'   => 'success',

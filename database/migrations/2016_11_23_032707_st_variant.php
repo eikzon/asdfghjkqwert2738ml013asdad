@@ -14,7 +14,7 @@ class StVariant extends Migration
     public function up()
     {
       Schema::create('st_variant', function (Blueprint $table) {
-        $table->increments('vr_id');
+        $table->increments('id');
         $table->string('vr_name');
         $table->string('vr_text');
         $table->string('vr_image');

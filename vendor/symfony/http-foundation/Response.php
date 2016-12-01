@@ -345,11 +345,7 @@ class Response
 
         // cookies
         foreach ($this->headers->getCookies() as $cookie) {
-            if ($cookie->isRaw()) {
-                setrawcookie($cookie->getName(), $cookie->getValue(), $cookie->getExpiresTime(), $cookie->getPath(), $cookie->getDomain(), $cookie->isSecure(), $cookie->isHttpOnly());
-            } else {
-                setcookie($cookie->getName(), $cookie->getValue(), $cookie->getExpiresTime(), $cookie->getPath(), $cookie->getDomain(), $cookie->isSecure(), $cookie->isHttpOnly());
-            }
+            setcookie($cookie->getName(), $cookie->getValue(), $cookie->getExpiresTime(), $cookie->getPath(), $cookie->getDomain(), $cookie->isSecure(), $cookie->isHttpOnly());
         }
 
         return $this;
@@ -1008,7 +1004,7 @@ class Response
      */
     public function isNotModified(Request $request)
     {
-        if (!$request->isMethodCacheable()) {
+        if (!$request->isMethodSafe()) {
             return false;
         }
 
@@ -1172,7 +1168,7 @@ class Response
     /**
      * Checks if we need to remove Cache-Control for SSL encrypted downloads when using IE < 9.
      *
-     * @see http://support.microsoft.com/kb/323308
+     * @link http://support.microsoft.com/kb/323308
      */
     protected function ensureIEOverSSLCompatibility(Request $request)
     {

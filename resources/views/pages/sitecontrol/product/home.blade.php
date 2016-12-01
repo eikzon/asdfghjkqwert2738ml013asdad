@@ -12,37 +12,48 @@
           <table class="table product-overview" id="myTable">
               <thead>
                 <tr>
-                    <th>Code</th>
-                    <th>Name</th>
-                    <th>Image</th>
-                    <th>Price</th>
-                    <th>Stock</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                  <th>Code</th>
+                  <th>Name</th>
+                  <th>Image</th>
+                  <th>Price</th>
+                  <th>Stock</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 @php $name = ['Boot 1', 'Boot 2', 'Boot 3', 'Boot 4', 'Boot 5', 'Boot 6']; @endphp
-                @for($i = 1; $i <= 5; $i++)
+                @foreach($products as $index => $product)
                   <tr>
-                    <td>#{{ rand(1,9999) }}</td>
-                    <td>{{ $name[$i] }}</td>
-                    <td> <img width="60" src="{{ asset('images/products/img-' . $i . '.jpg') }}"> </td>
-                    <td>{{ number_format(rand(1,1200)) }}</td>
-                    <td>{{ rand(1,100) }}</td>
-                    <td>10-7-2016</td>
-                    <td> <span class="label label-success font-weight-100">Active</span> </td>
+                    <td>{{ $product['pd_code'] }}</td>
+                    <td>{{ $product['pd_name'] }}</td>
+                    <td> <img width="60" src="{{ asset('images/products/img-' . $index . '.jpg') }}"> </td>
+                    <td>{{ number_format($product['pd_price']) }}</td>
+                    <td>{{ number_format($product['pd_stock']) }}</td>
+                    <td>{{ date('d/m/Y H:i', strtotime($product['created_at'])) }}</td>
                     <td>
-                      <a href="{{ action('SiteControl\ProductController@edit', ['id' => 1]) }}" class="text-inverse p-r-10" data-toggle="tooltip" title="Edit">
+                      <span class="label label-{{ config('website.product.status.color.' . $product['pd_status']) }} font-weight-100">
+                        {{ config('website.product.status.text.' . $product['pd_status']) }}
+                      </span>
+                    </td>
+                    <td>
+                      <a href="{{ action('SiteControl\ProductController@edit', ['id' => $product['id']]) }}"
+                         class="text-inverse p-r-10"
+                         data-toggle="tooltip"
+                         title="Edit">
                         <i class="ti-marker-alt"></i>
                       </a>
-                      <a href="javascript:void(0)" class="text-inverse" title="Delete" data-toggle="tooltip">
+                      <a style="cursor:pointer;" onclick="$(this).find('form').submit();">
                         <i class="ti-trash"></i>
+                        <form action="{{ action('SiteControl\ProductController@destroy', $product['id']) }}" method="POST" name="delete_item" style="display:none">
+                           <input type="hidden" name="_method" value="delete">
+                           <input type="hidden" name="_token" value="{{csrf_token()}}">
+                        </form>
                       </a>
                     </td>
                   </tr>
-                @endfor
+                @endforeach
               </tbody>
           </table>
           <div class="text-right">

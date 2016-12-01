@@ -14,10 +14,9 @@ class StVariantMap extends Migration
     public function up()
     {
       Schema::create('st_variant_map', function (Blueprint $table) {
-        $table->increments('vrm_id');
+        $table->increments('id');
         $table->integer('fk_vr_id');
         $table->integer('fk_pd_id');
-        $table->integer('vrm_stock');
         $table->softDeletes();
         $table->timestamps();
       });

@@ -4,7 +4,7 @@
   </div>
   <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
     @if(!empty($displayCreateButton))
-      <a href="{{ @$url }}" target="_blank" class="btn btn-danger pull-right m-l-20 btn-rounded btn-outline hidden-xs hidden-sm waves-effect waves-light">
+      <a href="{{ @$url }}" class="btn btn-danger pull-right m-l-20 btn-rounded btn-outline hidden-xs hidden-sm waves-effect waves-light">
         Create
       </a>
     @endif

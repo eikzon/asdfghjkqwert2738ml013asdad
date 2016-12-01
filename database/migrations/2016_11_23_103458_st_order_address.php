@@ -14,13 +14,16 @@ class StOrderAddress extends Migration
   public function up()
   {
     Schema::create('st_order_address', function (Blueprint $table) {
-      // $table->increments('md_id');
-      // $table->float('md_postcode');
-      // $table->float('md_address');
-      // $table->float('md_province');
-      // $table->integer('fk_member_id')->nullable();
-      // $table->softDeletes();
-      // $table->timestamps();
+      $table->float('oa_address');
+      $table->float('oa_alley')->nullable();
+      $table->float('oa_building')->nullable();
+      $table->text('oa_district');
+      $table->text('oa_city');
+      $table->text('oa_province');
+      $table->float('oa_postcode');
+      $table->integer('fk_order_id');
+      $table->softDeletes();
+      $table->timestamps();
     });
   }
 

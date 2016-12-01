@@ -14,7 +14,7 @@ class StProduct extends Migration
     public function up()
     {
       Schema::create('st_product', function (Blueprint $table) {
-        $table->increments('pd_id');
+        $table->increments('id');
         $table->string('pd_name');
         $table->mediumText('pd_short_desc');
         $table->longText('pd_long_desc');
@@ -22,8 +22,8 @@ class StProduct extends Migration
         $table->float('pd_price');
         $table->string('pd_discount');
         $table->float('pd_price_discount');
-        $table->integer('pd_badge');
-        $table->integer('pd_status');
+        $table->tinyInteger('pd_badge');
+        $table->tinyInteger('pd_status');
         $table->softDeletes();
         $table->timestamps();
       });

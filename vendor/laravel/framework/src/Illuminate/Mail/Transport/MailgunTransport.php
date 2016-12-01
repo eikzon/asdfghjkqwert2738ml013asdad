@@ -76,11 +76,7 @@ class MailgunTransport extends Transport
             ];
         }
 
-        $this->client->post($this->url, $options);
-
-        $this->sendPerformed($message);
-
-        return $this->numberOfRecipients($message);
+        return $this->client->post($this->url, $options);
     }
 
     /**
@@ -98,7 +94,7 @@ class MailgunTransport extends Transport
         );
 
         foreach ($contacts as $address => $display) {
-            $formatted[] = $display ? $display." <{$address}>" : $address;
+            $formatted[] = $display ? $display." <$address>" : $address;
         }
 
         return implode(',', $formatted);
