@@ -1,15 +1,5 @@
 @charset "UTF-8";
 
-@import url("reset.css");
-
-@import url("font-awesome.css");
-
-@import url("font.css");
-
-@import url("../js/source/jquery.fancybox.css?v=2.1.5");
-
-@import url("swiper.css");
-
 /* CSS Document */
 @media screen and (max-width: 667px) {
   * {

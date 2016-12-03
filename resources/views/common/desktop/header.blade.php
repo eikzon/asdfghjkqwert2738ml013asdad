@@ -1,5 +1,5 @@
 @php
-  $absurl = 'http://all-we-design.com/';
+  $absurl = 'http://shoerod.app/';
 @endphp
 <div class="container">
   <div class="header">
