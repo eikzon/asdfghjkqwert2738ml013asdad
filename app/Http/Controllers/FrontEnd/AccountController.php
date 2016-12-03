@@ -22,6 +22,11 @@ class AccountController extends Controller
     // register
     return view('pages.desktop.account.register');
   }
+  public function login()
+  {
+    // register
+    return view('pages.desktop.account.login');
+  }
   public function store()
   {
     // create register

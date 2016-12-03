@@ -39,7 +39,10 @@ Route::group(['namespace' => 'FrontEnd'], function(){
     Route::get('history', 'AccountController@history')->name('account_history');
     Route::get('wishlist', 'AccountController@wishlist')->name('account_wishlist');
     Route::get('register', 'AccountController@create')->name('account_create');
+    Route::post('register', 'AccountController@store')->name('account_store');
     Route::get('logout', 'AccountController@destroy')->name('account_logout');
+    Route::get('login', 'AccountController@login')->name('account_login');
+    Route::get('forgot_password', 'AccountController@fogot_password')->name('account_forgot_password');
   });
 
   Route::group(['prefix' => 'product'], function(){

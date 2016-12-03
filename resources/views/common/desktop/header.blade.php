@@ -5,8 +5,8 @@
   <div class="header">
     <a href="{{ $absurl }}" class="logo"><img src="{{ $absurl }}images/logo_breaker.png" alt="รองเท้า Breaker"/></a>
     <ul class="topnav">
-        <li class="login"><a href="login.php">เข้าสู่ระบบ</a></li>
-        <li class="register"><a href="register.php">ลงทะเบียน</a></li>
+        <li class="login"><a href="{{ route('account_login') }}">เข้าสู่ระบบ</a></li>
+        <li class="register"><a href="{{ route('account_create') }}">ลงทะเบียน</a></li>
         <!--<li class="dropdown member"><a href="#">บัญชีของฉัน</a>
           <ul class="drop-nav">
             <li><a href="myaccount.php">ข้อมูลส่วนตัว</a></li>
