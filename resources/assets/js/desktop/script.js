@@ -19,7 +19,7 @@ DropDown.prototype = {
     obj.dd.on('click', function(event){
       $(this).toggleClass('active');
       event.stopPropagation();
-    }); 
+    });
   }
 }
 $(function() {
@@ -29,3 +29,7 @@ $(function() {
   });
 });
 
+Galleria.loadTheme('js/galleria.classic.min.js');
+Galleria.run('#galleria');
+
+var swiper = new Swiper('.swiper-container', { });

@@ -4,16 +4,36 @@
 @endsection
 @section('content')
   @include('common.desktop.account.header')
-  <ul class="container-products">
-    <li>
-        <div class="new"></div>
-        <div class="frame"><a href="detail.php"><img src="products/images/BC-006_GN_4.jpg"/></a></div>
-        <div class="line"></div>
-        <a href="detail.php" class="name">Breaker King Knit</a><br>
-        <span class="price">1,550 Baht</span><br>
-        <span class="desc">Men's Futsal Boots | In Stock</span>
-    </li>
-    <li>
+  @if(!empty($productLists))
+    <ul class="container-products">
+      @foreach($productLists as $product)
+        <li>
+          <div class="{{ config('website.product.badges')[$product['pd_badge']] }}"></div>
+          <div class="frame">
+            <a href="{{ route('product_detail', $product['id']) }}" title="{{ $product['pd_name'] }}">
+              <img src="products/images/BC-006_GN_4.jpg"/>
+            </a>
+          </div>
+          <div class="line"></div>
+          <a href="{{ route('product_detail', $product['id']) }}" class="name" title="{{ $product['pd_name'] }}">
+            {{ $product['pd_name'] }}
+          </a><br>
+          <span class="price">{{ number_format($product['pd_price'], 2) }} Baht</span><br>
+          <span class="desc">
+            @if(!empty($product['pg_name']))
+              {{ $product['pg_name'] }} |
+            @endif
+            @if(!empty($product['pd_stock']))
+              In Stock
+            @else
+              Out of Stock
+            @endif
+          </span>
+        </li>
+      @endforeach
+    </ul>
+  @endif
+    <{{-- li>
         <div class="new"></div>
         <div class="frame"><a href="detail.php"><img src="products/images/BC-006_BK_4.jpg"/></a></div>
         <div class="line"></div>
@@ -218,5 +238,5 @@
         <span class="price">1,250 Baht</span><br>
         <span class="desc">Men's Futsal Boots | In Stock</span>
     </li>
-  </ul><!-- .container-products -->
+  </ul>--}}
 @endsection

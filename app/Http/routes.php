@@ -41,5 +41,17 @@ Route::group(['namespace' => 'FrontEnd'], function(){
     Route::get('register', 'AccountController@create')->name('account_create');
     Route::get('logout', 'AccountController@destroy')->name('account_logout');
   });
+
+  Route::group(['prefix' => 'product'], function(){
+    Route::get('/', 'ProductController@index')->name('product_list');
+    Route::get('{id}', 'ProductController@show')->name('product_detail');
+  });
+
+  Route::group(['prefix' => 'cart'], function(){
+    Route::get('/', 'CartController@index')->name('cart');
+    Route::get('shipping', 'CartController@shipping')->name('cart_shipping');
+    Route::get('complete', 'CartController@completePayment')->name('cart_complete');
+    Route::get('error', 'CartController@errorPayment')->name('cart_error');
+  });
 });
 

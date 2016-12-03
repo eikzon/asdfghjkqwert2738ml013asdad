@@ -2,8 +2,9 @@
 
 return [
   'status' => [
-    'text'   => ['Close', 'Active', 'Only Display'],
-    'color'  => ['danger', 'success', 'warning'],
+    'text'        => ['Close', 'Active', 'Only Display'],
+    'color'       => ['danger', 'success', 'warning'],
+    'displayOnly' => 2
   ],
   'badges' => ['none', 'new', 'Promotion'],
 ];

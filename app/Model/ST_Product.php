@@ -19,9 +19,13 @@ class ST_Product extends Model
 
   private $prefix = 'pd_';
 
-  public function index()
+  public function index($conditions = [])
   {
-    $products    = ST_Product::all();
+    if(!empty($conditions['status']))
+      $products = ST_Product::where('pd_status', 1)->orwhere('pd_status', 2)->get();
+    else
+      $products = ST_Product::all();
+
     $this->count = $products->count();
     return $products->toArray();
   }
@@ -54,6 +58,15 @@ class ST_Product extends Model
     }
 
     return $result;
+  }
+
+  public static function show(int $id)
+  {
+    $resultProduct = self::find($id);
+    if(!empty($resultProduct))
+      return $resultProduct->toArray();
+
+    return false;
   }
 
   public function edit(int $id_product)
@@ -123,4 +136,9 @@ class ST_Product extends Model
   {
     return $this->count;
   }
+
+  // public function variants()
+  // {
+  //   return $this->hasMany(ST_Variant_Map::class, 'fk_pd_id');
+  // }
 }

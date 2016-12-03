@@ -792,6 +792,7 @@ class ComposerStaticInit4855c9ae886595b304697b2d9602ef55
         'StVariant' => __DIR__ . '/../..' . '/database/migrations/2016_11_23_032707_st_variant.php',
         'StVariantMap' => __DIR__ . '/../..' . '/database/migrations/2016_11_23_033602_st_variant_map.php',
         'TbProductGroup' => __DIR__ . '/../..' . '/database/migrations/2016_11_30_025737_tb_product_group.php',
+        'TbWishlist' => __DIR__ . '/../..' . '/database/migrations/2016_12_02_063836_tb_wishlist.php',
         'TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
         'UpdateFieldVariantTb' => __DIR__ . '/../..' . '/database/migrations/2016_11_30_162422_update_field_variant_tb.php',

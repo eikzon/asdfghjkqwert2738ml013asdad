@@ -527,6 +527,7 @@ return array(
     'StVariant' => $baseDir . '/database/migrations/2016_11_23_032707_st_variant.php',
     'StVariantMap' => $baseDir . '/database/migrations/2016_11_23_033602_st_variant_map.php',
     'TbProductGroup' => $baseDir . '/database/migrations/2016_11_30_025737_tb_product_group.php',
+    'TbWishlist' => $baseDir . '/database/migrations/2016_12_02_063836_tb_wishlist.php',
     'TestCase' => $baseDir . '/tests/TestCase.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
     'UpdateFieldVariantTb' => $baseDir . '/database/migrations/2016_11_30_162422_update_field_variant_tb.php',

@@ -4,6 +4,8 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Model\ST_Product;
+
 class ST_Product_Group extends Model
 {
   protected $table    = 'st_product_group';
@@ -11,11 +13,26 @@ class ST_Product_Group extends Model
 
   public $count = 0;
 
-  public function index()
+  public function index($conditions = [])
   {
-    $groups      = ST_Product_Group::all();
+    $groups = ST_Product_Group::all();
+    // @foreach($conditions as $key => $condition)
+    //   $setCondition .= "->where('" . $key . "', " . $condition . ")";
+
     $this->count = $groups->count();
     return $groups->toArray();
+  }
+
+
+  public function list($condition = [])
+  {
+    // $productLists = ST_Product_Group::all()->join('ST_Product', 'pg_display_id', 'ST_Product.id');
+    $productLists = (new ST_Product)->index($condition);
+
+    if(!empty($productLists))
+      return $productLists;
+
+    return [];
   }
 
   public function store($request)
@@ -64,5 +81,10 @@ class ST_Product_Group extends Model
   public function count()
   {
     return $this->count;
+  }
+
+  public function products()
+  {
+    return $this->hasMany(ST_Product::class, 'fk_group_id');
   }
 }

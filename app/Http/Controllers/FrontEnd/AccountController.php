@@ -37,11 +37,25 @@ class AccountController extends Controller
   }
   public function wishlist()
   {
-    return view('pages.desktop.account.wishlist');
+    $wishlists = (new ST_Wishlist)->show();
+    return view('pages.desktop.account.wishlist', ['wishlists' => $wishlists]);
   }
   public function destroy()
   {
     //logout
     // return view('pages.desktop.account.profile');
+  }
+  public function wishlistAdd($id)
+  {
+    $result = false;
+    $result = (new ST_Wishlist)->store();
+    return $result;
+  }
+  public function wishlistDestroy(int $id)
+  {
+    if(ST_Wishlist::destroy($id))
+      return true;
+
+    return false;
   }
 }
