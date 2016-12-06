@@ -10,12 +10,12 @@
             <div class="row">
               <div class="col-lg-6 col-md-6 col-sm-6">
                 <h4 class="box-title m-t-40"><i class="ti-user"></i> Information </h4>
-                Email : SteaveJobs@hotmail.com<br>
-                First Name : Steave<br>
-                Last Name : Jobs<br>
-                Birthday : 07-01-1990<br>
-                Gender : Male<br>
-                Mobile : 0891234123
+                Email : {{ $member->email }}<br>
+                First Name : {{ $member->first_name }}<br>
+                Last Name : {{ $member->last_name }}<br>
+                Birthday : {{ date('d-m-Y', strtotime($member->birthday)) }}<br>
+                Gender : {{ ($member->gender == 0 ? 'Male' : 'Female') }}<br>
+                Mobile : {{ $member->tel }}
               </div>
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <h3 class="box-title m-t-40"><i class="ti-time"></i> Products In Order</h3>
