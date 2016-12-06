@@ -1316,22 +1316,6 @@ class Request
     }
 
     /**
-     * Gets the mime types associated with the format.
-     *
-     * @param string $format The format
-     *
-     * @return array The associated mime types
-     */
-    public static function getMimeTypes($format)
-    {
-        if (null === static::$formats) {
-            static::initializeFormats();
-        }
-
-        return isset(static::$formats[$format]) ? static::$formats[$format] : array();
-    }
-
-    /**
      * Gets the format associated with the mime type.
      *
      * @param string $mimeType The associated mime type
@@ -1483,16 +1467,6 @@ class Request
     }
 
     /**
-     * Checks whether the method is cacheable or not.
-     *
-     * @return bool
-     */
-    public function isMethodCacheable()
-    {
-        return in_array($this->getMethod(), array('GET', 'HEAD'));
-    }
-
-    /**
      * Returns the request body content.
      *
      * @param bool $asResource If true, a resource will be returned
@@ -1535,7 +1509,7 @@ class Request
             return stream_get_contents($this->content);
         }
 
-        if (null === $this->content || false === $this->content) {
+        if (null === $this->content) {
             $this->content = file_get_contents('php://input');
         }
 
@@ -1683,7 +1657,7 @@ class Request
      * It works if your JavaScript library sets an X-Requested-With HTTP header.
      * It is known to work with common JavaScript frameworks:
      *
-     * @see http://en.wikipedia.org/wiki/List_of_Ajax_frameworks#JavaScript
+     * @link http://en.wikipedia.org/wiki/List_of_Ajax_frameworks#JavaScript
      *
      * @return bool true if the request is an XMLHttpRequest, false otherwise
      */
@@ -1939,15 +1913,7 @@ class Request
         return new static($query, $request, $attributes, $cookies, $files, $server, $content);
     }
 
-    /**
-     * Indicates whether this request originated from a trusted proxy.
-     *
-     * This can be useful to determine whether or not to trust the
-     * contents of a proxy-specific header.
-     *
-     * @return bool true if the request came from a trusted proxy, false otherwise
-     */
-    public function isFromTrustedProxy()
+    private function isFromTrustedProxy()
     {
         return self::$trustedProxies && IpUtils::checkIp($this->server->get('REMOTE_ADDR'), self::$trustedProxies);
     }

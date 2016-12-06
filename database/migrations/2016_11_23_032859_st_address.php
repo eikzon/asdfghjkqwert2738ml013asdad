@@ -14,7 +14,7 @@ class StAddress extends Migration
   public function up()
   {
     Schema::create('st_member_address', function (Blueprint $table) {
-      $table->increments('md_id');
+      $table->increments('id');
       $table->float('md_postcode');
       $table->float('md_address');
       $table->float('md_province');

@@ -14,15 +14,15 @@ class StOrder extends Migration
   public function up()
   {
     Schema::create('st_order', function (Blueprint $table) {
-      $table->increments('od_id');
+      $table->increments('id');
       $table->float('od_price_discount');
       $table->float('od_price_total');
       $table->float('od_price_shipping');
-      $table->integer('od_code', 1);
-      $table->integer('od_status', 1);
-      $table->integer('od_flow_status', 1);
-      $table->integer('fk_member_id')->nullable();
-      $table->integer('fk_quest_id')->nullable();
+      $table->integer('od_code');
+      $table->tinyInteger('od_status');
+      $table->tinyInteger('od_flow_status');
+      $table->integer('fk_member_id');
+      $table->integer('fk_quest_id');
       $table->softDeletes();
       $table->timestamps();
     });
