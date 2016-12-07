@@ -68,5 +68,6 @@
 </div>
 <!-- /#wrapper -->
 <script src="{{ asset('js/all-sitecontrol.js') }}"></script>
+@yield('script_footer')
 </body>
 </html>

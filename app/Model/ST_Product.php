@@ -17,23 +17,22 @@ class ST_Product extends Model
 
   public $count = 0;
 
-  private $prefix = 'pd_';
-
   public function index($conditions = [])
   {
     if(!empty($conditions['status']))
-      $products = ST_Product::where('pd_status', 1)->orwhere('pd_status', 2)->get();
+      $products = ST_Product::with('images')->where('pd_status', 1)->orwhere('pd_status', 2)->get();
     else
-      $products = ST_Product::all();
+      $products = ST_Product::with('images')->get();
 
     $this->count = $products->count();
     return $products->toArray();
   }
 
-  public function store($request)
+  public function store($request, $images = [])
   {
     $result = ST_Product::create([
-      'pd_code'           => $request->input('code'),
+      'pd_code'           => rand(0, 99999),
+      // 'pd_code'           => $request->input('code'),
       'pd_name'           => $request->input('name'),
       'pd_short_desc'     => $request->input('short_desc'),
       'pd_long_desc'      => $request->input('long_desc'),
@@ -57,6 +56,8 @@ class ST_Product extends Model
       }
     }
 
+    $this->updateIdImages($request->input('code'), $result->id);
+
     return $result;
   }
 
@@ -71,7 +72,7 @@ class ST_Product extends Model
 
   public function edit(int $id_product)
   {
-    $product = ST_Product::where('id', $id_product)->first();
+    $product = ST_Product::with('images')->find($id_product);
 
     if(empty($product))
       return false;
@@ -87,6 +88,8 @@ class ST_Product extends Model
   {
     $product = ST_Product::find($request->input('id'));
     $result  = $this->conditionSQL($product, $request);
+
+    $this->updateIdImages($request->input('code'), $request->input('id'));
 
     if($request->has('variant.*') && $result)
     {
@@ -108,6 +111,11 @@ class ST_Product extends Model
       return true;
 
     return false;
+  }
+
+  public function updateIdImages($code, $id)
+  {
+    ST_Product_Images::where('fk_pd_code', $code)->update(['fk_pd_id' => $id]);
   }
 
   private function conditionSQL($product, $request)
@@ -137,8 +145,13 @@ class ST_Product extends Model
     return $this->count;
   }
 
-  // public function variants()
-  // {
-  //   return $this->hasMany(ST_Variant_Map::class, 'fk_pd_id');
-  // }
+  public function variants()
+  {
+    return $this->hasMany(ST_Variant_Map::class, 'fk_pd_id');
+  }
+
+  public function images()
+  {
+    return $this->hasMany(ST_Product_Images::class, 'fk_pd_id');
+  }
 }

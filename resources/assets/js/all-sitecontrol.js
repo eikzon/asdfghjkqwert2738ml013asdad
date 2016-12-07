@@ -1,4 +1,7 @@
 //= include ../plugins/bower_components/jquery/dist/jquery.min.js
+
+//= include sitecontrol/jquery.filedrop.js
+//= include sitecontrol/script.js
 /* <!-- Bootstrap Core JavaScript --> */
 //= include ../plugins/bootstrap-3.3.7/dist/js/bootstrap.min.js
 /* <!-- Menu Plugin JavaScript --> */

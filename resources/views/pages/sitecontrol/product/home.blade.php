@@ -28,7 +28,11 @@
                   <tr>
                     <td>{{ $product['pd_code'] }}</td>
                     <td>{{ $product['pd_name'] }}</td>
-                    <td> <img width="60" src="{{ asset('images/products/img-' . $index . '.jpg') }}"> </td>
+                    <td>
+                      @if(!empty($product['images']))
+                        <img width="100" src="{{ asset('images/products/' . $product['images'][0]['image']) }}">
+                      @endif
+                    </td>
                     <td>{{ number_format($product['pd_price']) }}</td>
                     <td>{{ number_format($product['pd_stock']) }}</td>
                     <td>{{ date('d/m/Y H:i', strtotime($product['created_at'])) }}</td>

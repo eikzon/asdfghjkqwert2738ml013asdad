@@ -7,6 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Model\ST_Product;
 use App\Model\ST_Product_Group;
 use App\Model\ST_Variant;
+use App\Model\ST_Product_Images;
+
+use Illuminate\Support\Facades\Input;
+use Image;
 
 class ProductController extends Controller
 {
@@ -79,5 +83,24 @@ class ProductController extends Controller
   {
     ST_Product::destroy($id);
     return redirect()->route('sitecontrol.product.index');
+  }
+
+  public function uploadImages(Request $request)
+  {
+    if(!empty($request->file('pic')) && !empty($request->input('code')))
+    {
+      $imageName = rand(1, 900) . time() . '.jpg';
+      $images[]  = $imageName;
+      Image::make($request->file('pic'))->resize(300, 200)->save('images/products/' . $imageName);
+      (new ST_Product_Images)->createImages($imageName, $request->input('code'));
+    }
+
+    return json_encode(['status' => 'File was uploaded successfuly!']);
+  }
+
+  public function destroyImage(int $pid, int $idImg)
+  {
+    ST_Product_Images::destroy($idImg);
+    return redirect()->route('sitecontrol.product.edit', $pid);
   }
 }
