@@ -16,20 +16,22 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix' => 'sitecontrol', 'namespace' => 'SiteControl'], function(){
-  Route::get('/', 'HomeController@index')->name('st-home');
-  Route::get('order', 'OrderController@index')->name('st-order');
-  // Route::get('member', 'MemberController@index')->name('st-member');
-  // Route::get('product', 'ProductController@index')->name('st-product');
-  Route::resource('product', 'ProductController', ['except' => 'show']);
-  Route::resource('order', 'OrderController');
-  Route::resource('member', 'MemberController');
-  Route::get('member/detail/{id}', 'MemberController@detail');
-  Route::resource('variant', 'VariantController');
-  Route::resource('group', 'ProductGroupController');
-  // Route::group(['prefix' => 'product'], function(){
-  //   Route::get('edit', 'ProductController@edit')->name('st-product');
-  //   Route::get('add', 'ProductController@')->name('st-product');
-  // });
+  Route::resource('login', 'AccountController');
+  Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', 'HomeController@index')->name('st-home');
+    Route::get('order', 'OrderController@index')->name('st-order');
+    Route::get('member', 'MemberController@index')->name('st-member');
+    // Route::get('product', 'ProductController@index')->name('st-product');
+    Route::resource('product', 'ProductController', ['except' => 'show']);
+    Route::post('product/uploadimages', 'ProductController@uploadImages');
+    Route::get('product/destroyimg/{pid}/{idImg}', 'ProductController@destroyImage')->name('st-destroyImage');
+    Route::resource('order', 'OrderController');
+    Route::resource('member', 'MemberController');
+    Route::get('member/detail/{id}', 'MemberController@detail');
+    Route::resource('variant', 'VariantController');
+    Route::resource('group', 'ProductGroupController');
+    Route::get('logout', 'AccountController@logout')->name('st-logout');
+  });
 });
 
 Route::group(['namespace' => 'FrontEnd'], function(){

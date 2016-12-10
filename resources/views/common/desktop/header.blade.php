@@ -50,11 +50,11 @@
     <li><a href="{{ $absurl }}">HOME</a></li>
     <li><a href="">PRODUCTS</a>
       <ul class="submenu">
-        <li><a href="{{ $absurl }}product.php"><img src="{{ $absurl }}images/menu_futsal.png" alt="FUTSAL"/></a></li>
-        <li><a href="{{ $absurl }}product.php"><img src="{{ $absurl }}images/menu_football.png" alt="Football"/></a></li>
-        <li><a href="{{ $absurl }}product.php"><img src="{{ $absurl }}images/menu_running.png" alt="RUNNING"/></a></li>
-        <li><a href="{{ $absurl }}product.php"><img src="{{ $absurl }}images/menu_badminton.png" alt="Badminton"/></a></li>
-        <li><a href="{{ $absurl }}student/"><img src="{{ $absurl }}images/menu_student.png" alt="STUDENT"/></a></li>
+        <li><a href="{{ $absurl }}product"><img src="{{ $absurl }}images/menu_futsal.png" alt="FUTSAL"/></a></li>
+        <li><a href="{{ $absurl }}product"><img src="{{ $absurl }}images/menu_football.png" alt="Football"/></a></li>
+        <li><a href="{{ $absurl }}product"><img src="{{ $absurl }}images/menu_running.png" alt="RUNNING"/></a></li>
+        <li><a href="{{ $absurl }}product"><img src="{{ $absurl }}images/menu_badminton.png" alt="Badminton"/></a></li>
+        <li><a href="{{ $absurl }}product"><img src="{{ $absurl }}images/menu_student.png" alt="STUDENT"/></a></li>
       </ul><!-- .submenu -->
     </li>
     <li><a href="{{ $absurl }}csr/">CSR</a></li>

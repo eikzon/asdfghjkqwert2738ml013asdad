@@ -1847,6 +1847,10 @@ table.dataTable thead .sorting:after {
   font-size: 14px;
 }
 
+.login .form-group:last-child {
+  margin-bottom: 0;
+}
+
 .panel {
   border-radius: 0px;
   margin-bottom: 15px;
@@ -4644,7 +4648,7 @@ table.focus-on tbody tr.focused td {
 
 /* Login- register pages */
 .login-register {
-  background: url(../../plugins/images/login-register.jpg) no-repeat center (center / cover) !important;
+  background: url(../images/login-register.jpg) no-repeat center (center / cover) !important;
   height: 100%;
   position: fixed;
 }

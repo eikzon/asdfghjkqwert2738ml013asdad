@@ -33,7 +33,7 @@
       @endforeach
     </ul>
   @endif
-    <{{-- li>
+    {{--<li>
         <div class="new"></div>
         <div class="frame"><a href="detail.php"><img src="products/images/BC-006_BK_4.jpg"/></a></div>
         <div class="line"></div>

@@ -2,7 +2,7 @@
 @section('content')
   <div class="container-fluid">
     @include('common.sitecontrol.breadcrumb', [
-      'page'                => 'Variant List',
+      'page'                => 'Variant Product',
       'displayCreateButton' => true,
       'url'                 => route('sitecontrol.variant.create')
     ])
@@ -14,13 +14,12 @@
                 <tr>
                   <th>No.</th>
                   <th>Name</th>
-                  <th>Description</th>
-                  <th>Type</th>
+                  <th>Text or Size</th>
+                  {{-- <th>Type</th> --}}
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                @php $name = ['Boot 1', 'Boot 2', 'Boot 3', 'Boot 4', 'Boot 5', 'Boot 6']; @endphp
                 @foreach($variants as $index => $variant)
                   <tr>
                     <td>{{ $index + 1 }}</td>
@@ -32,7 +31,7 @@
                         {{ $variant['vr_text'] }}
                       @endif
                     </td>
-                    <td>{{ ($variant['vr_type'] === 2) ? 'Image' : 'Text' }}</td>
+                    {{-- <td>{{ ($variant['vr_type'] === 2) ? 'Image' : 'Text' }}</td> --}}
                     <td>
                       <a href="{{ route('sitecontrol.variant.edit', $variant['id']) }}"
                          class="text-inverse p-r-10"
@@ -53,15 +52,7 @@
               </tbody>
           </table>
           <div class="text-right">
-            <ul class="pagination pagination-sm m-b-0">
-              <li class="disabled"> <a href="#"><i class="fa fa-angle-left"></i></a> </li>
-              <li class="active"> <a href="#">1</a> </li>
-              <li> <a href="#">2</a> </li>
-              <li> <a href="#">3</a> </li>
-              <li> <a href="#">4</a> </li>
-              <li> <a href="#">5</a> </li>
-              <li> <a href="#"><i class="fa fa-angle-right"></i></a> </li>
-            </ul>
+            {{ $variants->links() }}
           </div>
         </div>
       </div>

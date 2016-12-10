@@ -14,7 +14,7 @@
       </ol>
     @else
       <ol class="breadcrumb">
-        <li><a href="{{ route('st-home') }}">Dashboard</a></li>
+        <li><a href="{{ route('st-home') }}">Home Page</a></li>
         <li class="active">{{ $page }}</li>
       </ol>
     @endif

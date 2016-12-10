@@ -27,14 +27,14 @@
                                           <label class="radio-inline">
                                             <div class="radio radio-info">
                                               <input type="radio" name="status" id="status-non" value="0"
-                                              @if($group['pg_status'] != 2) checked @endif>
+                                              @if($group['pg_status'] != 1) checked @endif>
                                               <label for="status-non">Non Active</label>
                                             </div>
                                           </label>
                                           <label class="radio-inline p-0">
                                             <div class="radio radio-info">
                                               <input type="radio" name="status" id="status-active" value="1"
-                                              @if($group['pg_status'] === 2) checked @endif>
+                                              @if($group['pg_status'] == 1) checked @endif>
                                               <label for="status-display">Active</label>
                                             </div>
                                           </label>

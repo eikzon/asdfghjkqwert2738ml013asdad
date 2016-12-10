@@ -15,20 +15,21 @@ class ST_Product_Group extends Model
 
   public function index($conditions = [])
   {
-    $groups = ST_Product_Group::all();
-    // @foreach($conditions as $key => $condition)
-    //   $setCondition .= "->where('" . $key . "', " . $condition . ")";
+    $perPage = !empty($conditions['perPage']) ? $conditions['perPage'] : '';
 
-    $this->count = $groups->count();
-    return $groups->toArray();
+    if(!empty($conditions['status']))
+      $groups = ST_Product_Group::where('pg_status', 1)->orderBy('id', 'desc')->get();
+    else
+      $groups = ST_Product_Group::orderBy('id', 'desc')->paginate($perPage);
+
+    return $groups;
   }
 
 
-  public function list($condition = [])
+  public function productList(array $condition = [])
   {
     // $productLists = ST_Product_Group::all()->join('ST_Product', 'pg_display_id', 'ST_Product.id');
     $productLists = (new ST_Product)->index($condition);
-
     if(!empty($productLists))
       return $productLists;
 
@@ -69,18 +70,13 @@ class ST_Product_Group extends Model
   private function conditionSQL($group, $request)
   {
     $group->pg_name   = $request->input('name');
-    $group->pg_status = $request->input('type');
+    $group->pg_status = $request->input('status');
     $updateGroup      = $group->save();
 
     if($updateGroup)
       return true;
 
     return false;
-  }
-
-  public function count()
-  {
-    return $this->count;
   }
 
   public function products()

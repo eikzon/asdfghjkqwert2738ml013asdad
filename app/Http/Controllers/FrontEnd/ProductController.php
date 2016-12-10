@@ -14,7 +14,7 @@ class ProductController extends Controller
 {
   public function index()
   {
-    $productLists = (new ST_Product_Group)->list(['status' => true]);
+    $productLists = (new ST_Product_Group)->productList(['status' => true]);
     return view('pages.desktop.product.list',[
       'productLists' => $productLists
     ]);
