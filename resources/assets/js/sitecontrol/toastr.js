@@ -39,6 +39,19 @@
     });
   }
 
+  function actionFailLogin()
+  {
+    $.toast({
+      heading: 'Fail to Login !!',
+      text: 'Please check username or password',
+      position: 'top-right',
+      loaderBg:'#ff6849',
+      icon: 'error',
+      hideAfter: 3500,
+      stack: 6
+    });
+  }
+
      //  $(".tst4").click(function(){
      //       $.toast({
      //        heading: 'Welcome to my Elite admin',

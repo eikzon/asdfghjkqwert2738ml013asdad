@@ -259,11 +259,21 @@
                                 </div> --}}
                                 <hr>
                                 {{ csrf_field() }}
-                                @if(!empty($product['id'])) {{ method_field('PUT') }} @endif
                             <input type="hidden" name="id" value="{{ $product['id'] or '' }}">
                             <div class="form-actions m-t-40">
-                              <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
-                              <button type="button" class="btn btn-default">Cancel</button>
+                              <button type="submit" class="btn btn-success">
+                                <i class="fa fa-check"></i> Save
+                              </button>
+                              @if(!empty($product['id']))
+                                {{ method_field('PUT') }}
+                                <a class="btn btn-default" href="{{ route('sitecontrol.product.index') }}">
+                                  <i class="fa fa-chevron-left"></i> Back
+                                </a>
+                              @else
+                                <button type="reset" class="btn btn-default">
+                                  <i class="fa fa-refresh"></i> Cancel
+                                </button>
+                              @endif
                             </div>
                         </form>
                     </div>
