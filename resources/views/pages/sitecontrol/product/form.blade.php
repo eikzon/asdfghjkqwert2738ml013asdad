@@ -22,22 +22,19 @@
                                 </div>
                                 <div class="col-md-6">
                                   <div class="form-group">
-                                      <label class="control-label">Select Group Variant</label>
-                                      <select class="form-control" name="group" data-placeholder="Choose a Group" tabindex="1">
-                                          <option value="0">None Group</option>
-                                          @if(!empty($groups))
-                                            @foreach($groups as $group)
-                                              <option value="{{ $group['id'] }}"
-                                                @if($group['id'] === $product['fk_group_id'])
-                                                  selected
-                                                @endif
-                                                >
-                                                {{ $group['pg_name'] }}
-                                              </option>
-                                            @endforeach
+                                    <label class="control-label">Select Category</label>
+                                    <select class="form-control" name="category" data-placeholder="Choose a Category" tabindex="1">
+                                      @foreach(config('website.category.list') as $index => $category)
+                                        <option value="{{ $index }}"
+                                          @if($index == $product['fk_category_id'])
+                                            selected
                                           @endif
-                                      </select>
-                                    </div>
+                                          >
+                                          {{ $category }}
+                                        </option>
+                                      @endforeach
+                                    </select>
+                                  </div>
                                 </div>
                               </div>
                                 <div class="row">
@@ -46,6 +43,7 @@
                                       <label class="control-label">Product Name</label>
                                       <input type="text" id="name" name="name" class="form-control"
                                              placeholder="Product Name"
+                                             required=""
                                              value="{{ $product['pd_name'] or '' }}">
                                     </div>
                                   </div>
@@ -60,11 +58,11 @@
                                 </div>
                                 <h3 class="box-title m-t-40">Product Description</h3>
                                 <div class="row">
-                                    <div class="col-md-12 ">
-                                        <div class="form-group">
-                                            <textarea class="form-control" name="long_desc" rows="4" placeholder="Description ...">{{ $product['pd_long_desc'] or '' }}</textarea>
-                                        </div>
-                                    </div>
+                                  <div class="col-md-12 ">
+                                      <div class="form-group">
+                                          <textarea class="form-control" name="long_desc" rows="4" placeholder="Description ...">{{ $product['pd_long_desc'] or '' }}</textarea>
+                                      </div>
+                                  </div>
                                 </div>
                                 <div class="row">
                                   <div class="col-md-6">
@@ -73,6 +71,7 @@
                                       <div class="input-group">
                                         <div class="input-group-addon"><i class="ti-money"></i></div>
                                         <input type="text" name="price" class="form-control" id="exampleInputuname"
+                                               required=""
                                                placeholder="x,xxx.xx"
                                                value="{{ $product['pd_price'] or '' }}">
                                       </div>
@@ -101,7 +100,7 @@
                                   <div class="col-md-6">
                                     <div class="form-group">
                                       <label class="control-label">Stock</label>
-                                      <input type="text" name="stock" id="stock" class="form-control" placeholder="Quantity Per Stock" value="{{ $product['pd_stock'] or '' }}">
+                                      <input type="text" name="stock" id="stock" required="" class="form-control" placeholder="Quantity Per Stock" value="{{ $product['pd_stock'] or '' }}">
                                     </div>
                                   </div>
                                 </div>
@@ -168,18 +167,59 @@
                                 @endif
                                 <div class="col-lg-12">
                                   <h3 class="box-title m-t-20">Upload Image</h3>
-                                  <div id="dropbox">
+                                  <div id="dropbox" data-url="/sitecontrol/product/uploadimages">
                                     <span class="message">Drop images here to upload. <br /><i>(they will only be visible to you)</i></span>
                                   </div>
                                 </div>
+                                <div class="clearfix"></div>
+                                <br>
                                 <hr>
                                 <h3 class="box-title">
                                   <i class="ti-paint-roller"></i>
                                   Variant Product
                                 </h3>
-                                <br>
                                 <hr>
                                 <div class="row">
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label class="control-label">Select Group SKU</label>
+                                      <select class="form-control" name="group" data-placeholder="Choose a Group" tabindex="1">
+                                          <option value="0">None Group</option>
+                                          @if(!empty($groups))
+                                            @foreach($groups as $group)
+                                              <option value="{{ $group['id'] }}"
+                                                @if($group['id'] == $product['fk_group_id'])
+                                                  selected
+                                                @endif
+                                                >
+                                                {{ $group['pg_name'] }}
+                                              </option>
+                                            @endforeach
+                                          @endif
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label class="control-label">Select Variant</label>
+                                      <select class="form-control" name="variant[]" data-placeholder="Choose a Category" tabindex="1">
+                                        <option value="">None</option>
+                                        @if(!empty($variantsResult['text']))
+                                          @foreach($variantsResult['text'] as $text)
+                                            <option value="{{ $text['id'] }}"
+                                              @if(!empty($variantsMap[$text['id']]))
+                                                selected
+                                              @endif>
+                                              {{ $text['vr_name'] }}
+                                            </option>
+                                          @endforeach
+                                        @endif
+                                      </select>
+                                    </div>
+                                  </div>
+                                </div>
+                                </div>
+                                {{-- <div class="row">
                                   <div class="col-md-6">
                                     <div class="form-group">
                                       <label class="control-label">Select Variant Image</label>
@@ -216,8 +256,8 @@
                                       </select>
                                     </div>
                                   </div>
-                                </div>
-                                <hr> </div>
+                                </div> --}}
+                                <hr>
                                 {{ csrf_field() }}
                                 @if(!empty($product['id'])) {{ method_field('PUT') }} @endif
                             <input type="hidden" name="id" value="{{ $product['id'] or '' }}">

@@ -9,30 +9,38 @@ use App\Model\ST_Product_Group;
 use App\Model\ST_Variant;
 use App\Model\ST_Product_Images;
 
+use App\Traits\UploadImageTrait;
+
 use Illuminate\Support\Facades\Input;
-use Image;
 
 class ProductController extends Controller
 {
+  use UploadImageTrait;
   private $st_product = '';
 
   public function __construct()
   {
+    parent::__construct();
     $this->st_product = new ST_Product;
   }
 
   public function index()
   {
-    return view('pages.sitecontrol.product.home', [
-      'products' => $this->st_product->index(),
-    ]);
+    $products = $this->st_product->index(['perPage' => config('website.common.perPage.siteControl')]);
+
+    if($products->currentPage() > $products->lastPage())
+      return redirect()->route('sitecontrol.product.index');
+    else
+      return view('pages.sitecontrol.product.home', [
+        'products' => $products,
+      ]);
   }
 
   public function create()
   {
     return view('pages.sitecontrol.product.form', [
       'product'        => null,
-      'groups'         => (new ST_Product_Group)->index(),
+      'groups'         => (new ST_Product_Group)->index(['status' => true]),
       'variantsResult' => (new ST_Variant)->getType(),
       'state'          => 'store'
     ]);
@@ -41,12 +49,12 @@ class ProductController extends Controller
   public function store(Request $request)
   {
     if($this->st_product->store($request))
-      return redirect()->route('sitecontrol.product.index');
+      return redirect()->route('sitecontrol.product.index', 'create');
     else
       return redirect()->route('sitecontrol.product.create');
   }
 
-  public function edit(int $id)
+  public function edit($id)
   {
     $variantsMap = [];
     if(!empty($id))
@@ -74,31 +82,24 @@ class ProductController extends Controller
   public function update(Request $request)
   {
     if($this->st_product->updatePD($request))
-      return redirect()->route('sitecontrol.product.index');
+      return redirect()->route('sitecontrol.product.index', 'update');
     else
       return redirect()->route('sitecontrol.product.edit', ['id' => $request->input('id')]);
   }
 
-  public function destroy(int $id)
+  public function destroy($id)
   {
     ST_Product::destroy($id);
-    return redirect()->route('sitecontrol.product.index');
+    return redirect()->route('sitecontrol.product.index', 'delete');
   }
 
   public function uploadImages(Request $request)
   {
     if(!empty($request->file('pic')) && !empty($request->input('code')))
-    {
-      $imageName = rand(1, 900) . time() . '.jpg';
-      $images[]  = $imageName;
-      Image::make($request->file('pic'))->resize(300, 200)->save('images/products/' . $imageName);
-      (new ST_Product_Images)->createImages($imageName, $request->input('code'));
-    }
-
-    return json_encode(['status' => 'File was uploaded successfuly!']);
+      return $this->uploadTraits($request, 'product');
   }
 
-  public function destroyImage(int $pid, int $idImg)
+  public function destroyImage($pid, $idImg)
   {
     ST_Product_Images::destroy($idImg);
     return redirect()->route('sitecontrol.product.edit', $pid);

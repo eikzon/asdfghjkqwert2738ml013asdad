@@ -3,13 +3,16 @@ $(function(){
 	var dropbox = $('#dropbox'),
 		message = $('.message', dropbox);
 
+	var urlUpload = $('#dropbox').data('url');
+
 	dropbox.filedrop({
 		// The name of the $_FILES entry:
 		paramname:'pic',
 
 		maxfiles: 5,
     maxfilesize: 2,
-		url: '/sitecontrol/product/uploadimages',
+		url: urlUpload,
+		// url: '/breakershoes/onsite/sitecontrol/product/uploadimages',
 		data: {'code': $('input[name="code"]').val()},
 
 		uploadFinished:function(i,file,response){

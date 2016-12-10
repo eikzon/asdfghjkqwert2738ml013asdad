@@ -13,26 +13,26 @@ class ST_Product extends Model
 
   protected $dates    = ['deleted_at'];
   protected $table    = 'st_product';
-  protected $fillable = ['pd_code', 'pd_name', 'pd_short_desc', 'pd_long_desc', 'pd_price', 'pd_discount', 'pd_price_discount', 'pd_badge', 'pd_status', 'pd_stock', 'fk_group_id'];
+  protected $fillable = ['pd_code', 'pd_name', 'pd_short_desc', 'pd_long_desc', 'pd_price', 'pd_discount', 'pd_price_discount', 'pd_badge', 'pd_status', 'pd_stock', 'fk_group_id', 'fk_category_id'];
 
   public $count = 0;
 
   public function index($conditions = [])
   {
-    if(!empty($conditions['status']))
-      $products = ST_Product::with('images')->where('pd_status', 1)->orwhere('pd_status', 2)->get();
-    else
-      $products = ST_Product::with('images')->get();
+    $perPage = !empty($conditions['perPage']) ? $conditions['perPage'] : '';
 
-    $this->count = $products->count();
-    return $products->toArray();
+    if(!empty($conditions['status']))
+      $products = ST_Product::with('images')->where('pd_status', 1)->orwhere('pd_status', 2)->orderBy('id', 'desc')->paginate($conditions['perPage']);
+    else
+      $products = ST_Product::with('images')->orderBy('id', 'desc')->paginate($perPage);
+
+    return $products;
   }
 
   public function store($request, $images = [])
   {
     $result = ST_Product::create([
-      'pd_code'           => rand(0, 99999),
-      // 'pd_code'           => $request->input('code'),
+      'pd_code'           => $request->input('code'),
       'pd_name'           => $request->input('name'),
       'pd_short_desc'     => $request->input('short_desc'),
       'pd_long_desc'      => $request->input('long_desc'),
@@ -42,7 +42,8 @@ class ST_Product extends Model
       'pd_badge'          => $request->input('badge'),
       'pd_status'         => $request->input('status'),
       'pd_stock'          => $request->input('stock'),
-      'fk_group_id'       => $request->input('group')
+      'fk_group_id'       => $request->input('group'),
+      'fk_category_id'    => $request->input('category')
     ]);
 
     if($request->has('variant.*') && $result)
@@ -63,14 +64,14 @@ class ST_Product extends Model
 
   public static function show(int $id)
   {
-    $resultProduct = self::find($id);
+    $resultProduct = self::with('images')->find($id);
     if(!empty($resultProduct))
       return $resultProduct->toArray();
 
     return false;
   }
 
-  public function edit(int $id_product)
+  public function edit($id_product)
   {
     $product = ST_Product::with('images')->find($id_product);
 

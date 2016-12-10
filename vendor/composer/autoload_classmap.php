@@ -6,8 +6,10 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddFieldCategoryProductTB' => $baseDir . '/database/migrations/2016_12_10_072908_add_field_category_productTB.php',
     'AddFieldGroupProduct' => $baseDir . '/database/migrations/2016_11_30_161648_add_field_group_product.php',
     'AddFieldImage' => $baseDir . '/database/migrations/2016_12_07_163239_add_field_image.php',
+    'AddFieldUsernameUsersTB' => $baseDir . '/database/migrations/2016_12_10_054940_add_field_username_usersTB.php',
     'AddStockToTbProduct' => $baseDir . '/database/migrations/2016_11_30_025341_add_stock_to_tb_product.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
@@ -532,4 +534,6 @@ return array(
     'TestCase' => $baseDir . '/tests/TestCase.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
     'UpdateFieldVariantTb' => $baseDir . '/database/migrations/2016_11_30_162422_update_field_variant_tb.php',
+    'UsersController' => $baseDir . '/database/migrations/2016_12_10_052500_UsersController.php',
+    'UsersTableSeeder' => $baseDir . '/database/seeds/UsersTableSeeder.php',
 );

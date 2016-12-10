@@ -23,13 +23,12 @@
                 </tr>
               </thead>
               <tbody>
-                @php $name = ['Boot 1', 'Boot 2', 'Boot 3', 'Boot 4', 'Boot 5', 'Boot 6']; @endphp
-                @foreach($products as $index => $product)
+                @foreach($products as $product)
                   <tr>
                     <td>{{ $product['pd_code'] }}</td>
                     <td>{{ $product['pd_name'] }}</td>
                     <td>
-                      @if(!empty($product['images']))
+                      @if(!empty($product['images'][0]))
                         <img width="100" src="{{ asset('images/products/' . $product['images'][0]['image']) }}">
                       @endif
                     </td>
@@ -61,18 +60,20 @@
               </tbody>
           </table>
           <div class="text-right">
-            <ul class="pagination pagination-sm m-b-0">
-              <li class="disabled"> <a href="#"><i class="fa fa-angle-left"></i></a> </li>
-              <li class="active"> <a href="#">1</a> </li>
-              <li> <a href="#">2</a> </li>
-              <li> <a href="#">3</a> </li>
-              <li> <a href="#">4</a> </li>
-              <li> <a href="#">5</a> </li>
-              <li> <a href="#"><i class="fa fa-angle-right"></i></a> </li>
-            </ul>
+            {{ $products->links() }}
           </div>
         </div>
       </div>
     </div>
   </div>
+@endsection
+@section('script_footer')
+  @if(request()->getQueryString() == 'delete')
+    <script>actionDelete();</script>
+  @elseif(request()->getQueryString() == 'create')
+    <script>actionCreate();</script>
+  @elseif(request()->getQueryString() == 'update')
+    <script>actionUpdate();</script>
+  @endif
+  </script>
 @endsection

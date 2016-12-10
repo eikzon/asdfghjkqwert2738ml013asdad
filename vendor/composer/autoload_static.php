@@ -290,8 +290,10 @@ class ComposerStaticInit4855c9ae886595b304697b2d9602ef55
     );
 
     public static $classMap = array (
+        'AddFieldCategoryProductTB' => __DIR__ . '/../..' . '/database/migrations/2016_12_10_072908_add_field_category_productTB.php',
         'AddFieldGroupProduct' => __DIR__ . '/../..' . '/database/migrations/2016_11_30_161648_add_field_group_product.php',
         'AddFieldImage' => __DIR__ . '/../..' . '/database/migrations/2016_12_07_163239_add_field_image.php',
+        'AddFieldUsernameUsersTB' => __DIR__ . '/../..' . '/database/migrations/2016_12_10_054940_add_field_username_usersTB.php',
         'AddStockToTbProduct' => __DIR__ . '/../..' . '/database/migrations/2016_11_30_025341_add_stock_to_tb_product.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
@@ -816,6 +818,8 @@ class ComposerStaticInit4855c9ae886595b304697b2d9602ef55
         'TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
         'UpdateFieldVariantTb' => __DIR__ . '/../..' . '/database/migrations/2016_11_30_162422_update_field_variant_tb.php',
+        'UsersController' => __DIR__ . '/../..' . '/database/migrations/2016_12_10_052500_UsersController.php',
+        'UsersTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UsersTableSeeder.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

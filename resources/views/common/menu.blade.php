@@ -5,12 +5,13 @@
         <div>
           <img src="{{ asset('images/component/sitecontrol/varun.jpg') }}" alt="user-img" class="img-circle">
         </div>
-        <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administrator <span class="caret"></span>
+        <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administrator
+          {{-- <span class="caret"></span> --}}
         </a>
         <ul class="dropdown-menu animated flipInY">
-          <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
+          {{-- <li><a href=""><i class="ti-settings"></i> Account Setting</a></li> --}}
           <li role="separator" class="divider"></li>
-          <li><a href="login.html"><i class="fa fa-power-off"></i> Logout</a></li>
+          <li><a href="{{ route('st-logout') }}"><i class="fa fa-power-off"></i> Logout</a></li>
         </ul>
       </div>
     </div>
@@ -41,7 +42,7 @@
               <i class="linea-icon linea-basic fa-fw" data-icon="&#xe001;"></i>
               <span class="hide-menu">
                 Product
-                <span class="label label-rouded label-custom pull-right"> 1,230 </span>
+                <span class="label label-rouded label-custom pull-right">{{ $count['product'] }}</span>
               </span>
             </a>
           </li>
@@ -50,7 +51,7 @@
               <i class="linea-icon linea-basic fa-fw" data-icon="a"></i>
               <span class="hide-menu">
                 Order
-                <span class="label label-rouded label-danger pull-right"> 190 </span>
+                <span class="label label-rouded label-danger pull-right">{{ $count['product'] }}</span>
               </span>
             </a>
           </li>
@@ -59,7 +60,7 @@
               <i class="linea-icon linea-basic fa-fw" data-icon="&#xe028;"></i>
               <span class="hide-menu">
                 Member
-                <span class="label label-rouded label-info pull-right"> 987 </span>
+                <span class="label label-rouded label-info pull-right">{{ $count['product'] }}</span>
               </span>
             </a>
           </li>
@@ -72,7 +73,8 @@
             <a href="{{ route('sitecontrol.group.index') }}" class="waves-effect">
               <i class="linea-icon linea-aerrow" data-icon="&#xe078;"></i>
               <span class="hide-menu">
-                Product Group
+                Group SKU
+                <span class="label label-rouded label-info pull-right">{{ $count['sku'] }}</span>
               </span>
             </a>
           </li>
@@ -81,10 +83,11 @@
               <i class="linea-icon linea-aerrow" data-icon="&#xe078;"></i>
               <span class="hide-menu">
                 Variant Product
+                <span class="label label-rouded label-info pull-right">{{ $count['variant'] }}</span>
               </span>
             </a>
           </li>
-          <li><a href="login.html" class="waves-effect"><i class="icon-logout fa-fw"></i> <span class="hide-menu">Log out</span></a></li>
+          <li><a href="{{ route('st-logout') }}" class="waves-effect"><i class="icon-logout fa-fw"></i> <span class="hide-menu">Log out</span></a></li>
       </ul>
   </div>
 </div>
