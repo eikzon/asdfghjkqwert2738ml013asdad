@@ -10,6 +10,8 @@ class ST_Member extends Model
 {
   use SoftDeletes;
 
+  public static $orders = [];
+
   protected $table      = 'st_member';
   protected $dates      = ['deleted_at'];
   protected $softDelete = true;
@@ -26,7 +28,9 @@ class ST_Member extends Model
   protected static function boot()
   {
     parent::boot();
-    static::addGlobalScope('ST_Member', function(Builder $builder) {});
+    static::addGlobalScope('ST_Member', function(Builder $builder) {
+      $builder->with('orders');
+    });
 
     ST_Member::updating(function ($member) {
       $member->attributes = beforeSql($member->attributes);
@@ -37,6 +41,11 @@ class ST_Member extends Model
     ST_Member::saved(function ($member) {});
 
     ST_Member::deleted(function ($member) {});
+  }
+
+  public function orders()
+  {
+    return $this->hasMany(ST_Order::class, 'fk_member_id');
   }
 
   public function scopeNow($query)

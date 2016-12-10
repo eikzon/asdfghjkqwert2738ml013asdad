@@ -12,7 +12,7 @@ class MemberController extends Controller
   {
     $member = ST_Member::byFilter(e($request->input('search')), e($request->input('status')))
                         ->orderBy('id', 'desc')
-                        ->paginate(5);
+                        ->paginate(config('website.common.perPage.siteControl'));
 
     return view('pages.sitecontrol.member.home', [
       'members' => $member
