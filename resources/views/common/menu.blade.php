@@ -69,7 +69,15 @@
               </div>
           </li>
           <li>
-            <a href="{{ action('SiteControl\MemberController@index') }}" class="waves-effect">
+            <a href="{{ route('sitecontrol.group.index') }}" class="waves-effect">
+              <i class="linea-icon linea-aerrow" data-icon="&#xe078;"></i>
+              <span class="hide-menu">
+                Product Group
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route('sitecontrol.variant.index') }}" class="waves-effect">
               <i class="linea-icon linea-aerrow" data-icon="&#xe078;"></i>
               <span class="hide-menu">
                 Variant Product

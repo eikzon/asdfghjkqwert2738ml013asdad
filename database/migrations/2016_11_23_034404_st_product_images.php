@@ -14,7 +14,7 @@ class StProductImages extends Migration
     public function up()
     {
       Schema::create('st_product_images', function (Blueprint $table) {
-        $table->increments('pdm_id');
+        $table->increments('id');
         $table->integer('fk_pd_id');
         $table->string('image');
         $table->softDeletes();

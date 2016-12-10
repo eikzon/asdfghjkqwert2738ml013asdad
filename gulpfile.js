@@ -32,7 +32,8 @@ gulp.task("include-coffee", function(cb) {
 gulp.task("include-js", function(cb) {
   pump([
     gulp.src([
-      'resources/assets/js/all-sitecontrol.js'
+      'resources/assets/js/all-sitecontrol.js',
+      'resources/assets/js/all-desktop.js'
     ]),
     include(),
     gulp.dest("public/js")
@@ -44,6 +45,7 @@ gulp.task("include-js", function(cb) {
 elixir(function(mix) {
   mix
     .sass('sitecontrol.scss')
+    .sass('desktop.scss')
     .task('include-coffee')
     .task('include-js');
 });

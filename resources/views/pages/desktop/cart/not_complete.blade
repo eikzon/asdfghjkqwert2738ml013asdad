@@ -1,0 +1,16 @@
+@extends('layout.desktop')
+@section('header')
+  @include('common.desktop.header')
+@endsection
+@section('content')
+  @include('common.desktop.account.header')
+  <div class="container-cart">
+    <div class="center">
+      @include('common.desktop.cart.step', ['step' => 3])
+      <div class="cart-empty">
+          <p>ยังไม่มีสินค้าในตะกร้าช้อปปิ้งของคุณ</p>
+          <a href="#" class="continue-shopping">เลือกซื้อสินค้าต่อ</a>
+      </div>
+    </div>
+  </div>
+@endsection

@@ -129,9 +129,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
         $user = null;
 
         if (! is_null($id)) {
-            if ($user = $this->provider->retrieveById($id)) {
-                $this->fireAuthenticatedEvent($user);
-            }
+            $user = $this->provider->retrieveById($id);
         }
 
         // If the user is null, but we decrypt a "recaller" cookie we can attempt to
@@ -163,11 +161,13 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
             return;
         }
 
-        if ($this->user()) {
-            return $this->user()->getAuthIdentifier();
+        $id = $this->session->get($this->getName());
+
+        if (is_null($id) && $this->user()) {
+            $id = $this->user()->getAuthIdentifier();
         }
 
-        return $this->session->get($this->getName());
+        return $id;
     }
 
     /**
@@ -472,19 +472,6 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
     }
 
     /**
-     * Fire the authenticated event if the dispatcher is set.
-     *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
-     * @return void
-     */
-    protected function fireAuthenticatedEvent($user)
-    {
-        if (isset($this->events)) {
-            $this->events->fire(new Events\Authenticated($user));
-        }
-    }
-
-    /**
      * Update the session with the given ID.
      *
      * @param  string  $id
@@ -502,7 +489,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
      *
      * @param  mixed  $id
      * @param  bool   $remember
-     * @return \Illuminate\Contracts\Auth\Authenticatable|false
+     * @return \Illuminate\Contracts\Auth\Authenticatable
      */
     public function loginUsingId($id, $remember = false)
     {
@@ -521,7 +508,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
      * Log the given user ID into the application without sessions or cookies.
      *
      * @param  mixed  $id
-     * @return \Illuminate\Contracts\Auth\Authenticatable|false
+     * @return bool
      */
     public function onceUsingId($id)
     {
@@ -530,7 +517,7 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
         if (! is_null($user)) {
             $this->setUser($user);
 
-            return $user;
+            return true;
         }
 
         return false;
@@ -732,8 +719,6 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
         $this->user = $user;
 
         $this->loggedOut = false;
-
-        $this->fireAuthenticatedEvent($user);
 
         return $this;
     }
