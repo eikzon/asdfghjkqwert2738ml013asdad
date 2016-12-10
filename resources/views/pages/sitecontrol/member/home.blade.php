@@ -9,7 +9,7 @@
           <table class="table product-overview" id="myTable">
             <thead>
               <tr>
-                <th>ID</th>
+                <th>No.</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Date</th>
@@ -18,38 +18,55 @@
               </tr>
             </thead>
             <tbody>
-              @php 
-                $name = ['Steave Jobs', 'Bill Gates', 'Timothy Donald Cook', 'Jonathan Ive', 'Susanne Hartman'];
-              @endphp
-              @for($i = 0; $i <= 4; $i++)
-                <tr>
-                  <td>{{ $i + 1 }}</td>
-                  <td>{{ $name[$i] }}</td>
-                  <td>{{ str_replace(' ', '', $name[$i]) . '@hotmail.com' }}</td>
-                  <td>10-7-2016</td>
-                  <td> <span class="label label-success font-weight-100">Active</span> </td>
-                  <td>
-                    <a href="{{ action('SiteControl\MemberController@show', ['id' => 1]) }}" class="text-inverse p-r-10" data-toggle="tooltip" title="View">
-                      <i class="ti-eye"></i>
-                    </a>
-                    <a href="javascript:void(0)" class="text-inverse" title="Delete" data-toggle="tooltip">
-                      <i class="ti-trash"></i>
-                    </a>
-                  </td>
-                </tr>
-              @endfor
+              @if(!empty($members))
+                @foreach($members as $index => $member)
+                  @php
+                    if($member->status == 1)
+                    {
+                      $status       = 'Active';
+                      $statusCode   = 3;
+                      $label_status = 'label-success';
+                    }
+                    elseif($member->status == 0)
+                    {
+                      $status       = 'Inactive';
+                      $statusCode   = 1;
+                      $label_status = 'label-warning';
+                    }
+                    else
+                    {
+                      $status       = 'Block';
+                      $statusCode   = 1;
+                      $label_status = 'label-danger';
+                    }
+                  @endphp
+                  <tr>
+                    <td>{{ (Request::get('page') * config('admin.perPage')) + ($index + 1) }}</td>
+                    <td>{{ $member->first_name . ' ' . $member->last_name }}</td>
+                    <td>{{ $member->email }}</td>
+                    <td>{{ date('d-m-Y h:i:s', strtotime($member->updated_at)) }}</td>
+                    <td>
+                      <a href="#" class="js-member-change-status" data-url="{{ action('SiteControl\MemberController@update', ['id' => $member->id]) }}" data-status="{{ $statusCode }}">
+                        <span class="label {{ $label_status }} font-weight-100 js-label-status">
+                          {{ $status }}
+                        </span>
+                      </a>
+                    </td>
+                    <td>
+                      <a href="{{ action('SiteControl\MemberController@detail', ['id' => $member->id]) }}" class="text-inverse p-r-10" data-toggle="tooltip" title="View">
+                        <i class="ti-eye"></i>
+                      </a>
+                      <a href="javascript:void(0)" class="text-inverse js-member-delete" data-url="{{ action('SiteControl\MemberController@destroy', ['id' => $member->id]) }}" title="Delete" data-toggle="tooltip">
+                        <i class="ti-trash"></i>
+                      </a>
+                    </td>
+                  </tr>
+                @endforeach
+              @endif
             </tbody>
           </table>
           <div class="text-right">
-            <ul class="pagination pagination-sm m-b-0">
-              <li class="disabled"> <a href="#"><i class="fa fa-angle-left"></i></a> </li>
-              <li class="active"> <a href="#">1</a> </li>
-              <li> <a href="#">2</a> </li>
-              <li> <a href="#">3</a> </li>
-              <li> <a href="#">4</a> </li>
-              <li> <a href="#">5</a> </li>
-              <li> <a href="#"><i class="fa fa-angle-right"></i></a> </li>
-            </ul>
+            {{ $members->links() }}
           </div>
         </div>
       </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\SiteControl;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\ST_Order;
 
 class OrderController extends Controller
 {
@@ -12,9 +13,15 @@ class OrderController extends Controller
     return view('pages.sitecontrol.order.home');
   }
 
-  public function show()
+  public function show(Request $request, $id)
   {
-    return view('pages.sitecontrol.order.show');
+    $order = ST_Order::find($id);
+
+    if(empty($order)) return redirect()->back();
+
+    return view('pages.sitecontrol.order.show', [
+      'order' => $order
+    ]);
   }
 
   public function update()

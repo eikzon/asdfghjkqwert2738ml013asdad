@@ -27,6 +27,7 @@ Route::group(['prefix' => 'sitecontrol', 'namespace' => 'SiteControl'], function
     Route::get('product/destroyimg/{pid}/{idImg}', 'ProductController@destroyImage')->name('st-destroyImage');
     Route::resource('order', 'OrderController');
     Route::resource('member', 'MemberController');
+    Route::get('member/detail/{id}', 'MemberController@detail');
     Route::resource('variant', 'VariantController');
     Route::resource('group', 'ProductGroupController');
     Route::get('logout', 'AccountController@logout')->name('st-logout');
