@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="csrf-token" content="{{ csrf_token() }}">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
@@ -68,7 +67,14 @@
   </div>
 </div>
 <!-- /#wrapper -->
-<script src="{{ asset('js/all-sitecontrol.js') }}"></script>
-@yield('script_footer')
+  <script src="{{ asset('js/all-sitecontrol.js') }}"></script>
+  @yield('script_footer')
+  @if(request()->getQueryString() == 'delete')
+    <script>actionDelete();</script>
+  @elseif(request()->getQueryString() == 'create')
+    <script>actionCreate();</script>
+  @elseif(request()->getQueryString() == 'update')
+    <script>actionUpdate();</script>
+  @endif
 </body>
 </html>

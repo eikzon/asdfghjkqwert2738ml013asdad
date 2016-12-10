@@ -67,13 +67,3 @@
     </div>
   </div>
 @endsection
-@section('script_footer')
-  @if(request()->getQueryString() == 'delete')
-    <script>actionDelete();</script>
-  @elseif(request()->getQueryString() == 'create')
-    <script>actionCreate();</script>
-  @elseif(request()->getQueryString() == 'update')
-    <script>actionUpdate();</script>
-  @endif
-  </script>
-@endsection
