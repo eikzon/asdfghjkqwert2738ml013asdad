@@ -2,7 +2,7 @@
 
 return [
   'perPage' => [
-    'siteControl' => 4,
+    'siteControl' => 8,
     'frontEnd' => 10,
   ]
 ];

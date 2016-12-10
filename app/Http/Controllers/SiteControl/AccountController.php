@@ -27,7 +27,7 @@ class AccountController extends Controller
     if (Auth::attempt($userdata))
       return redirect()->route('st-home');
     else
-      return redirect()->route('sitecontrol.login.index');
+      return redirect()->route('sitecontrol.login.index', 'fail');
   }
 
   public function logout()

@@ -5,7 +5,7 @@
   <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
     @if(!empty($displayCreateButton))
       <a href="{{ @$url }}" class="btn btn-danger pull-right m-l-20 btn-rounded btn-outline hidden-xs hidden-sm waves-effect waves-light">
-        Create
+        <i class="fa fa-plus-square-o"></i> Create
       </a>
     @endif
     @if(!empty($displayTime))

@@ -30,16 +30,16 @@
               </div>
           </li>
           <li>
-            <a href="{{ action('SiteControl\HomeController@index') }}" class="waves-effect">
-              <i class="linea-icon linea-basic fa-fw" data-icon="Q"></i>
+            <a href="{{ route('st-home') }}" class="waves-effect">
+              <i class="linea-icon linea-ecommerce fa-fw" data-icon="U"></i>
               <span class="hide-menu">
                 Dashboard
               </span>
             </a>
           </li>
           <li>
-            <a href="{{ action('SiteControl\ProductController@index') }}" class="waves-effect">
-              <i class="linea-icon linea-basic fa-fw" data-icon="&#xe001;"></i>
+            <a href="{{ route('sitecontrol.product.index') }}" class="waves-effect">
+              <i class="linea-icon linea-ecommerce fa-fw" data-icon="P"></i>
               <span class="hide-menu">
                 Product
                 <span class="label label-rouded label-custom pull-right">{{ $count['product'] }}</span>
@@ -48,7 +48,7 @@
           </li>
           <li>
             <a href="{{ action('SiteControl\OrderController@index') }}" class="waves-effect">
-              <i class="linea-icon linea-basic fa-fw" data-icon="a"></i>
+              <i class="linea-icon linea-ecommerce fa-fw" data-icon="A"> </i>
               <span class="hide-menu">
                 Order
                 <span class="label label-rouded label-danger pull-right">{{ $count['product'] }}</span>
@@ -71,7 +71,7 @@
           </li>
           <li>
             <a href="{{ route('sitecontrol.group.index') }}" class="waves-effect">
-              <i class="linea-icon linea-aerrow" data-icon="&#xe078;"></i>
+              <i class="linea-icon linea-basic fa-fw" data-icon="&#xe006;"></i>
               <span class="hide-menu">
                 Group SKU
                 <span class="label label-rouded label-info pull-right">{{ $count['sku'] }}</span>
@@ -80,7 +80,7 @@
           </li>
           <li>
             <a href="{{ route('sitecontrol.variant.index') }}" class="waves-effect">
-              <i class="linea-icon linea-aerrow" data-icon="&#xe078;"></i>
+              <i class="linea-icon linea-music fa-fw" data-icon="m"></i>
               <span class="hide-menu">
                 Variant Product
                 <span class="label label-rouded label-info pull-right">{{ $count['variant'] }}</span>

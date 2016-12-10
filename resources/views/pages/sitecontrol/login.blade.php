@@ -93,5 +93,8 @@
     </div>
   </section>
 <script src="{{ asset('js/all-sitecontrol.js') }}"></script>
+@if(request()->getQueryString() == 'fail')
+  <script>actionFailLogin();</script>
+@endif
 </body>
 </html>
