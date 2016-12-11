@@ -9,14 +9,17 @@ class ST_Order_Address extends Model
 {
   public static $orders = [];
 
-  protected $table    = 'st_order_address';
-  protected $fillable = ['oa_address',
-                         'oa_alley',
-                         'oa_building',
+  protected $table    = 'st_order_shipping';
+  protected $fillable = ['oa_first_name',
+                         'oa_last_name',
+                         'oa_tel',
+                         'oa_address',
                          'oa_district',
-                         'oa_city',
                          'oa_province',
                          'oa_postcode',
+                         'oa_isbilling_address',
+                         'oa_billign_address',
+                         'oa_tax_id',
                          'fk_order_id',
                         ];
 
