@@ -31,7 +31,6 @@ alert('กรุณาใช้ IE เวอร์ชั่นที่ใหม
 });
 </script>
 <![endif]-->
-<script type="text/javascript" src="{{ asset('js/all-desktop.js') }}"></script>
 </head>
 
 <body>
@@ -54,6 +53,7 @@ alert('กรุณาใช้ IE เวอร์ชั่นที่ใหม
 <div class="footer">Copyright &copy; 2015 S.C.S. Group of Company All Rights Reserved.</div><!-- .footer -->
 <script src="{{ asset('js/all-desktop.js') }}"></script>
 <script type="text/javascript">stLight.options({publisher: "0df680db-d29e-44cd-b062-11268d671dd6", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
+@yield('script_footer')
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

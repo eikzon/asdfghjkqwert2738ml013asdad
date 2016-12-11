@@ -10,6 +10,7 @@ return array(
     'AddFieldGroupProduct' => $baseDir . '/database/migrations/2016_11_30_161648_add_field_group_product.php',
     'AddFieldImage' => $baseDir . '/database/migrations/2016_12_07_163239_add_field_image.php',
     'AddFieldUsernameUsersTB' => $baseDir . '/database/migrations/2016_12_10_054940_add_field_username_usersTB.php',
+    'AddLevelFieldToTbUser' => $baseDir . '/database/migrations/2016_12_11_032814_add_level_field_to_tb_user.php',
     'AddStockToTbProduct' => $baseDir . '/database/migrations/2016_11_30_025341_add_stock_to_tb_product.php',
     'ChangeTypeOrderAddress' => $baseDir . '/database/migrations/2016_12_11_102639_change_type_order_address.php',
     'CreateOrderShipping' => $baseDir . '/database/migrations/2016_12_11_104442_create_order_shipping.php',

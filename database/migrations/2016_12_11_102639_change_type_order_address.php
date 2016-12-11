@@ -7,7 +7,7 @@ class ChangeTypeOrderAddress extends Migration
 {
   public function up()
   {
-    if(Schema::hasColumn('st_order_address'))
+    if(Schema::hasTable('st_order_address'))
       Schema::drop('st_order_address');
 
     Schema::create('st_order_shipping', function (Blueprint $table) {

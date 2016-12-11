@@ -44,12 +44,12 @@ class VariantController extends Controller
   public function store(Request $request)
   {
     if($this->st_variant->store($request))
-      return redirect()->route('sitecontrol.variant.index');
+      return redirect()->route('sitecontrol.variant.index', 'create');
     else
       return redirect()->route('sitecontrol.variant.create');
   }
 
-  public function edit(int $id)
+  public function edit($id)
   {
     if(!empty($id))
     {
@@ -70,7 +70,7 @@ class VariantController extends Controller
   public function update(Request $request)
   {
     if($this->st_variant->updateVariant($request))
-      return redirect()->route('sitecontrol.variant.index');
+      return redirect()->route('sitecontrol.variant.index', 'update');
     else
       return redirect()->route('sitecontrol.variant.edit', ['id' => $request->input('id')]);
   }
@@ -81,9 +81,9 @@ class VariantController extends Controller
       return $this->uploadTraits($request, 'variant');
   }
 
-  public function destroy(int $id)
+  public function destroy($id)
   {
     ST_Variant::destroy($id);
-    return redirect()->route('sitecontrol.variant.index');
+    return redirect()->route('sitecontrol.variant.index', 'delete');
   }
 }

@@ -44,7 +44,7 @@ class ST_Variant extends Model
     return $result;
   }
 
-  public function edit(int $id_product)
+  public function edit($id_product)
   {
     $variant = ST_Variant::where('id', $id_product)->first();
 

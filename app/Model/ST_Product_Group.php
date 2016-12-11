@@ -15,7 +15,7 @@ class ST_Product_Group extends Model
 
   public function index($conditions = [])
   {
-    $perPage = !empty($conditions['perPage']) ? $conditions['perPage'] : '';
+    $perPage = !empty($conditions['perPage']) ? $conditions['perPage'] : 0;
 
     if(!empty($conditions['status']))
       $groups = ST_Product_Group::where('pg_status', 1)->orderBy('id', 'desc')->get();
@@ -28,7 +28,6 @@ class ST_Product_Group extends Model
 
   public function productList(array $condition = [])
   {
-    // $productLists = ST_Product_Group::all()->join('ST_Product', 'pg_display_id', 'ST_Product.id');
     $productLists = (new ST_Product)->index($condition);
     if(!empty($productLists))
       return $productLists;
@@ -46,7 +45,7 @@ class ST_Product_Group extends Model
     return $result;
   }
 
-  public function edit(int $id_product)
+  public function edit($id_product)
   {
     $group = ST_Product_Group::where('id', $id_product)->first();
 

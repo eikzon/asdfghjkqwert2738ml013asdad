@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'sitecontrol', 'namespace' => 'SiteControl'], function(){
   Route::resource('login', 'AccountController');
-  Route::group(['middleware' => 'auth'], function () {
+  Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('/', 'HomeController@index')->name('st-home');
     Route::get('order', 'OrderController@index')->name('st-order');
     Route::get('member', 'MemberController@index')->name('st-member');
@@ -41,6 +41,7 @@ Route::group(['namespace' => 'FrontEnd'], function(){
     Route::get('address', 'AccountController@address')->name('account_address');
     Route::get('history', 'AccountController@history')->name('account_history');
     Route::get('wishlist', 'AccountController@wishlist')->name('account_wishlist');
+    Route::get('wishlist/{pid}', 'AccountController@wishlistAdd')->name('account_wishlist_add');
     Route::get('register', 'AccountController@create')->name('account_create');
     Route::post('register', 'AccountController@store')->name('account_store');
     Route::get('logout', 'AccountController@destroy')->name('account_logout');

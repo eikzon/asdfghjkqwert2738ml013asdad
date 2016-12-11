@@ -11,18 +11,24 @@ class ST_Product extends Model
 {
   use SoftDeletes;
 
+  private static $memberId = [];
+
   protected $dates    = ['deleted_at'];
   protected $table    = 'st_product';
   protected $fillable = ['pd_code', 'pd_name', 'pd_short_desc', 'pd_long_desc', 'pd_price', 'pd_discount', 'pd_price_discount', 'pd_badge', 'pd_status', 'pd_stock', 'fk_group_id', 'fk_category_id'];
 
-  public $count = 0;
-
   public function index($conditions = [])
   {
-    $perPage = !empty($conditions['perPage']) ? $conditions['perPage'] : '';
+    $perPage = !empty($conditions['perPage']) ? $conditions['perPage'] : NULL;
 
     if(!empty($conditions['status']))
-      $products = ST_Product::with('images')->where('pd_status', 1)->orwhere('pd_status', 2)->orderBy('id', 'desc')->paginate($conditions['perPage']);
+    {
+      $products = ST_Product::with('images')->with('sku')->where('pd_status', 1)->orwhere('pd_status', 2)->orderBy('id', 'desc');
+      if($perPage)
+        $products = $products->paginate($perPage);
+      else
+        $products = $products->get();
+    }
     else
       $products = ST_Product::with('images')->orderBy('id', 'desc')->paginate($perPage);
 
@@ -62,9 +68,12 @@ class ST_Product extends Model
     return $result;
   }
 
-  public static function show(int $id)
+  public function show($id, $memberId = 0)
   {
-    $resultProduct = self::with('images')->find($id);
+    if(!empty($memberId))
+      $this->memberId = $memberId;
+
+    $resultProduct = self::with('images')->with('sku')->with('wishlist')->find($id);
     if(!empty($resultProduct))
       return $resultProduct->toArray();
 
@@ -133,26 +142,29 @@ class ST_Product extends Model
     $product->fk_group_id       = $request->input('group');
     $updateProduct              = $product->save();
 
-    return true;
-    // $updateImages  = ST_Product_Images::sequence($request->input('image[]'), $request->input('id'));
-    // $updateVariant = ST_Variant_Map::sequence($request->input('variant[]'), $request->input('id'));
-    // foreach($request->input('variant[]') as $variant)
-    //   $variant->
-    // return ($updateVariant === true && $updateProduct === true);
-  }
+    if($updateProduct)
+      return true;
 
-  public function count()
-  {
-    return $this->count;
+    return false;
   }
 
   public function variants()
   {
-    return $this->hasMany(ST_Variant_Map::class, 'fk_pd_id');
+    return $this->hasMany(ST_Variant_Map::class, 'fk_pd_id', '');
   }
 
   public function images()
   {
     return $this->hasMany(ST_Product_Images::class, 'fk_pd_id');
+  }
+
+  public function sku()
+  {
+    return $this->hasOne(ST_Product_Group::class, 'id', 'fk_group_id');
+  }
+
+  public function wishlist()
+  {
+    return $this->hasOne(ST_Wishlist::class, 'fk_product_id')->where('fk_member_id', $this->memberId);
   }
 }
