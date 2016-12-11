@@ -13,7 +13,7 @@ $(document).ready(function () {
     }
   });
 
-  $('.js-member-change-status').on('click', function() {
+  $('.js-change-status').on('click', function() {
     $status = $(this).data('status');
     $.ajax({
       type: 'POST',
@@ -23,25 +23,45 @@ $(document).ready(function () {
         status: $status
       },
       success: function(result) {
-        window.location.reload();
+        actionUpdate();
+        setTimeout(function(){ window.location.reload(); }, 3000);
       }
     });
   });
 
-  $('.js-member-delete').on('click', function() {
-    if(confirm('You won\'t be able to revert this!') == true)
-    {
-      $.ajax({
-        type: 'POST',
-        url: $(this).data('url'),
-        data: {
-          _method: 'DELETE'
-        },
-        success: function(result) {
-          window.location.reload();
-        }
-      });
-    }
+  $('.js-delete').on('click', function() {
+    $.ajax({
+      type: 'POST',
+      url: $(this).data('url'),
+      data: {
+        _method: 'DELETE'
+      },
+      success: function(result) {
+        actionDelete();
+        setTimeout(function(){ window.location.reload(); }, 3000);
+      }
+    });
+  });
+
+  $('.js-change-flow-status').on('change', function() {
+
+    $orderFlowStatus = $('select[name="od_flow_status"]').val();
+
+    console.log($orderFlowStatus);
+    console.log($(this).data('url'));
+
+    $.ajax({
+      type: 'POST',
+      url: $(this).data('url'),
+      data: {
+        _method: 'PUT',
+        od_flow_status: $orderFlowStatus
+      },
+      success: function(result) {
+        actionUpdate();
+        setTimeout(function(){ window.location.reload(); }, 3000);
+      }
+    });
   });
 });
 
@@ -3796,6 +3816,19 @@ if ( typeof Object.create !== 'function' ) {
       position: 'top-right',
       loaderBg:'#ff6849',
       icon: 'success',
+      hideAfter: 3500,
+      stack: 6
+    });
+  }
+
+  function actionFailLogin()
+  {
+    $.toast({
+      heading: 'Fail to Login !!',
+      text: 'Please check username or password',
+      position: 'top-right',
+      loaderBg:'#ff6849',
+      icon: 'error',
       hideAfter: 3500,
       stack: 6
     });

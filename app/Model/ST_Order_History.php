@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ST_Order extends Model
+class ST_Order_History extends Model
 {
   use SoftDeletes;
 
@@ -28,8 +28,7 @@ class ST_Order extends Model
     parent::boot();
     static::addGlobalScope('ST_Order', function(Builder $builder) {
       $builder->with('productLists')
-              ->with('orderAddress')
-              ->with('members');
+              ->with('orderAddress');
     });
 
     ST_Order::updating(function ($order) {
@@ -53,12 +52,6 @@ class ST_Order extends Model
     if($search) $query->where('email', 'LIKE', '%'.$search.'%');
     if($status) $query->where('status', $status);
     return $query;
-  }
-
-  // relation
-  public function members()
-  {
-    return $this->belongsTo(ST_Member::class, 'fk_member_id');
   }
 
   public function productLists()

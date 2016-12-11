@@ -46,7 +46,7 @@
                     <td>{{ $member->email }}</td>
                     <td>{{ date('d-m-Y h:i:s', strtotime($member->updated_at)) }}</td>
                     <td>
-                      <a href="#" class="js-member-change-status" data-url="{{ action('SiteControl\MemberController@update', ['id' => $member->id]) }}" data-status="{{ $statusCode }}">
+                      <a href="#" class="js-change-status" data-url="{{ action('SiteControl\MemberController@update', ['id' => $member->id]) }}" data-status="{{ $statusCode }}">
                         <span class="label {{ $label_status }} font-weight-100 js-label-status">
                           {{ $status }}
                         </span>
@@ -56,7 +56,7 @@
                       <a href="{{ action('SiteControl\MemberController@detail', ['id' => $member->id]) }}" class="text-inverse p-r-10" data-toggle="tooltip" title="View">
                         <i class="ti-eye"></i>
                       </a>
-                      <a href="javascript:void(0)" class="text-inverse js-member-delete" data-url="{{ action('SiteControl\MemberController@destroy', ['id' => $member->id]) }}" title="Delete" data-toggle="tooltip">
+                      <a href="javascript:void(0)" class="text-inverse js-delete" data-url="{{ action('SiteControl\MemberController@destroy', ['id' => $member->id]) }}" title="Delete" data-toggle="tooltip">
                         <i class="ti-trash"></i>
                       </a>
                     </td>

@@ -8,9 +8,15 @@ use App\Model\ST_Order;
 
 class OrderController extends Controller
 {
-  public function index()
+  public function index(Request $request)
   {
-    return view('pages.sitecontrol.order.home');
+    $orders = ST_Order::byFilter(e($request->input('search')), e($request->input('status')))
+                        ->orderBy('id', 'desc')
+                        ->paginate(config('website.common.perPage.siteControl'));
+
+    return view('pages.sitecontrol.order.home', [
+      'orders' => $orders
+    ]);
   }
 
   public function show(Request $request, $id)
@@ -24,13 +30,15 @@ class OrderController extends Controller
     ]);
   }
 
-  public function update()
+  public function update(Request $request, $id)
   {
-    // return view('pages.sitecontrol.product.create');
+    $order = ST_Order::find($id);
+    $order->update($request->all());
   }
 
-  public function destroy()
+  public function destroy(Request $request, $id)
   {
-    // return view('pages.sitecontrol.product.create');
+    ST_Order::find($id)->delete();
+    return redirect()->route('sitecontrol.order.index', 'delete');
   }
 }
