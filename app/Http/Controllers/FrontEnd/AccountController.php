@@ -45,10 +45,17 @@ class AccountController extends Controller
     $wishlists = (new ST_Wishlist)->show();
     return view('pages.desktop.account.wishlist', ['wishlists' => $wishlists]);
   }
+  public function wishlistAdd()
+  {
+    if(!empty(Auth::user()->id))
+      return (new ST_Wishlist)->get(Auth::user()->id);
+
+    return false;
+  }
   public function destroy()
   {
-    //logout
-    // return view('pages.desktop.account.profile');
+    Auth::logout();
+    return view('pages.desktop.account.profile');
   }
   public function wishlistAdd($id)
   {

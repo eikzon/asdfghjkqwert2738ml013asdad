@@ -11,7 +11,7 @@ class AccountController extends Controller
 {
   public function index()
   {
-    if(Auth::user())
+    if(!empty(Auth::user()->level))
       return redirect()->route('st-home');
     else
       return view('pages.sitecontrol.login');
@@ -25,9 +25,19 @@ class AccountController extends Controller
     ];
 
     if (Auth::attempt($userdata))
-      return redirect()->route('st-home');
-    else
-      return redirect()->route('sitecontrol.login.index', 'fail');
+    {
+      if(!empty(Auth::user()->level))
+      {
+        return redirect()->route('st-home');
+      }
+      else
+      {
+        Auth::logout();
+        return redirect('/');
+      }
+    }
+
+    return redirect()->route('sitecontrol.login.index', 'fail');
   }
 
   public function logout()

@@ -8,10 +8,12 @@
     <div class="topdesc">
       <div class="pic">
         <div id="galleria">
-          @if(!empty($images))
-            @foreach($images as $image)
-              <a href="{{ asset('products/images/BC-006_GN_4.jpg') }}">
-                <img src="products/images/BC-006_GN_4.jpg" rel="image_src" type="image/jpeg">
+          @if(!empty($product['images']))
+            @foreach($product['images'] as $image)
+              <a href="{{ asset('images/products/' . $image['image']) }}" title="{{ $product['pd_name'] }}">
+                <img src="{{ asset('images/products/' . $image['image']) }}"
+                     rel="image_src"
+                     type="image/jpeg">
               </a>
             @endforeach
           @endif
@@ -20,8 +22,13 @@
       <div class="desc">
         <div class="wrap"><form method="post" action="cart.php">
           <div class="name">{{ $product['pd_name'] }}</div>
-          <div class="price"><!--<span class="pricedead">1,550 Baht</span>-->
-            {{ number_format($product['pd_price'], 2) }} Baht
+          <div class="price">
+            @if(!empty($product['pd_price_discount']))
+              <span class="pricedead">{{ number_format($product['pd_price']) }} Baht</span>
+              {{ number_format($product['pd_price_discount']) }} Baht
+            @else
+              {{ number_format($product['pd_price']) }} Baht
+            @endif
           </div>
           <div class="shortdesc">
             Item Code : {{ $product['pd_code'] }}
@@ -42,20 +49,22 @@
             </div>
           @endif
           <div class="stock">
-            @if(!empty($product['pg_name'])) {{ $product['pg_name'] }} | @endif
-            @if(!empty($product['pd_stock']))
+            @if(!empty($product['sku']['pg_name'])) {{ $product['sku']['pg_name'] }} | @endif
+            @if(!empty($product['pd_stock']) && $product['pd_status'] == 1)
               In Stock
             @else
               Out of Stock
             @endif
           </div>
-          <div class="shortdesc"> {{ $product['pd_short_desc'] }} </div><!-- .shortdesc -->
+          <div class="shortdesc">{!! $product['pd_short_desc'] !!}</div><!-- .shortdesc -->
           <div class="shortdesc">
             @if(!empty($product['pd_stock']))
-              <input type="text" name="quantity" id="quantity" value="1" size="1" maxlength="4" class="box-qty">
+              <input type="text" name="quantity" id="quantity" value="1" size="1" class="box-qty">
+              <input type="submit" name="addcart" id="addcart" value="สั่งซื้อสินค้า" title="สั่งซื้อสินค้า" class="btn-addcart">
             @endif
-            <input type="submit" name="addcart" id="addcart" value="สั่งซื้อสินค้า" title="สั่งซื้อสินค้า" class="btn-addcart">
-            <a href="#" class="btn-wishlist">สินค้าที่น่าสนใจ</a>
+            <a href="{{ route('account_wishlist_add', $product['id']) }}" class="btn-wishlist">
+              สินค้าที่น่าสนใจ
+            </a>
           </div>
           <div class="social">
             <span class='st_facebook_vcount' displayText='Facebook'></span>
@@ -68,7 +77,7 @@
     <div class="infomation">
       <div class="name">{{ $product['pd_name'] }}</div><!-- .name -->
       <div class="longdesc">
-        {{ $product['pd_long_desc'] }}
+        {!! $product['pd_long_desc'] !!}
       </div>
     </div><!-- .infomation -->
   </div><!-- .detailproducts -->
@@ -118,7 +127,11 @@
         </li>
         <li class="swiper-slide">
             <div class="new"></div>
-            <div class="frame"><a href="BC-006_GN_4.php"><img src="products/images/BC-006_GN_4.jpg"/></a></div>
+            <div class="frame">
+              <a href="BC-006_GN_4.php">
+                <img src="products/images/BC-006_GN_4.jpg"/>
+              </a>
+            </div>
             <div class="line"></div>
             <a href="BC-006_GN_4.php" class="name">Breaker King Knit</a>
             <br>
@@ -134,4 +147,13 @@
     <a href="javascript:history.back();" class="btprevious">ย้อนกลับ</a>
     <div class="clear"></div>
   </div>
+@endsection
+@section('script_footer')
+<script>
+  Galleria.loadTheme('/js/galleria.classic.min.js');
+  Galleria.run('#galleria');
+</script>
+<script>
+  new Swiper('.swiper-container', { });
+</script>
 @endsection

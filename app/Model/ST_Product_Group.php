@@ -15,7 +15,7 @@ class ST_Product_Group extends Model
 
   public function index($conditions = [])
   {
-    $perPage = !empty($conditions['perPage']) ? $conditions['perPage'] : config('website.common.perPage.siteControl');
+    $perPage = !empty($conditions['perPage']) ? $conditions['perPage'] : 0;
 
     if(!empty($conditions['status']))
       $groups = ST_Product_Group::where('pg_status', 1)->orderBy('id', 'desc')->get();
