@@ -47,9 +47,6 @@ $(document).ready(function () {
 
     $orderFlowStatus = $('select[name="od_flow_status"]').val();
 
-    console.log($orderFlowStatus);
-    console.log($(this).data('url'));
-
     $.ajax({
       type: 'POST',
       url: $(this).data('url'),

@@ -9,13 +9,17 @@
       <div class="blog-inside login">
         <h2>Login</h2>
         <p>กรุณากรอกข้อมูลในกล่องด้านล่างเพื่อเข้าสู่ระบบ<br>(สำหรับผู้ที่ลงทะเบียนแล้ว)</p>
-        <form method="post" action="{{ route('account_store') }}" class="form-style login">
-            <label for="user-email">อีเมล์<span>*</span></label>
-            <input type="text" name="user-email" id="user-email" autofocus>
-            <label for="user-password">รหัสผ่าน<span>*</span></label>
-            <input type="password" name="user-password" id="user-password">
-            <a href="{{ route('account_forgot_password') }}">ลืมรหัสผ่าน?</a>
-            <input type="submit" name="btn-submit" id="btn-submit" value="เข้าสู่ระบบ">
+        <form method="get" action="{{ route('client_login') }}" class="form-style login">
+          @if(!empty($messageError))
+            <label style="color: red;">* {{ $messageError }}</label>
+          @endif
+          <label for="user-email">อีเมล์<span>*</span></label>
+          <input type="text" name="email" id="user-email" value="{{ !empty($inputEmail) ? $inputEmail : '' }}" autofocus required>
+          <label for="user-password">รหัสผ่าน<span>*</span></label>
+          <input type="password" name="password" id="user-password" required>
+          <a href="{{ route('account_forgot_password') }}">ลืมรหัสผ่าน?</a>
+          <input type="hidden" name="_token" value="{{csrf_token()}}">
+          <input type="submit" name="btn-submit" id="btn-submit" value="เข้าสู่ระบบ">
         </form>
       </div>
       <div class="blog-inside register">

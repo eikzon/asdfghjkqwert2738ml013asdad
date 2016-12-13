@@ -46,6 +46,8 @@ Route::group(['namespace' => 'FrontEnd'], function(){
     Route::post('register', 'AccountController@store')->name('account_store');
     Route::get('logout', 'AccountController@destroy')->name('account_logout');
     Route::get('login', 'AccountController@login')->name('account_login');
+    Route::get('client_login', 'AccountController@clientLogin')->name('client_login');
+    Route::get('client_logout', 'AccountController@clientLogout')->name('client_logout');
     Route::get('forgot_password', 'AccountController@fogot_password')->name('account_forgot_password');
   });
 
@@ -56,6 +58,7 @@ Route::group(['namespace' => 'FrontEnd'], function(){
 
   Route::group(['prefix' => 'cart'], function(){
     Route::get('/', 'CartController@index')->name('cart');
+    Route::post('addToCart', 'CartController@addToCart')->name('add_to_cart');
     Route::get('shipping', 'CartController@shipping')->name('cart_shipping');
     Route::get('complete', 'CartController@completePayment')->name('cart_complete');
     Route::get('error', 'CartController@errorPayment')->name('cart_error');

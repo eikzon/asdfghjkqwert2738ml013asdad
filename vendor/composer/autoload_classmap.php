@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AddFieldCategoryProductTB' => $baseDir . '/database/migrations/2016_12_10_072908_add_field_category_productTB.php',
+    'AddFieldFkMemberIdCart' => $baseDir . '/database/migrations/2016_12_12_155741_add_field_fk_member_id_cart.php',
     'AddFieldGroupProduct' => $baseDir . '/database/migrations/2016_11_30_161648_add_field_group_product.php',
     'AddFieldImage' => $baseDir . '/database/migrations/2016_12_07_163239_add_field_image.php',
     'AddFieldUsernameUsersTB' => $baseDir . '/database/migrations/2016_12_10_054940_add_field_username_usersTB.php',

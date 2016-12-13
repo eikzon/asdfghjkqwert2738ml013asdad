@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="desc">
-        <div class="wrap"><form method="post" action="cart.php">
+        <div class="wrap"><form method="post" action="{{ route('add_to_cart') }}">
           <div class="name">{{ $product['pd_name'] }}</div>
           <div class="price">
             @if(!empty($product['pd_price_discount']))
@@ -56,11 +56,16 @@
               Out of Stock
             @endif
           </div>
+          @if(!empty($errorMsg))
+            {{ d($errorMsg) }}
+          @endif
           <div class="shortdesc">{!! $product['pd_short_desc'] !!}</div><!-- .shortdesc -->
           <div class="shortdesc">
             @if(!empty($product['pd_stock']))
-              <input type="text" name="quantity" id="quantity" value="1" size="1" class="box-qty">
-              <input type="submit" name="addcart" id="addcart" value="สั่งซื้อสินค้า" title="สั่งซื้อสินค้า" class="btn-addcart">
+              <input type="text" name="ct_quantity" id="quantity" value="1" size="1" class="box-qty">
+              <input type="hidden" name="fk_product_id" id="quantity" value="{{ $product['id'] }}" size="1" class="box-qty">
+              {{ csrf_field() }}
+              <input type="submit" name="addcart" id="addcart" value="สั่งซื้อสินค้า" title="สั่งซื้อสินค้า" class="btn-addcart" data-url={{ route('add_to_cart') }} data-pid="{{ $product['id'] }}">
             @endif
             <a href="{{ route('account_wishlist_add', $product['id']) }}" class="btn-wishlist">
               สินค้าที่น่าสนใจ
@@ -150,6 +155,10 @@
 @endsection
 @section('script_footer')
 <script>
+  @if(session()->has('errorMsg'))
+    {{ session()->forget('errorMsg') }}
+    alert('สินค้าไม่เพียงพอสำหรับความต้องการ');
+  @endif
   Galleria.loadTheme('/js/galleria.classic.min.js');
   Galleria.run('#galleria');
 </script>
