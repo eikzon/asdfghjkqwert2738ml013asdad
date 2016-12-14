@@ -12,8 +12,8 @@ trait UploadImageTrait {
     {
       case 'product' :
         $path   = 'images/products/';
-        $width  = 300;
-        $height = 200;
+        $width  = 620;
+        $height = 434;
         break;
       case 'variant' :
         $path   = 'images/variant/';

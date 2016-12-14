@@ -66,7 +66,7 @@
           {{ csrf_field() }}
           <div class="form-group m-b-0">
             <div class="col-sm-12 text-center">
-              <p>Contact Staff <span class="text-primary m-l-5"><b>02-xxx-xxxx</b></span><br>2016 © all-we-design.com</p>
+              <p>2016 © breaker-shoes.com</p>
             </div>
           </div>
         </form>

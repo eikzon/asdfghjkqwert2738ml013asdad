@@ -4,7 +4,7 @@
         <title>Laravel</title>
 
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-
+        {{-- {{ print_r($payment) }} --}}
         <style>
             html, body {
                 height: 100%;
@@ -41,5 +41,9 @@
                 <div class="title">Laravel 5</div>
             </div>
         </div>
+        <form method="post" action="{{ action('PaypalController@store') }}">
+            {{ csrf_field() }}
+            <button type="submit" value="lll">Yesss</button>
+        </form>
     </body>
 </html>

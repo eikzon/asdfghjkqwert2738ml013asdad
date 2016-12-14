@@ -2,10 +2,7 @@
   <div class="sidebar-nav navbar-collapse slimscrollsidebar">
     <div class="user-profile">
       <div class="dropdown user-pro-body">
-        <div>
-          <img src="{{ asset('images/component/sitecontrol/varun.jpg') }}" alt="user-img" class="img-circle">
-        </div>
-        <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administrator
+        <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong>Administrator</strong>
           {{-- <span class="caret"></span> --}}
         </a>
         <ul class="dropdown-menu animated flipInY">
@@ -51,16 +48,16 @@
               <i class="linea-icon linea-ecommerce fa-fw" data-icon="A"> </i>
               <span class="hide-menu">
                 Order
-                <span class="label label-rouded label-danger pull-right">{{ $count['product'] }}</span>
+                <span class="label label-rouded label-danger pull-right">{{ $count['order'] }}</span>
               </span>
             </a>
           </li>
           <li>
             <a href="{{ action('SiteControl\MemberController@index') }}" class="waves-effect">
-              <i class="linea-icon linea-basic fa-fw" data-icon="&#xe028;"></i>
+              <i class="ti-user fa-fw"></i>
               <span class="hide-menu">
                 Member
-                <span class="label label-rouded label-info pull-right">{{ $count['product'] }}</span>
+                <span class="label label-rouded label-info pull-right">{{ $count['member'] }}</span>
               </span>
             </a>
           </li>

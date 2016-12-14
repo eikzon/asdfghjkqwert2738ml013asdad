@@ -7444,10 +7444,15 @@ pre {
 .logo i {
   color: #ffffff; }
 
+.logo img {
+  padding-left: 10%;
+  padding-top: 10px; }
+
 .top-left-part {
   width: 220px;
   float: left;
-  background: #ffffff; }
+  background: #ffffff;
+  height: 60px; }
 
 .top-left-part a {
   color: #ffffff;

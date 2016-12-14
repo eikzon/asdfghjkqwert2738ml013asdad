@@ -8,6 +8,7 @@
     <div class="center">
       @include('common.desktop.cart.step', ['step' => 2])
       <div class="cart-shipping-payment">
+        <form action="{{ route('cart_payment') }}" method="post">
           <div class="blog-inside">
               <h2>1. ที่อยู่จัดส่ง</h2>
               <label for="receiver-name">ชื่อของผู้รับ<span>*</span></label>
@@ -77,10 +78,10 @@
           <div class="blog-inside">
               <h2>2. การชำระเงิน</h2>
               <ul>
-                  <li><label for="paymentselect-paypal"><input type="radio" name="paymentselect" id="paymentselect-paypal" checked="checked"><img src="images/ic-paypal.png"><div class="radio-txt1">ชำระเงินผ่าน PayPal</div></label></li>
-                  <li><label for="paymentselect-paysbuy"><input type="radio" name="paymentselect" id="paymentselect-paysbuy"><img src="images/ic-paysbuy.png"><div class="radio-txt1">ชำระเงินผ่าน PaysBuy</div></label></li>
-                  <li><label for="paymentselect-creditcard"><input type="radio" name="paymentselect" id="paymentselect-creditcard"><img src="images/ic-visa.png"><img src="images/ic-master.png"><div class="radio-txt2">ชำระเงินผ่าน บัตรเครดิต<br>หรือบัตรเดบิต</div></label></li>
-                  <li><label for="paymentselect-banktransfer"><input type="radio" name="paymentselect" id="paymentselect-banktransfer"><img src="images/ic-banktransfer.png"><div class="radio-txt2">ชำระเงินโดยการโอนเงินเข้าบัญชีธนาคาร<br>(เอทีเอ็ม / เคาน์เตอร์ธนาคาร)</div></label></li>
+                  <li><label for="paymentselect-paypal"><input type="radio" name="paymentselect" id="paymentselect-paypal" checked="checked"><img src="{{ asset('images/ic-paypal.png') }}"><div class="radio-txt1">ชำระเงินผ่าน PayPal</div></label></li>
+                  {{-- <li><label for="paymentselect-creditcard"><input type="radio" name="paymentselect" id="paymentselect-creditcard"><img src="{{ asset('images/ic-visa.png') }}"><img src="{{ asset('images/ic-master.png') }}"><div class="radio-txt2">ชำระเงินผ่าน บัตรเครดิต<br>หรือบัตรเดบิต</div></label></li> --}}
+                  {{-- <li><label for="paymentselect-paysbuy"><input type="radio" name="paymentselect" id="paymentselect-paysbuy"><img src="{{ asset('images/ic-paysbuy.png') }}"><div class="radio-txt1">ชำระเงินผ่าน PaysBuy</div></label></li>
+                  <li><label for="paymentselect-banktransfer"><input type="radio" name="paymentselect" id="paymentselect-banktransfer"><img src="{{ asset('images/ic-banktransfer.png') }}"><div class="radio-txt2">ชำระเงินโดยการโอนเงินเข้าบัญชีธนาคาร<br>(เอทีเอ็ม / เคาน์เตอร์ธนาคาร)</div></label></li> --}}
               </ul>
           </div>
           <div class="blog-inside">
@@ -105,8 +106,10 @@
                   <textarea name="order-remark" id="order-remark"></textarea>
                  </li>
                </ul>
-               <a href="#" class="continue-proceed">ดำเนินการชำระเงิน</a>
+               <button type="submit" class="btn continue-proceed">ดำเนินการชำระเงิน</button>
           </div>
+          {{ csrf_field() }}
+        </form>
       </div>
     </div>
   </div>

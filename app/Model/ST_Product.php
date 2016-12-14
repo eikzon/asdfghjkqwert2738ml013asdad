@@ -11,7 +11,7 @@ class ST_Product extends Model
 {
   use SoftDeletes;
 
-  private static $memberId = [];
+  public $memberId = [];
 
   protected $dates    = ['deleted_at'];
   protected $table    = 'st_product';
@@ -31,6 +31,18 @@ class ST_Product extends Model
     }
     else
       $products = ST_Product::with('images')->orderBy('id', 'desc')->paginate($perPage);
+
+    return $products;
+  }
+
+  public function relatedItems($id)
+  {
+    $products = ST_Product::with('images')
+                  ->with('sku')
+                  ->where('id', '!=', $id)
+                  ->where('pd_status', 1)
+                  ->orwhere('pd_status', 2)
+                  ->get();
 
     return $products;
   }
@@ -68,12 +80,10 @@ class ST_Product extends Model
     return $result;
   }
 
-  public function show($id, $memberId = 0)
+  public function show($id)
   {
-    if(!empty($memberId))
-      $this->memberId = $memberId;
+    $resultProduct = self::with('images')->with('sku')->find($id);
 
-    $resultProduct = self::with('images')->with('sku')->with('wishlist')->find($id);
     if(!empty($resultProduct))
       return $resultProduct->toArray();
 
@@ -148,6 +158,19 @@ class ST_Product extends Model
     return false;
   }
 
+  public function list($categoryId)
+  {
+    $products = ST_Product::with('images')
+                  ->with('sku')
+                  ->where([
+                      ['fk_category_id', '=', $categoryId],
+                      ['pd_status', '>', 0]
+                    ])
+                  ->orderBy('id', 'desc')
+                  ->get();
+    return $products;
+  }
+
   public function variants()
   {
     return $this->hasMany(ST_Variant_Map::class, 'fk_pd_id', '');
@@ -161,10 +184,5 @@ class ST_Product extends Model
   public function sku()
   {
     return $this->hasOne(ST_Product_Group::class, 'id', 'fk_group_id');
-  }
-
-  public function wishlist()
-  {
-    return $this->hasOne(ST_Wishlist::class, 'fk_product_id')->where('fk_member_id', $this->memberId);
   }
 }
