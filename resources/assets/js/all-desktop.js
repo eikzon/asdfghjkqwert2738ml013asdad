@@ -1,4 +1,6 @@
 //= include desktop/jquery.min.js
+//= include desktop/cart.js
+//= include desktop/checkout.js
 //= include desktop/source/jquery.fancybox.js
 //= include desktop/source/web.js
 //= include desktop/script.js

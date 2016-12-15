@@ -48,7 +48,9 @@ Route::group(['namespace' => 'FrontEnd'], function(){
     Route::post('register', 'AccountController@store')->name('account_store');
     Route::get('logout', 'AccountController@destroy')->name('account_logout');
     Route::get('login', 'AccountController@login')->name('account_login');
-    Route::get('forgot_password', 'AccountController@forgotPassword')->name('account_forgot_password');
+    Route::get('client_login', 'AccountController@clientLogin')->name('client_login');
+    Route::get('client_logout', 'AccountController@clientLogout')->name('client_logout');
+    Route::get('forgot_password', 'AccountController@fogot_password')->name('account_forgot_password');
     Route::post('forgot_password', 'AccountController@forgotPasswordSend')->name('account_forgot_password_send');
   });
 
@@ -59,7 +61,12 @@ Route::group(['namespace' => 'FrontEnd'], function(){
 
   Route::group(['prefix' => 'cart'], function(){
     Route::get('/', 'CartController@index')->name('cart');
+    Route::post('addToCart', 'CartController@addToCart')->name('add_to_cart');
+    Route::post('updateCart', 'CartController@updateCartItems')->name('update_cart');
+    Route::get('deleteCart/{id}', 'CartController@deleteCartItems')->name('delete_cart');
     Route::get('shipping', 'CartController@shipping')->name('cart_shipping');
+    Route::post('checkout', 'CartController@checkout')->name('cart_checkout');
+    Route::get('complete', 'CartController@completePayment')->name('cart_complete');
     Route::get('complete/{token}', 'CartController@completePayment')->name('cart_complete');
     Route::get('error', 'CartController@errorPayment')->name('cart_error');
     Route::post('payment', 'PaypalController@store')->name('cart_payment');

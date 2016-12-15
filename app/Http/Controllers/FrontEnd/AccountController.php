@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Model\ST_Member;
+use View;
 
 use App\Model\ST_Wishlist;
 use App\Model\ST_Order;
@@ -27,11 +29,61 @@ class AccountController extends Controller
     // register
     return view('pages.desktop.account.register');
   }
-  public function login()
+  public function login(Request $request)
   {
-    // register
-    return view('pages.desktop.account.login');
+    if($request->session()->has('memberData'))
+      return redirect('/');
+    else
+      return view('pages.desktop.account.login');
   }
+
+  public function clientLogin(Request $request)
+  {
+    $member = ST_Member::where('email',e($request->input('email')))->get();
+
+    if(!empty($member[0]))
+    {
+      if($member[0]->status == 1)
+      {
+        if(md5($request->input('email') . $request->input('password')) == $member[0]->password)
+        {
+          $setSession['id']         = $member[0]->id ;
+          $setSession['email']      = $member[0]->email ;
+          $setSession['first_name'] = $member[0]->first_name ;
+          $setSession['last_name']  = $member[0]->last_name ;
+
+          $request->session()->put('memberData', $setSession);
+
+          return redirect('/');
+        }
+        else
+        {
+          $MessageShow = trans('รหัสผ่านไม่ถูกต้องกรุณาตรวจสอบและลองใหม่อีกครั้งค่ะ') ;
+        }
+      }
+      else
+      {
+        $MessageShow = trans('Username ของคุณโดนระงับการใช้บริการ หรือ ยังไม่ได้ทำการ Activate กรุณาติดต่อเจ้าหน้าที่ค่ะ') ;
+      }
+    }
+    else
+    {
+      $MessageShow = trans('ไม่พบ Username นี้ในระบบกรุณาตรวจสอบและลองใหม่อีกครั้งค่ะ') ;
+    }
+
+    return view('pages.desktop.account.login', [
+      'messageError' => $MessageShow,
+      'inputEmail'   => e($request->input('email'))
+    ]);
+  }
+
+  public function clientLogout(Request $request)
+  {
+    $request->session()->forget('memberData');
+    
+    return redirect('/');
+  }
+
   public function store()
   {
     // create register
