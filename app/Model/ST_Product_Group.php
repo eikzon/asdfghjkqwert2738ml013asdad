@@ -5,6 +5,8 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Model\ST_Product;
+use App\Model\ST_Variant;
+use App\Model\ST_Variant_Map;
 
 class ST_Product_Group extends Model
 {
@@ -78,8 +80,35 @@ class ST_Product_Group extends Model
     return false;
   }
 
+  public function variantsOption(int $groupId)
+  {
+    $result = self::with(['products' => function ($query){
+      $query->join('st_variant_map', 'fk_pd_id', '=', 'st_product.id')
+            ->join('st_variant', 'st_variant.id', '=', 'fk_vr_id');
+    }])->where('st_product_group.id', 1)->get()->toArray();
+
+    return $result;
+  }
+
   public function products()
   {
     return $this->hasMany(ST_Product::class, 'fk_group_id');
+  }
+
+  public function variantsMap()
+  {
+    return $this->hasOne(ST_Variant_Map::class, 'fk_pd_id');
+  }
+
+  public function variantsMaps()
+  {
+    return $this->hasManyThrough(
+            ST_Variant_Map::class, ST_Product::class,
+            'id', 'fk_pd_id', 'st_product_group.id'
+           );
+     // return $this->hasManyThrough(
+     //        ST_Variant::class, ST_Variant_Map::class, ST_Product::class,
+     //        'st_variant.id', 'fk_pd_id', 'st_product.id', 'st_product_group.id'
+     //       );
   }
 }

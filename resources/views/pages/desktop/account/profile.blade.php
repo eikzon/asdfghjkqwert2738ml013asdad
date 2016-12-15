@@ -5,7 +5,7 @@
 @section('content')
   @include('common.desktop.account.header')
   <div class="container-myaccount">
-    @include('common.desktop.account.menu')
+    @include('common.desktop.account.menu', ['page' => 'profile'])
     <div class="blog">
       <h2>ข้อมูลส่วนตัว</h2>
       <form method="post" action="" class="form-style">

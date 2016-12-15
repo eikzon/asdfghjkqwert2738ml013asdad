@@ -33,17 +33,15 @@
           <div class="shortdesc">
             Item Code : {{ $product['pd_code'] }}
           </div>
-          @if(!empty($variants))
-            <div class="shortdesc">EUR Size :
+          @if(!empty($variants[0]['products']))
+            <div class="shortdesc">{{ $variants[0]['pg_name'] }} :
               <select class="select-size">
-                @foreach($variants as $variant)
-                  <option value="0">กรุณาเลือกขนาด (39-44)</option>
-                  <option>39</option>
-                  <option>40</option>
-                  <option disabled="disabled">41 [Out of Stock]</option>
-                  <option>42</option>
-                  <option>43</option>
-                  <option>44</option>
+                @foreach($variants[0]['products'] as $variant)
+                  <option @if($variant['pd_status'] == 2) disabled="disabled" @endif
+                          value="{{ $variant['id'] }}">
+                    {{ $variant['vr_name'] }}
+                    @if($variant['pd_status'] == 2) [Out of Stock] @endif
+                  </option>
                 @endforeach
               </select>
             </div>
@@ -67,7 +65,13 @@
               {{ csrf_field() }}
               <input type="submit" name="addcart" id="addcart" value="สั่งซื้อสินค้า" title="สั่งซื้อสินค้า" class="btn-addcart" data-url={{ route('add_to_cart') }} data-pid="{{ $product['id'] }}">
             @endif
-            <a href="{{ route('account_wishlist_add', $product['id']) }}" class="btn-wishlist">
+            <a
+              @if(!empty($product['wishlist']))
+                href="{{ route('account_wishlist_delete', [$product['id'], $product['wishlist']->id]) }}"
+              @else
+                href="{{ route('account_wishlist_add', $product['id']) }}"
+              @endif
+              class="btn-wishlist @if(!empty($product['wishlist'])) active @endif">
               สินค้าที่น่าสนใจ
             </a>
           </div>
@@ -86,72 +90,29 @@
       </div>
     </div><!-- .infomation -->
   </div><!-- .detailproducts -->
-  <div class="related">
-    <div class="header-related">Related Products</div>
-    <div class="swiper-container">
-      <ul class="related-products swiper-wrapper">
-        <li class="swiper-slide">
-            <div class="new"></div>
-            <div class="frame"><a href="BC-006_GN_4.php"><img src="products/images/BC-006_GN_4.jpg"/></a></div>
-            <div class="line"></div>
-            <a href="BC-006_GN_4.php" class="name">Breaker King Knit</a>
-            <br>
-            <span class="price">1,550 Baht</span>
-            <br>
-            <span class="desc">Men's Futsal Boots | In Stock</span>
-        </li>
-        <li class="swiper-slide">
-            <div class="new"></div>
-            <div class="frame"><a href="BC-006_GN_4.php"><img src="products/images/BC-006_GN_4.jpg"/></a></div>
-            <div class="line"></div>
-            <a href="BC-006_GN_4.php" class="name">Breaker King Knit</a>
-            <br>
-            <span class="price">1,550 Baht</span>
-            <br>
-            <span class="desc">Men's Futsal Boots | In Stock</span>
-        </li>
-        <li class="swiper-slide">
-            <div class="new"></div>
-            <div class="frame"><a href="BC-006_GN_4.php"><img src="products/images/BC-006_GN_4.jpg"/></a></div>
-            <div class="line"></div>
-            <a href="BC-006_GN_4.php" class="name">Breaker King Knit</a>
-            <br>
-            <span class="price">1,550 Baht</span>
-            <br>
-            <span class="desc">Men's Futsal Boots | In Stock</span>
-        </li>
-        <li class="swiper-slide">
-            <div class="new"></div>
-            <div class="frame"><a href="BC-006_GN_4.php"><img src="products/images/BC-006_GN_4.jpg"/></a></div>
-            <div class="line"></div>
-            <a href="BC-006_GN_4.php" class="name">Breaker King Knit</a>
-            <br>
-            <span class="price">1,550 Baht</span>
-            <br>
-            <span class="desc">Men's Futsal Boots | In Stock</span>
-        </li>
-        <li class="swiper-slide">
-            <div class="new"></div>
-            <div class="frame">
-              <a href="BC-006_GN_4.php">
-                <img src="products/images/BC-006_GN_4.jpg"/>
-              </a>
-            </div>
-            <div class="line"></div>
-            <a href="BC-006_GN_4.php" class="name">Breaker King Knit</a>
-            <br>
-            <span class="price">1,550 Baht</span>
-            <br>
-            <span class="desc">Men's Futsal Boots | In Stock</span>
-        </li>
-      </ul>
-      <div class="swiper-button-next swiper-button-black"></div>
-      <div class="swiper-button-prev swiper-button-black"></div>
+  @if(!empty($relatedItems))
+    @php $count = $relatedItems->count(); @endphp
+    <div class="related">
+      <div class="header-related">Related Products</div>
+      <div class="swiper-container">
+        <ul class="related-products swiper-wrapper">
+          @foreach($relatedItems as $item)
+            @include('common.desktop.product.list', [
+              'product' => $item,
+              'slide'   => ($count > 4) ? true : false
+            ])
+          @endforeach
+        </ul>
+        @if($count > 4)
+          <div class="swiper-button-next swiper-button-black"></div>
+          <div class="swiper-button-prev swiper-button-black"></div>
+        @endif
+      </div>
+      <div class="clear"></div>
+      <a href="javascript:history.back();" class="btprevious">ย้อนกลับ</a>
+      <div class="clear"></div>
     </div>
-    <div class="clear"></div>
-    <a href="javascript:history.back();" class="btprevious">ย้อนกลับ</a>
-    <div class="clear"></div>
-  </div>
+  @endif
 @endsection
 @section('script_footer')
 <script>

@@ -11,6 +11,8 @@ use Illuminate\Foundation\Auth\Access\AuthorizesResources;
 use App\Model\ST_Product;
 use App\Model\ST_Product_Group;
 use App\Model\ST_Variant;
+use App\Model\ST_Order;
+use App\Model\ST_Member;
 
 class Controller extends BaseController
 {
@@ -19,8 +21,8 @@ class Controller extends BaseController
   public function __construct()
   {
     $product = (new ST_Product)->index()->total();
-    // $order = (new ST_Product)->index()->total();
-    // $member = (new ST_Product)->index()->total();
+    $order = (new ST_Order)->now()->get()->count();
+    $member = (new ST_Member)->now()->get()->count();
     $sku     = (new ST_Product_Group)->index()->total();
     $variant = (new ST_Variant)->index()->total();
 

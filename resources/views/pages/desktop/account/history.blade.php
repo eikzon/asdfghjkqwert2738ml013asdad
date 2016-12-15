@@ -5,7 +5,7 @@
 @section('content')
   @include('common.desktop.account.header')
     <div class="container-myaccount">
-      @include('common.desktop.account.menu')
+      @include('common.desktop.account.menu', ['page' => 'history'])
         <div class="blog">
             <h2>ประวัติการสั่งซื้อ</h2>
             <form method="post" action="" class="form-style">
@@ -23,14 +23,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td data-title="เลขที่ใบสั่งซื้อ :"><a href="#">BS-5911109</a></td>
-                                    <td data-title="วันที่สั่งซื้อ :">08/11/2016 11:42</td>
-                                    <td data-title="สถานะ :">ได้รับคำสั่งซื้อ</td>
-                                    <td data-title="การชำระเงิน :">โอนเงินเข้าบัญชีธนาคาร</td>
-                                    <td data-title="สถานะชำระเงิน :">รอการชำระเงิน</td>
-                                    <td data-title="เลขพัสดุ(EMS) :">-</td>
-                                </tr>
+                              @if(!empty($orders))
+                                @foreach($orders as $order)
+                                  <tr>
+                                      <td data-title="เลขที่ใบสั่งซื้อ :">
+                                        <a href="{{ route('account_history_detail', $order['id']) }}">
+                                          {{ $order['od_code'] }}
+                                        </a>
+                                      </td>
+                                      <td data-title="วันที่สั่งซื้อ :">{{ $order['created_at'] }}</td>
+                                      <td data-title="สถานะ :">
+                                        {{ config('website.order.status.' . $order['od_flow_status']) }}
+                                      </td>
+                                      <td data-title="การชำระเงิน :">Paypal</td>
+                                      <td data-title="สถานะชำระเงิน :">
+                                        @if($order['od_status'] == 0)
+                                          ไม่สำเร็จ
+                                        @else
+                                          ชำระเงินแล้ว
+                                        @endif
+                                      </td>
+                                      <td data-title="เลขพัสดุ(EMS) :">
+                                        {{ $order['od_tracking'] ?? '-' }}
+                                      </td>
+                                  </tr>
+                                @endforeach
+                              @endif
                             </tbody>
                         </table>
                     </div>

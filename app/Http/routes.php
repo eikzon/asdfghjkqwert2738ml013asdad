@@ -40,8 +40,10 @@ Route::group(['namespace' => 'FrontEnd'], function(){
     Route::get('profile', 'AccountController@profile')->name('account_profile');
     Route::get('address', 'AccountController@address')->name('account_address');
     Route::get('history', 'AccountController@history')->name('account_history');
+    Route::get('history/{id}', 'AccountController@historyDetail')->name('account_history_detail');
     Route::get('wishlist', 'AccountController@wishlist')->name('account_wishlist');
     Route::get('wishlist/{pid}', 'AccountController@wishlistAdd')->name('account_wishlist_add');
+    Route::get('wishlist/destroy/{pid}/{id}', 'AccountController@wishlistDestroy')->name('account_wishlist_delete');
     Route::get('register', 'AccountController@create')->name('account_create');
     Route::post('register', 'AccountController@store')->name('account_store');
     Route::get('logout', 'AccountController@destroy')->name('account_logout');
@@ -49,10 +51,11 @@ Route::group(['namespace' => 'FrontEnd'], function(){
     Route::get('client_login', 'AccountController@clientLogin')->name('client_login');
     Route::get('client_logout', 'AccountController@clientLogout')->name('client_logout');
     Route::get('forgot_password', 'AccountController@fogot_password')->name('account_forgot_password');
+    Route::post('forgot_password', 'AccountController@forgotPasswordSend')->name('account_forgot_password_send');
   });
 
   Route::group(['prefix' => 'product'], function(){
-    Route::get('/', 'ProductController@index')->name('product_list');
+    Route::get('category/{id}', 'ProductController@index')->name('product_list');
     Route::get('{id}', 'ProductController@show')->name('product_detail');
   });
 
@@ -64,7 +67,13 @@ Route::group(['namespace' => 'FrontEnd'], function(){
     Route::get('shipping', 'CartController@shipping')->name('cart_shipping');
     Route::post('checkout', 'CartController@checkout')->name('cart_checkout');
     Route::get('complete', 'CartController@completePayment')->name('cart_complete');
+    Route::get('complete/{token}', 'CartController@completePayment')->name('cart_complete');
     Route::get('error', 'CartController@errorPayment')->name('cart_error');
+    Route::post('payment', 'PaypalController@store')->name('cart_payment');
   });
+
+
 });
+
+    Route::get('list', ['as'=>'payPremium','uses'=>'PaypalController@index']);
 

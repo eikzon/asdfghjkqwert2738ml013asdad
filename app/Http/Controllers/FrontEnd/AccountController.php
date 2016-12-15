@@ -9,6 +9,11 @@ use App\Http\Controllers\Controller;
 use App\Model\ST_Member;
 use View;
 
+use App\Model\ST_Wishlist;
+use App\Model\ST_Order;
+
+use Mail;
+
 class AccountController extends Controller
 {
   public function index()
@@ -88,32 +93,63 @@ class AccountController extends Controller
   {
     return view('pages.desktop.account.address');
   }
+  public function forgotPassword()
+  {
+    return view('pages.desktop.account.forgot_password');
+  }
+  public function forgotPasswordSend()
+  {
+    // Mail::send('pages.desktop.account.address', ['user' => 'this is a detail mannn'], function ($m) {
+    //     $m->from('hello@app.com', 'Your Application');
+    //     $m->to('inimz25@gmail.com', 'nongnae')->subject('Your Reminder!');
+    // });
+
+    $statusEmailSend = (true) ? 'success' : 'fail';
+    return redirect()->route('account_forgot_password', $statusEmailSend);
+  }
   public function history()
   {
-    return view('pages.desktop.account.history');
+    $user = 1;
+    $orders = ST_Order::ByMember($user)->get();
+    return view('pages.desktop.account.history', ['orders' => $orders]);
+  }
+  public function historyDetail($id)
+  {
+    $user  = 1;
+    $order = ST_Order::ByDetail($user, $id)->get();
+    return view('pages.desktop.account.history_detail', ['order' => $order]);
   }
   public function wishlist()
   {
-    $wishlists = (new ST_Wishlist)->show();
+    // auth()->user()->id = 0;
+    $wishlists = (new ST_Wishlist)->list(1);
     return view('pages.desktop.account.wishlist', ['wishlists' => $wishlists]);
   }
-  public function wishlistAdd()
-  {
-    if(!empty(Auth::user()->id))
-      return (new ST_Wishlist)->get(Auth::user()->id);
 
-    return false;
-  }
+  // public function wishlistAdd()
+  // {
+  //   if(!empty(Auth::user()->id))
+  //     return (new ST_Wishlist)->get(Auth::user()->id);
+
+  //   return false;
+  // }
   public function destroy()
   {
     Auth::logout();
     return view('pages.desktop.account.profile');
   }
-  public function wishlistDestroy(int $id)
+  public function wishlistAdd($id)
   {
-    if(ST_Wishlist::destroy($id))
-      return true;
+    (new ST_Wishlist)->store($id);
 
-    return false;
+    return redirect()->route('product_detail', $id);
+  }
+  public function wishlistDestroy($pid, $id)
+  {
+    ST_Wishlist::destroy($id);
+    if(!empty($pid))
+      return redirect()->route('product_detail', $pid);
+    else
+      return redirect()->route('account_wishlist');
   }
 }

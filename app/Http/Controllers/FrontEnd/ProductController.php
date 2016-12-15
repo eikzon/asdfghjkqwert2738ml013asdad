@@ -9,14 +9,13 @@ use App\Http\Controllers\Controller;
 
 use App\Model\ST_Product;
 use App\Model\ST_Product_Group;
+use App\Model\ST_Wishlist;
 
 class ProductController extends Controller
 {
-  public function index()
+  public function index($id)
   {
-    $productLists = (new ST_Product)->index([
-      'status'  => true
-    ]);
+    $productLists = (new ST_Product)->list($id);
     return view('pages.desktop.product.list',[
       'productLists' => $productLists
     ]);
@@ -24,10 +23,23 @@ class ProductController extends Controller
 
   public function show(int $id)
   {
-    $memberId= !empty(auth()->user()->id) ? auth()->user()->id : '';
-    $result = (new ST_Product)->show($id, $memberId);
+    $variants = [];
+    $memberId = !empty(auth()->user()->id) ? auth()->user()->id : 1;
+
+    $productClass           = new ST_Product;
+    $productClass->memberId = $memberId;
+
+    $result             = $productClass->show($id);
+    if(!empty($result['fk_group_id']))
+      $variants = (new ST_Product_Group)->variantsOption($result['fk_group_id']);
+
+    $result['wishlist'] = (new ST_Wishlist)->get($id, $memberId);
+    $relatedItems       = $productClass->relatedItems($id);
+
     return view('pages.desktop.product.detail',[
-      'product' => $result
+      'product'      => $result,
+      'relatedItems' => $relatedItems,
+      'variants'     => $variants
     ]);
   }
 }

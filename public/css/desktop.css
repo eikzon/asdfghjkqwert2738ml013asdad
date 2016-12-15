@@ -5031,6 +5031,9 @@ html[xmlns] .slides {
 .detailproducts .topdesc .desc .wrap a.btn-wishlist:hover::before {
   color: #094cbc; }
 
+.detailproducts .topdesc .desc .wrap a.btn-wishlist.active, .detailproducts .topdesc .desc .wrap a.btn-wishlist.active::before {
+  color: crimson; }
+
 @media screen and (max-width: 667px) {
   .detailproducts .topdesc .desc .wrap input.box-qty {
     width: 40%;
