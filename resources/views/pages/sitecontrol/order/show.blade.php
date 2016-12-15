@@ -41,14 +41,16 @@
                     </thead>
                     <tbody>
                       @php
-                        $name = ['Boot 1', 'Boot 2', 'Boot 3', 'Boot 4', 'Boot 5', 'Boot 6'];
+                        $productPrice    = $product['products'][0]['pd_price'];
+                        $productDiscount = $product['products'][0]['pd_price_discount'];
+                        $pricePerUnit    = (!empty($productDiscount) ? $productDiscount : $productPrice);
                       @endphp
                       @foreach($order['productLists'] as $index => $product)
                         <tr>
                           <td>{{ $product['products'][0]['pd_code'] }}</td>
                           <td><img width="60" src="{{ asset('images/products/' . $product['products'][0]['images'][0]['image']) }}"></td>
                           <td>{{ $product['products'][0]['pd_name'] }}</td>
-                          <td>{{ number_format((float)($product['products'][0]['pd_price'] - $product['products'][0]['pd_price_discount']), 2) }}</td>
+                          <td>{{ number_format((float)$pricePerUnit, 2) }}</td>
                           <td>{{ $product->od_quantity }}</td>
                           <td>{{ number_format($product->od_price, 2) }}</td>
                         </tr>
