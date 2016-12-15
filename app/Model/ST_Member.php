@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use Hash;
+
 class ST_Member extends Model
 {
   use SoftDeletes;
@@ -43,6 +45,16 @@ class ST_Member extends Model
     ST_Member::deleted(function ($member) {});
   }
 
+  public static function UpdatePassword($password, $uid)
+  {
+    $user           = self::find($uid);
+    $user->password = Hash::make($password);
+    if($user->save())
+      return true;
+
+    return false;
+  }
+
   public function orders()
   {
     return $this->hasMany(ST_Order_History::class, 'fk_member_id');
@@ -51,6 +63,14 @@ class ST_Member extends Model
   public function scopeNow($query)
   {
     return $query;
+  }
+
+  public function scopeEmail($query, $email)
+  {
+    return $query->where([
+                          ['email', '=', $email],
+                          ['status', '>', 0],
+                        ]);
   }
 
   public function scopeByFilter($query, $search, $status)

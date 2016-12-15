@@ -67,11 +67,20 @@
               </div>
           </li>
           <li>
+            <a href="{{ route('sitecontrol.category.index') }}" class="waves-effect">
+              <i class="linea-icon linea-aerrow fa-fw" data-icon="&#xe078;"></i>
+              <span class="hide-menu">
+                Category
+                <span class="label label-rouded label-default pull-right">5</span>
+              </span>
+            </a>
+          </li>
+          <li>
             <a href="{{ route('sitecontrol.group.index') }}" class="waves-effect">
               <i class="linea-icon linea-basic fa-fw" data-icon="&#xe006;"></i>
               <span class="hide-menu">
                 Group SKU
-                <span class="label label-rouded label-info pull-right">{{ $count['sku'] }}</span>
+                <span class="label label-rouded label-default pull-right">{{ $count['sku'] }}</span>
               </span>
             </a>
           </li>
@@ -80,7 +89,7 @@
               <i class="linea-icon linea-music fa-fw" data-icon="m"></i>
               <span class="hide-menu">
                 Variant Product
-                <span class="label label-rouded label-info pull-right">{{ $count['variant'] }}</span>
+                <span class="label label-rouded label-default pull-right">{{ $count['variant'] }}</span>
               </span>
             </a>
           </li>

@@ -24,13 +24,13 @@
                                   <div class="form-group">
                                     <label class="control-label">Select Category</label>
                                     <select class="form-control" name="category" data-placeholder="Choose a Category" tabindex="1">
-                                      @foreach(config('website.category.list') as $index => $category)
-                                        <option value="{{ $index }}"
-                                          @if($index == $product['fk_category_id'])
+                                      @foreach($categories as $category)
+                                        <option value="{{ $category['id'] }}"
+                                          @if($category['id'] == $product['fk_category_id'])
                                             selected
                                           @endif
                                           >
-                                          {{ $category }}
+                                          {{ $category['ct_name'] }}
                                         </option>
                                       @endforeach
                                     </select>

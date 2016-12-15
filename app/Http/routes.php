@@ -30,6 +30,7 @@ Route::group(['prefix' => 'sitecontrol', 'namespace' => 'SiteControl'], function
     Route::get('member/detail/{id}', 'MemberController@detail');
     Route::resource('variant', 'VariantController');
     Route::resource('group', 'ProductGroupController');
+    Route::resource('category', 'CategoryController');
     Route::get('logout', 'AccountController@logout')->name('st-logout');
   });
 });
@@ -60,7 +61,8 @@ Route::group(['namespace' => 'FrontEnd'], function(){
   Route::group(['prefix' => 'cart'], function(){
     Route::get('/', 'CartController@index')->name('cart');
     Route::get('shipping', 'CartController@shipping')->name('cart_shipping');
-    Route::get('complete/{token}', 'CartController@completePayment')->name('cart_complete');
+    Route::get('complete/1/{token}', 'CartController@completePayment')->name('cart_complete');
+    Route::get('transfer/3/{token}', 'CartController@completePayment')->name('cart_complete');
     Route::get('error', 'CartController@errorPayment')->name('cart_error');
     Route::post('payment', 'PaypalController@store')->name('cart_payment');
   });

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Model\ST_Product;
 use App\Model\ST_Product_Group;
 use App\Model\ST_Variant;
+use App\Model\ST_Category;
 use App\Model\ST_Product_Images;
 
 use App\Traits\UploadImageTrait;
@@ -41,6 +42,7 @@ class ProductController extends Controller
     return view('pages.sitecontrol.product.form', [
       'product'        => null,
       'groups'         => (new ST_Product_Group)->index(['status' => true]),
+      'categories'     => (new ST_Category)->index(),
       'variantsResult' => (new ST_Variant)->getType(),
       'state'          => 'store'
     ]);
@@ -72,6 +74,7 @@ class ProductController extends Controller
         'variantsResult' => (new ST_Variant)->getType(),
         'variantsMap'    => $variantsMap,
         'groups'         => (new ST_Product_Group)->index(),
+        'categories'     => (new ST_Category)->index(),
         'state'          => 'update'
       ]);
     }
