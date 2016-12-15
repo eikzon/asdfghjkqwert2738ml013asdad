@@ -59,7 +59,10 @@ Route::group(['namespace' => 'FrontEnd'], function(){
   Route::group(['prefix' => 'cart'], function(){
     Route::get('/', 'CartController@index')->name('cart');
     Route::post('addToCart', 'CartController@addToCart')->name('add_to_cart');
+    Route::post('updateCart', 'CartController@updateCartItems')->name('update_cart');
+    Route::get('deleteCart/{id}', 'CartController@deleteCartItems')->name('delete_cart');
     Route::get('shipping', 'CartController@shipping')->name('cart_shipping');
+    Route::post('checkout', 'CartController@checkout')->name('cart_checkout');
     Route::get('complete', 'CartController@completePayment')->name('cart_complete');
     Route::get('error', 'CartController@errorPayment')->name('cart_error');
   });

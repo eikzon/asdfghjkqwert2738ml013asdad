@@ -5,15 +5,18 @@ $(document).ready(function () {
     }
   });
 
-  $('.js-add-to-cart').on('click', function() {
-    $quantity = $('input[name="quantity"]').val();
-    $pid      = $(this).data('pid');
+  $('.js-cart-product').on('click', function() {
+    $quantity  = $(this).closest('.group-quantity').find('.js-quantity');
+    $cartId    = $(this).data('cart-id');
+    $productId = $(this).data('product-id');
+
     $.ajax({
       type: 'POST',
       url: $(this).data('url'),
       data: {
         _method: 'PUT',
-        fk_product_id: $pid,
+        id: $cartId,
+        fk_product_id: $productId,
         ct_quantity: $quantity
       },
       success: function(result) {
@@ -21,4 +24,17 @@ $(document).ready(function () {
       }
     });
   });
-}
+
+  $('.js-delete-cart').on('click', function() {
+    $.ajax({
+      type: 'GET',
+      url: $(this).data('url'),
+      data: {
+        _method: 'DELETE'
+      },
+      success: function(result) {
+        window.location.reload();
+      }
+    });
+  });
+});

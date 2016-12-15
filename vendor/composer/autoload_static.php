@@ -295,6 +295,8 @@ class ComposerStaticInit4855c9ae886595b304697b2d9602ef55
         'AddFieldFkMemberIdCart' => __DIR__ . '/../..' . '/database/migrations/2016_12_12_155741_add_field_fk_member_id_cart.php',
         'AddFieldGroupProduct' => __DIR__ . '/../..' . '/database/migrations/2016_11_30_161648_add_field_group_product.php',
         'AddFieldImage' => __DIR__ . '/../..' . '/database/migrations/2016_12_07_163239_add_field_image.php',
+        'AddFieldRemark' => __DIR__ . '/../..' . '/database/migrations/2016_12_15_012107_add-field_remark.php',
+        'AddFieldSubDistrict' => __DIR__ . '/../..' . '/database/migrations/2016_12_15_012048_add-field_sub_district.php',
         'AddFieldUsernameUsersTB' => __DIR__ . '/../..' . '/database/migrations/2016_12_10_054940_add_field_username_usersTB.php',
         'AddLevelFieldToTbUser' => __DIR__ . '/../..' . '/database/migrations/2016_12_11_032814_add_level_field_to_tb_user.php',
         'AddStockToTbProduct' => __DIR__ . '/../..' . '/database/migrations/2016_11_30_025341_add_stock_to_tb_product.php',

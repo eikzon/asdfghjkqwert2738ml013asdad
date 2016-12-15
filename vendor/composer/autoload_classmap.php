@@ -10,6 +10,8 @@ return array(
     'AddFieldFkMemberIdCart' => $baseDir . '/database/migrations/2016_12_12_155741_add_field_fk_member_id_cart.php',
     'AddFieldGroupProduct' => $baseDir . '/database/migrations/2016_11_30_161648_add_field_group_product.php',
     'AddFieldImage' => $baseDir . '/database/migrations/2016_12_07_163239_add_field_image.php',
+    'AddFieldRemark' => $baseDir . '/database/migrations/2016_12_15_012107_add-field_remark.php',
+    'AddFieldSubDistrict' => $baseDir . '/database/migrations/2016_12_15_012048_add-field_sub_district.php',
     'AddFieldUsernameUsersTB' => $baseDir . '/database/migrations/2016_12_10_054940_add_field_username_usersTB.php',
     'AddLevelFieldToTbUser' => $baseDir . '/database/migrations/2016_12_11_032814_add_level_field_to_tb_user.php',
     'AddStockToTbProduct' => $baseDir . '/database/migrations/2016_11_30_025341_add_stock_to_tb_product.php',
