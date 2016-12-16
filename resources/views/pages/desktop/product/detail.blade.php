@@ -66,21 +66,25 @@
           @endif
           <div class="shortdesc">{!! $product['pd_short_desc'] !!}</div><!-- .shortdesc -->
           <div class="shortdesc">
-            @if(!empty($product['pd_stock']))
-              <input type="text" name="ct_quantity" id="quantity" value="1" size="1" class="box-qty">
-              <input type="hidden" name="fk_product_id" id="quantity" value="{{ $product['id'] }}" size="1" class="box-qty">
-              {{ csrf_field() }}
-              <input type="submit" name="addcart" id="addcart" value="สั่งซื้อสินค้า" title="สั่งซื้อสินค้า" class="btn-addcart" data-url={{ route('add_to_cart') }} data-pid="{{ $product['id'] }}">
-            @endif
-            <a
-              @if(!empty($product['wishlist']))
-                href="{{ route('account_wishlist_delete', [$product['id'], $product['wishlist']->id]) }}"
-              @else
-                href="{{ route('account_wishlist_add', $product['id']) }}"
+            @if(request()->session()->has('memberData'))
+              @if(!empty($product['pd_stock']))
+                <input type="text" name="ct_quantity" id="quantity" value="1" size="1" class="box-qty">
+                <input type="hidden" name="fk_product_id" id="quantity" value="{{ $product['id'] }}" size="1" class="box-qty">
+                {{ csrf_field() }}
+                <input type="submit" name="addcart" id="addcart" value="สั่งซื้อสินค้า" title="สั่งซื้อสินค้า" class="btn-addcart" data-url={{ route('add_to_cart') }} data-pid="{{ $product['id'] }}">
               @endif
-              class="btn-wishlist @if(!empty($product['wishlist'])) active @endif">
-              สินค้าที่น่าสนใจ
-            </a>
+              <a
+                @if(!empty($product['wishlist']))
+                  href="{{ route('account_wishlist_delete', [$product['id'], $product['wishlist']->id]) }}"
+                @else
+                  href="{{ route('account_wishlist_add', $product['id']) }}"
+                @endif
+                class="btn-wishlist @if(!empty($product['wishlist'])) active @endif">
+                สินค้าที่น่าสนใจ
+              </a>
+            @else
+              กรุณาทำการสมัครสมาชิก และเข้าสู่ระบบเพื่อซื้อสินค้า<br>
+            @endif
           </div>
           <div class="social">
             <span class='st_facebook_vcount' displayText='Facebook'></span>

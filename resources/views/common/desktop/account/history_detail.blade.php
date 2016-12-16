@@ -8,14 +8,13 @@
         <div class="clear"></div>
         @php
           $address = $order[0]['orderAddress'][0];
-          $billing = $order[0]['orderBilling'][0];
         @endphp
         <div class="order-detail">
           <dl>
             <dt>วันที่สั่งซื้อ :</dt>
             <dd>{{ $order[0]['created_at'] }}</dd>
             <dt>การชำระเงิน :</dt>
-            <dd>Paypal</dd>
+            <dd>@if($order[0]['od_payment_type'] != 3) Paypal - Credit Card @else Bank Transfer @endif</dd>
             <dt>มือถือ :</dt>
             <dd>{{ $address['oa_tel'] }}</dd>
           </dl>
@@ -35,9 +34,9 @@
             <dt>ที่อยู่ใบกำกับภาษี</dt>
             <dd class="none">&nbsp;</dd>
             <dt>ชื่อผู้รับสินค้า :</dt>
-            <dd>{{ $billing['oa_first_name'] . ' ' . $billing['oa_last_name'] }}</dd>
+            <dd>{{ $address['oa_first_name'] . ' ' . $address['oa_last_name'] }}</dd>
             <dt>ที่อยู่ :</dt>
-            <dd>{{ $billing['oa_address'] }}</dd>
+            <dd>{{ $address['oa_billign_address'] }}</dd>
           </dl>
         </div>
         <div class="clear"></div>

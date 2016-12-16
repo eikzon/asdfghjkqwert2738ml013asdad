@@ -44,7 +44,7 @@ class ST_Order_Detail extends Model
 
   public function relateProduct($orderId)
   {
-    return ST_Order_Detail::with('products')->where('fk_st_order_id', $orderId);
+    return ST_Order_Detail::where('fk_st_order_id', $orderId)->get();
   }
 
   public function scopeNow($query)
@@ -54,6 +54,6 @@ class ST_Order_Detail extends Model
 
   public function products()
   {
-    return $this->hasMany(ST_Product::class, 'id', 'od_product_id');
+    return $this->hasOne(ST_Product::class, 'id', 'od_product_id');
   }
 }

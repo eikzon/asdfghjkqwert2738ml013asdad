@@ -50,10 +50,11 @@ class ST_Order extends Model
   public function createOrder($request)
   {
     $orderDetail = new ST_Order;
-    $orderDetail->od_code      = 12112231;
-    $orderDetail->od_status    = 1;
-    $orderDetail->fk_member_id = 1;
-    $orderDetail->od_remark    = $request->input('order-remark');
+    $orderDetail->od_code         = date('Ymd') . sprintf('%06d', rand(10, 999999));
+    $orderDetail->od_status       = 1;
+    $orderDetail->fk_member_id    = request()->session()->get('memberData')['id'];
+    $orderDetail->od_remark       = $request->input('order-remark');
+    $orderDetail->od_payment_type = $request->input('paymentselect');
     $orderDetail->save();
 
     return ($orderDetail->id ?? false);
@@ -78,21 +79,21 @@ class ST_Order extends Model
 
   public function scopeByMember($query, $memberId)
   {
-    $query->where('fk_member_id', $memberId)->where('od_status', 1)->orwhere('od_status', 2);
+    $query->where('fk_member_id', $memberId)->where('od_status', 1)->orwhere('od_status', 2)->orderBy('id', 'desc');
     return $query;
   }
 
   public function scopeByDetail($query, $memberId, $orderId)
   {
-    $query->where('fk_member_id', $memberId)->where('id', $orderId)->where('od_status', 1)->orwhere('od_status', 2);
+    $query->where('fk_member_id', $memberId)->where('id', $orderId)->where([['od_status', '!=', 0]]);
     return $query;
   }
 
-  public function updatePayment($id, $type)
+  public function updatePayment($type, $id)
   {
     $order = ST_Order::find($id);
     $order->od_datetime_payment = date('Y-m-d H:i:s');
-    $order->od_payment_type     = $type;
+    $order->od_status           = ($type == 3) ? 1 : 2;
 
     if($order->save())
       return true;

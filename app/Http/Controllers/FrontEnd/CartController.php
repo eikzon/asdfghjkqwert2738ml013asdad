@@ -12,6 +12,7 @@ use App\Model\ST_Order;
 use App\Model\ST_Product;
 use App\Model\ST_Product_Images;
 use App\Model\ST_Order_Address;
+use App\Model\ST_Order_Detail;
 use App\Model\ST_Member;
 
 use Crypt;
@@ -109,6 +110,9 @@ class CartController extends Controller
 
   public function checkout(Request $request)
   {
+    $orderClass    = new ST_Order;
+    $orderCreateId = $orderClass->createOrder($request);
+
     $reqAddress = [
                     'oa_first_name' => $request->input('oa_first_name'),
                     'oa_last_name' => $request->input('oa_last_name'),
@@ -120,10 +124,9 @@ class CartController extends Controller
                     'oa_postcode' => $request->input('oa_postcode'),
                     'oa_isbilling_address' => !empty($request->input('oa_isbilling_address')) ? $request->input('oa_isbilling_address') : 0,
                     'oa_billign_address' => $request->input('oa_billign_address'),
-                    'oa_tax_id' => $request->input('oa_tax_id')
+                    'oa_tax_id' => $request->input('oa_tax_id'),
+                    'fk_order_id' => $orderCreateId
                   ];
-    $orderClass    = new ST_Order;
-    $orderCreateId = $orderClass->createOrder($request);
 
     if($orderCreateId)
     {
@@ -137,18 +140,16 @@ class CartController extends Controller
         foreach($products as $product)
         {
           $orderDetailClass->createOrderDetail($product, $orderCreateId);
-          $priceTotal    += $product['ct_total'];
-          $discountTotal += $product['ct_discount'];
-          $shippingTotal += $product['ct_shipping'];
+          @$priceTotal    += ($product['products']['pd_price'] * $product['ct_quantity']);
+          @$discountTotal += $product['ct_discount'];
+          @$shippingTotal += $product['ct_shipping'];
         }
 
-        $items['list']       = $orderDetailClass->relateProduct($orderCreateId);
+        $items['list']       = $orderDetailClass->relateProduct($orderCreateId)->toArray();
         $items['orderId']    = $orderCreateId;
         $items['priceTotal'] = $priceTotal;
         $items['shipping']   = $shippingTotal;
       }
-
-      dd($products);
 
       $orderUpdateStatus = $orderClass->updateOrder([
                               'od_price_discount' => $discountTotal ?? 0,
@@ -156,7 +157,16 @@ class CartController extends Controller
                               'od_price_total'    => $priceTotal ?? 0
                             ], $orderCreateId);
 
-      (new PaypalController)->store($items);
+      if($request->input('paymentselect') == 3)
+      {
+        return redirect()->route('cart_complete', [3, Crypt::encrypt($orderCreateId)]);
+      }
+      else
+      {
+        $urlPayment = (new PaypalController)->createPayment($items);
+        if($urlPayment)
+          return redirect($urlPayment);
+      }
     }
     else
     {
@@ -169,14 +179,11 @@ class CartController extends Controller
     if(empty($token))
       return view('pages.desktop.cart.not_complete');
 
-    $user  = 1;
-    $id    = 1;
-    // $id    = Crypt::decrypt($token);
+    $id = Crypt::decrypt($token);
     $orderClass = new ST_Order;
-    if($orderClass->updatePayment($id, $type))
+    if($orderClass->updatePayment($type, $id))
     {
-      $order = $orderClass->ByDetail($user, $id)->get();
-
+      $order = $orderClass::ByDetail(request()->session()->get('memberData')['id'], $id)->get();
       if($order->isEmpty())
         return view('pages.desktop.cart.not_complete');
       else

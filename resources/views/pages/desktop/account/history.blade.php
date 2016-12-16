@@ -38,12 +38,14 @@
                                     <td data-title="สถานะ :">
                                       {{ config('website.order.status.' . $order['od_flow_status']) }}
                                     </td>
-                                    <td data-title="การชำระเงิน :">Paypal</td>
+                                    <td data-title="การชำระเงิน :">@if($order['od_payment_type'] != 3) Paypal - Credit Card @else Bank Transfer @endif</td>
                                     <td data-title="สถานะชำระเงิน :">
-                                      @if($order['od_status'] == 0)
-                                        ไม่สำเร็จ
-                                      @else
+                                      @if($order['od_status'] == 1)
+                                        รอชำระเงิน
+                                      @elseif($order['od_status'] == 2)
                                         ชำระเงินแล้ว
+                                      @else
+                                        ยกเลิก
                                       @endif
                                     </td>
                                     <td data-title="เลขพัสดุ(EMS) :">

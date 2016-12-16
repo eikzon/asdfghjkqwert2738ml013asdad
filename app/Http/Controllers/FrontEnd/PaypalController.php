@@ -65,17 +65,24 @@ class PaypalController extends Controller {
                 ->setCurrency('THB')
                 ->setQuantity($product['od_quantity'])
                 ->setTax(0)
-                ->setPrice($product['od_price']);
-        $lists = $item;
+                ->setPrice($product['products']['pd_price']);
+        $lists[] = $item;
       }
 
       $itemList = Paypalpayment::itemList();
       $itemList->setItems($lists);
 
+      $shipping = ($items['shipping'] ?? 0);
+      $subTotal = ($items['priceTotal'] - $items['shipping']);
       $details = Paypalpayment::details();
-      $details->setShipping($items['shipping'] ?? 0)
+      $details->setShipping("{$shipping}")
+              ->setTax('0')
+              ->setSubtotal("{$subTotal}");
+
+      $details = Paypalpayment::details();
+      $details->setShipping($shipping)
               ->setTax(0)
-              ->setSubtotal($items['priceTotal'] - $items['shipping']);
+              ->setSubtotal($subTotal);
 
       // ### Amount
       // Lets you specify a payment amount.
@@ -130,9 +137,7 @@ class PaypalController extends Controller {
       // the buyer to. Retrieve the url from the $payment->getApprovalLink()
       // method
       if(!empty($payment->getApprovalLink()))
-        return redirect($payment->getApprovalLink());
-      else
-        return redirect()->route('cart_error');
+        return $payment->getApprovalLink();
     }
 
 
