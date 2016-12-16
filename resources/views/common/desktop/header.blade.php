@@ -5,7 +5,7 @@
   <div class="header">
     <a href="{{ url('/') }}" class="logo"><img src="{{ asset('images/logo_breaker.png') }}" alt="รองเท้า Breaker"/></a>
     <ul class="topnav">
-        @if(empty(auth()->user()->id))
+        @if(!request()->session()->has('memberData'))
           <li class="login"><a href="{{ route('account_login') }}">เข้าสู่ระบบ</a></li>
           <li class="register"><a href="{{ route('account_create') }}">ลงทะเบียน</a></li>
         @else
@@ -20,21 +20,38 @@
           </li>
         @endif
         <li class="cart"><div id="dd" class="shopping-dropdown">
-           <span>2</span>
-           <ul class="dropdown shopping-list">
-             <li><a href="detail.php"><div class="product-img"><img src="products/images/BC-006_GN_4.jpg"></div>
-                <div class="product-desc">
-                  <div class="product-name">Breaker King Knit<br>BC006-GN / 39 / Multicolor<br>จำนวน: 1<span class="product-price">1,550 บาท</span></div>
-                </div>
-             </a></li>
-             <li><a href="detail.php"><div class="product-img"><img src="products/images/BC-006_GN_4.jpg"></div>
-                <div class="product-desc">
-                  <div class="product-name">Breaker King Knit<br>BC006-GN / 39 / Multicolor<br>จำนวน: 1<span class="product-price">1,550 บาท</span></div>
-                </div>
-             </a></li>
+          <span>{{ getCart()->count() }}</span>
+          <ul class="dropdown shopping-list">
+            @if(!empty(getCart()))
+              @foreach(getCart() as $cart)
+                @php
+                  $productPrice    = $cart->products->pd_price;
+                  $productDiscount = $cart->products->pd_price_discount;
+
+                  $pricePerUnit  = !empty($productDiscount) ? $productDiscount : $productPrice;
+                  $totalPrice    = $pricePerUnit * $cart->ct_quantity;
+                  @$subTotal    += $totalPrice;
+                  $shippingPrice = ($subTotal < 499) ? 50 : 0;
+                  $grandTotal    = $subTotal + $shippingPrice;
+                @endphp
+                <li>
+                  <a href="{{ route('product_detail', $cart['products']->id) }}">
+                    <div class="product-img">
+                      <img src="{{ asset("images/products/" . getImageCart($cart->products->id)->image) }}">
+                    </div>
+                    <div class="product-desc">
+                      <div class="product-name">{{ $cart->products->pd_name }}<br>{{ getVariant($cart->products->id)->vr_text }}<br>จำนวน: {{ $cart->ct_quantity }}
+                        <span class="product-price">{{ number_format((float)$totalPrice, 2) }} บาท</span>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              @endforeach
+            @endif
+             
              <li>
               <div class="shopping-txt">ค่าจัดส่ง<br>ราคารวม</div>
-              <div class="shopping-price">0.00 บาท<br>1,879 บาท</div>
+              <div class="shopping-price">{{ !empty($shippingPrice) ? number_format((float)$shippingPrice, 2) : '0.00' }} บาท<br>{{ !empty($grandTotal) ? number_format((float)$grandTotal, 2) : '0.00' }} บาท</div>
              </li>
              <li>
              <a href="{{ route('cart') }}" class="btn-process">ดูตะกร้าสินค้า</a>

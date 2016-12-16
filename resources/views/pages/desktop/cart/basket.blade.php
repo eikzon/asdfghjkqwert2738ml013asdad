@@ -40,7 +40,7 @@
                     $totalPrice   = $pricePerUnit * $cart->ct_quantity;
                     @$subTotal   += $totalPrice;
 
-                    $shippingPrice = ($subTotal < 600) ? 50 : 0;
+                    $shippingPrice = ($subTotal < 499) ? 50 : 0;
 
                     $grandTotal = $subTotal + $shippingPrice;
 
@@ -58,13 +58,13 @@
                     }
                   @endphp
                   <tr>
-                    <td data-title="สินค้า"><a href="#"><img src="images/products/{{ $image }}"></a></td>
+                    <td data-title="สินค้า"><a href="{{ route('product_detail', $cart['products']->id) }}"><img src="{{ asset('images/products/' . $image) }}"></a></td>
                     <td data-title="รายละเอียด">
                       <a href="{{ route('product_detail', $cart['products']->id) }}">
                         <p>{{ $cart['products']->pd_name }}
                           <span>
                             Item Code : {{ $cart['products']->pd_code }}<br>
-                            Size : 39
+                            {{ getVariant($cart->products->id)->vr_text }}
                           </span>
                         </p>
                       </a>
@@ -72,7 +72,7 @@
                     <td data-title="ราคาต่อหน่วย (บาท)">{{ number_format((float)$pricePerUnit, 2) }}</td>
                     <form action="{{ route('update_cart') }}" method="POST">
                       <td data-title="จำนวน" class="group-quantity">
-                        <input type="text" name="quantity" id="quantity" value="{{ $cart->ct_quantity }}" size="1" maxlength="4" class="box-qty js-quantity"><br>
+                        <input type="number" name="quantity" id="quantity" value="{{ $cart->ct_quantity }}" size="1" maxlength="4" class="box-qty js-quantity"><br>
                         <input type="hidden" name="id" value="{{ $cart->id }}">
                         <input type="hidden" name="fk_product_id" value="{{ $cart['products']->id }}">
                         <input type="hidden" name="_token" value="{{csrf_token()}}">
