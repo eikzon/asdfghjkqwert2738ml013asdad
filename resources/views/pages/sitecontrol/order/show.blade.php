@@ -13,22 +13,29 @@
             <div class="row">
               @php
                 $shipping = '';
-                if(!empty($order['orderAddress']->first()))
+                $orderAddress = $order['orderAddress']->first();
+                if(!empty($orderAddress))
                 {
-                  $shipping = $order['orderAddress'][0]['oa_address'] . ' ' 
-                            . $order['orderAddress'][0]['oa_province'] . ' ' 
-                            . $order['orderAddress'][0]['oa_district'] . ' ' . 
-                              $order['orderAddress'][0]['oa_postcode'];
-                }
+                  $shipping = 'Address       : ' . $orderAddress->oa_address . '<br>' 
+                            . 'Sub District   : ' . $orderAddress->oa_sub_district . '<br>' 
+                            . 'District   : ' . $orderAddress->oa_district . '<br>' 
+                            . 'Province      : ' . $orderAddress->oa_province . '<br>' 
+                            . 'Postcode : ' . $orderAddress->oa_postcode . '<br>'
+                            . 'Tel : ' . $orderAddress->oa_tel;
+
+                  $billing = 'Address : ' . (!empty($orderAddress->oa_isbilling_address) ? $orderAddress->oa_billign_address : $shipping)
+                             . '<br>' . 'Tax Id : ' . $orderAddress->oa_tax_id;
+                } 
               @endphp
               <div class="col-lg-6 col-md-6 col-sm-6">
                   <h4 class="box-title m-t-40"><i class="ti-home"></i> Shipping Address </h4>
-                  {{ (!empty($order['orderAddress']->first())) ? $order['orderAddress'][0]['oa_first_name'] . ' ' . $order['orderAddress'][0]['oa_last_name'] : '' }}<br>
-                  <p>{{ $shipping }}</p>
+                  {{ (!empty($orderAddress->first())) ? $orderAddress->oa_first_name . ' ' . $orderAddress->oa_last_name : '' }}
+                  <br>
+                  <p>{!! $shipping !!}</p>
               </div>
               <div class="col-lg-6 col-md-6 col-sm-6">
                   <h4 class="box-title m-t-40"><i class="ti-home"></i> Billing Address </h4>
-                  <p>{{ (!empty($order['orderAddress']->first()->oa_isbilling_address) ? $order['orderAddress'][0]['oa_billign_address'] : $shipping) }}</p>
+                  <p>{!! $billing !!}</p>
               </div>
               <div class="col-lg-12 col-md-12 col-sm-12">
                   <h3 class="box-title m-t-40"><i class="ti-gift"></i> Products In Order</h3>
@@ -38,25 +45,27 @@
                           <th>Code</th>
                           <th>Image</th>
                           <th>Name</th>
+                          <th>Variant</th>
                           <th>Price/Quantity</th>
                           <th>Quantity</th>
                           <th>Summary</th>
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach($order['productLists'] as $index => $product)
+                      @foreach($order->productLists as $productList)
                         @php
-                          $productPrice    = $product['products'][0]['pd_price'];
-                          $productDiscount = $product['products'][0]['pd_price_discount'];
+                          $productPrice    = $productList->products->first()->pd_price;
+                          $productDiscount = $productList->products->first()->pd_price_discount;
                           $pricePerUnit    = (!empty($productDiscount) ? $productDiscount : $productPrice);
                         @endphp
                         <tr>
-                          <td>{{ $product['products'][0]['pd_code'] }}</td>
-                          <td><img width="60" src="{{ asset('images/products/' . $product['products'][0]['images'][0]['image']) }}"></td>
-                          <td>{{ $product['products'][0]['pd_name'] }}</td>
+                          <td>{{ $productList->products->first()->pd_code }}</td>
+                          <td><img width="60" src="{{ asset('images/products/' . getImageCart($productList->id)->image) }}"></td>
+                          <td>{{ $productList->products->first()->pd_name }}</td>
+                          <td>{{ getVariant($productList->id)->vr_text }}</td>
                           <td>{{ number_format((float)$pricePerUnit, 2) }}</td>
-                          <td>{{ $product->od_quantity }}</td>
-                          <td>{{ number_format($product->od_price, 2) }}</td>
+                          <td>{{ $productList->od_quantity }}</td>
+                          <td>{{ number_format($productList->od_price, 2) }}</td>
                         </tr>
                       @endforeach
                     </tbody>
@@ -87,7 +96,7 @@
                 <h3 class="box-title m-t-40"><i class="ti-layout-list-thumb"></i> Order Flow</h3>
                 <div class="table-responsive">
                   @php
-                    $status = ['Cancel', 'Waiting Payment', 'Receive', 'Confirmed', 'Delivery', 'Processing'];
+                    $status = ['Cancel', 'Waiting Payment', 'Receive', 'Confirmed', 'Delivery', 'Processing', 'Done'];
                   @endphp
                   <table class="table">
                     <tbody>
@@ -109,6 +118,14 @@
                           </select>
                         </td>
                       </tr>
+                      @if($order->od_flow_status >= 4)
+                        <tr>
+                          <td width="390">EMS Track</td>
+                          <td>
+                            <input type="text" class="form-control js-update-ems-track" name="od_ems_track" value="{{ $order->od_ems_track }}" data-url="{{ action('SiteControl\OrderController@update', ['id' => $order->id]) }}">
+                          </td>
+                        </tr>
+                      @endif
                     </tbody>
                   </table>
                 </div>

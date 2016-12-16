@@ -34,6 +34,8 @@ class OrderController extends Controller
   {
     $order = ST_Order::find($id);
     $order->update($request->all());
+
+    return redirect()->route('sitecontrol.order.show', 'update');
   }
 
   public function destroy(Request $request, $id)

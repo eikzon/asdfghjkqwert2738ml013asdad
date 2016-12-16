@@ -52,4 +52,21 @@ $(document).ready(function () {
       }
     });
   });
+
+  $('.js-update-ems-track').on('change', function() {
+    $emsTrack = $('input[name="od_ems_track"]').val();
+
+    $.ajax({
+      type: 'POST',
+      url: $(this).data('url'),
+      data: {
+        _method: 'PUT',
+        od_ems_track: $emsTrack
+      },
+      success: function(result) {
+        actionUpdate();
+        setTimeout(function(){ window.location.reload(); }, 3000);
+      }
+    });
+  });
 });

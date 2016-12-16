@@ -309,6 +309,7 @@ class ComposerStaticInit4855c9ae886595b304697b2d9602ef55
         'AddFieldGroupProduct' => __DIR__ . '/../..' . '/database/migrations/2016_11_30_161648_add_field_group_product.php',
         'AddFieldImage' => __DIR__ . '/../..' . '/database/migrations/2016_12_07_163239_add_field_image.php',
         'AddFieldNotificationToMember' => __DIR__ . '/../..' . '/database/migrations/2016_12_16_030803_add_field_notification_to_member.php',
+        'AddFieldOrderEms' => __DIR__ . '/../..' . '/database/migrations/2016_12_16_214836_add_field_order_ems.php',
         'AddFieldRemark' => __DIR__ . '/../..' . '/database/migrations/2016_12_15_012107_add-field_remark.php',
         'AddFieldShippingMember' => __DIR__ . '/../..' . '/database/migrations/2016_12_16_160750_add_field_shipping_member.php',
         'AddFieldSubDistrict' => __DIR__ . '/../..' . '/database/migrations/2016_12_15_012048_add-field_sub_district.php',
