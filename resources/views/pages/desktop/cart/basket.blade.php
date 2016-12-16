@@ -3,7 +3,10 @@
   @include('common.desktop.header')
 @endsection
 @section('content')
-  @include('common.desktop.account.header')
+  @include('common.desktop.account.header', [
+    'title'  => 'Shopping Cart',
+    'detail' => 'ตะกร้าสินค้า'
+  ])
   <div class="container-cart">
     <div class="center">
       @include('common.desktop.cart.step', ['step' => 1])

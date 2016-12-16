@@ -302,6 +302,7 @@ class ComposerStaticInit4855c9ae886595b304697b2d9602ef55
     );
 
     public static $classMap = array (
+        'AddFeildDatetimeOrder' => __DIR__ . '/../..' . '/database/migrations/2016_12_16_123423_add_feild_datetime_order.php',
         'AddFieldCategoryProductTB' => __DIR__ . '/../..' . '/database/migrations/2016_12_10_072908_add_field_category_productTB.php',
         'AddFieldCommentAndTrackingOrder' => __DIR__ . '/../..' . '/database/migrations/2016_12_14_114248_add_field_comment_and_tracking_order.php',
         'AddFieldFkMemberIdCart' => __DIR__ . '/../..' . '/database/migrations/2016_12_12_155741_add_field_fk_member_id_cart.php',

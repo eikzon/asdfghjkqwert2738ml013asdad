@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddFeildDatetimeOrder' => $baseDir . '/database/migrations/2016_12_16_123423_add_feild_datetime_order.php',
     'AddFieldCategoryProductTB' => $baseDir . '/database/migrations/2016_12_10_072908_add_field_category_productTB.php',
     'AddFieldCommentAndTrackingOrder' => $baseDir . '/database/migrations/2016_12_14_114248_add_field_comment_and_tracking_order.php',
     'AddFieldFkMemberIdCart' => $baseDir . '/database/migrations/2016_12_12_155741_add_field_fk_member_id_cart.php',

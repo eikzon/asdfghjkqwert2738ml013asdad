@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use Paypalpayment;
+use Crypt;
 
 class PaypalController extends Controller {
 
@@ -43,9 +44,8 @@ class PaypalController extends Controller {
 
     }
 
-    public function store()
+    public function createPayment($items)
     {
-      $inv = uniqid();
       // ### Payer
       // A resource representing a Payer that funds a payment
       // For paypal account payments, set payment method
@@ -56,38 +56,26 @@ class PaypalController extends Controller {
       // ### Itemized information
       // (Optional) Lets you specify item wise
       // information
-      $item1 = Paypalpayment::item();
-      $item1->setName('Ground Coffee 40 oz')
-              ->setDescription('Ground Coffee 40 oz')
-              ->setCurrency('THB')
-              ->setQuantity(1)
-              ->setTax(0.3)
-              ->setPrice(7.50);
 
-      $item2 = Paypalpayment::item();
-      $item2->setName('Granola bars')
-              ->setDescription('Granola Bars with Peanuts')
-              ->setCurrency('THB')
-              ->setQuantity(5)
-              ->setTax(0.2)
-              ->setPrice(2);
+      foreach($items['list'] as $index => $product)
+      {
+        $item = Paypalpayment::item();
+        $item->setName($product['products']['pd_name'])
+                ->setDescription($product['products']['pd_short_desc'])
+                ->setCurrency('THB')
+                ->setQuantity($product['od_quantity'])
+                ->setTax(0)
+                ->setPrice($product['od_price']);
+        $lists = $item;
+      }
 
       $itemList = Paypalpayment::itemList();
-      $itemList->setItems([$item1, $item2]);
+      $itemList->setItems($lists);
 
       $details = Paypalpayment::details();
-      $details->setShipping('1.2')
-              ->setTax('1.3')
-              ->setSubtotal('17.5');
-
-      // ### Additional payment details
-      // Use this optional field to set additional
-      // payment information such as tax, shipping
-      // charges etc.
-      $details = Paypalpayment::details();
-      $details->setShipping(1.2)
-          ->setTax(1.3)
-          ->setSubtotal(17.50);
+      $details->setShipping($items['shipping'] ?? 0)
+              ->setTax(0)
+              ->setSubtotal($items['priceTotal'] - $items['shipping']);
 
       // ### Amount
       // Lets you specify a payment amount.
@@ -95,7 +83,7 @@ class PaypalController extends Controller {
       // such as shipping, tax.
       $amount = Paypalpayment::amount();
       $amount->setCurrency("THB")
-          ->setTotal(20)
+          ->setTotal($items['priceTotal'])
           ->setDetails($details);
 
       // ### Transaction
@@ -106,14 +94,14 @@ class PaypalController extends Controller {
       $transaction->setAmount($amount)
           ->setItemList($itemList)
           ->setDescription("Payment description")
-          ->setInvoiceNumber($inv);
+          ->setInvoiceNumber($items['orderId']);
 
       // ### Redirect urls
       // Set the urls that the buyer must be redirected to after
       // payment approval/ cancellation.
       $redirectUrls = Paypalpayment::redirectUrls();
-      $redirectUrls->setReturnUrl(route('cart_complete', $inv))
-                   ->setCancelUrl(route('cart_error'));
+      $redirectUrls->setReturnUrl(route('cart_complete', [1, Crypt::encrypt($items['orderId'])]))
+                   ->setCancelUrl(route('cart_error', [0, Crypt::encrypt($items['orderId'])]));
 
       // ### Payment
       // A Payment Resource; create one using
@@ -122,7 +110,7 @@ class PaypalController extends Controller {
       $payment->setIntent("sale")
           ->setPayer($payer)
           ->setRedirectUrls($redirectUrls)
-          ->setTransactions(array($transaction));
+          ->setTransactions([$transaction]);
 
       // ### Create Payment
       // Create a payment by calling the 'create' method
@@ -150,8 +138,7 @@ class PaypalController extends Controller {
 
 public function index()
     {
-        $payments = Paypalpayment::getAll(array('count' => 10, 'start_index' => 0), $this->_apiContext);
-        // dd($payments);
-        return view('welcome', ['payment' => $payments]);
+      $payments = Paypalpayment::getAll(array('count' => 10, 'start_index' => 0), $this->_apiContext);
+      return view('welcome', ['payment' => $payments]);
     }
 }

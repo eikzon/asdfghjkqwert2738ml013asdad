@@ -3,7 +3,10 @@
   @include('common.desktop.header')
 @endsection
 @section('content')
-  @include('common.desktop.account.header')
+  @include('common.desktop.account.header', [
+    'title'  => 'BREAKER',
+    'detail' => $product['pd_name']
+  ])
   <div class="detailproducts">
     <div class="topdesc">
       <div class="pic">
@@ -35,15 +38,19 @@
           </div>
           @if(!empty($variants[0]['products']))
             <div class="shortdesc">{{ $variants[0]['pg_name'] }} :
-              <select class="select-size">
-                @foreach($variants[0]['products'] as $variant)
-                  <option @if($variant['pd_status'] == 2) disabled="disabled" @endif
-                          value="{{ $variant['id'] }}">
-                    {{ $variant['vr_name'] }}
-                    @if($variant['pd_status'] == 2) [Out of Stock] @endif
-                  </option>
-                @endforeach
-              </select>
+              @if(count($variants[0]['products']) > 1)
+                <select class="select-size">
+                  @foreach($variants[0]['products'] as $variant)
+                    <option @if($variant['pd_status'] == 2) disabled="disabled" @endif
+                            value="{{ $variant['id'] }}">
+                      {{ $variant['vr_name'] }}
+                      @if($variant['pd_status'] == 2) [Out of Stock] @endif
+                    </option>
+                  @endforeach
+                </select>
+              @else
+                {{ $variants[0]['products'][0]['vr_name'] }}
+              @endif
             </div>
           @endif
           <div class="stock">

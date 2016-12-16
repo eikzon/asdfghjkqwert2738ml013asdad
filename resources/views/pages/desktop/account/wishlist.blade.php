@@ -3,7 +3,10 @@
   @include('common.desktop.header')
 @endsection
 @section('content')
-  @include('common.desktop.account.header')
+  @include('common.desktop.account.header', [
+    'title'  => 'My Account',
+    'detail' => 'บัญชีของฉัน'
+  ])
   <div class="container-myaccount">
     @include('common.desktop.account.menu', ['page' => 'wishlist'])
     <div class="blog">

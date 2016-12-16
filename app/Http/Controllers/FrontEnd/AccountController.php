@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
 use App\Model\ST_Member;
 use App\Model\ST_Wishlist;
 use App\Model\ST_Order;
@@ -58,7 +59,7 @@ class AccountController extends Controller
   public function changePassword(Request $request, $id)
   {
     $member          = ST_Member::find($id);
-    $currentPassword = md5($member->email . $request->input('user-password')); 
+    $currentPassword = md5($member->email . $request->input('user-password'));
     $newPassword     = md5($member->email . $request->input('user-newpassword'));
 
     if($request->input('user-newpassword') != $request->input('user-newpassword-2')){
@@ -139,7 +140,7 @@ class AccountController extends Controller
   public function clientLogout(Request $request)
   {
     $request->session()->forget('memberData');
-    
+
     return redirect('/');
   }
 
@@ -241,10 +242,11 @@ class AccountController extends Controller
     $orders = ST_Order::ByMember($user)->get();
     return view('pages.desktop.account.history', ['orders' => $orders]);
   }
-  public function historyDetail($id)
+  public function historyDetail($type, $orderId)
   {
     $user  = 1;
-    $order = ST_Order::ByDetail($user, $id)->get();
+    $orderId = 1;
+    $order = ST_Order::ByDetail($user, $orderId)->get();
     return view('pages.desktop.account.history_detail', ['order' => $order]);
   }
   public function wishlist()
