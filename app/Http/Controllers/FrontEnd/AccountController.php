@@ -32,6 +32,10 @@ class AccountController extends Controller
 
       return view('pages.desktop.account.profile', ['member' => $member]);
     }
+    else
+    {
+      return redirect('/account/login');
+    }
   }
   public function updateProfile(Request $request, $id)
   {
@@ -144,9 +148,52 @@ class AccountController extends Controller
     // create register
     return view('pages.desktop.account.register');
   }
-  public function address()
+  public function address(Request $request)
   {
-    return view('pages.desktop.account.address');
+    $memberID = '';
+
+    if($request->session()->has('memberData'))
+    {
+      $memberID = $request->session()->get('memberData');
+      $member   = ST_Member::find($memberID)->first();
+
+      return view('pages.desktop.account.address', ['member' => $member]);
+    }
+    else
+    {
+      return redirect('/account/login');
+    }
+  }
+  public function updateShipping(Request $request, $id)
+  {
+    $member      = ST_Member::find($id);
+    $requestData = ['shipping_address'      => $request->input('shipping_address'),
+                    'shipping_province'     => $request->input('shipping_province'),
+                    'shipping_district'     => $request->input('shipping_district'),
+                    'shipping_sub_district' => $request->input('shipping_sub_district'),
+                    'shipping_postcode'     => $request->input('shipping_postcode')
+                   ];
+
+    if($member->update($requestData))
+      return view('pages.desktop.account.address', ['member'      => $member,
+                                                    'messageShow' => 'แก้ไขข้อมูลสถานที่จัดส่งสำเร็จ']);
+    else
+      return view('pages.desktop.account.address', ['member'      => $member,
+                                                    'messageShow' => 'แก้ไขข้อมูลสถานที่จัดส่งไม่สำเร็จ']);
+  }
+  public function updateBilling(Request $request, $id)
+  {
+    $member      = ST_Member::find($id);
+    $requestData = ['billign_address' => $request->input('billign_address'),
+                    'user_tax_Id'     => $request->input('user_tax_Id')
+                   ];
+
+    if($member->update($requestData))
+      return view('pages.desktop.account.address', ['member'      => $member,
+                                                    'messageShow' => 'แก้ไขข้อมูลที่อยู่ใบกำกับภาษีสำเร็จ']);
+    else
+      return view('pages.desktop.account.address', ['member'      => $member,
+                                                    'messageShow' => 'แก้ไขข้อมูลสที่อยู่ใบกำกับภาษีสำเร็จ']);
   }
   public function forgotPassword()
   {
