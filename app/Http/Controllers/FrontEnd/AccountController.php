@@ -7,12 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Model\ST_Member;
-use View;
-
 use App\Model\ST_Wishlist;
 use App\Model\ST_Order;
-use App\Model\ST_Member;
-
+use View;
 use Mail;
 
 class AccountController extends Controller
