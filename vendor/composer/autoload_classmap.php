@@ -7,10 +7,11 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AddFieldCategoryProductTB' => $baseDir . '/database/migrations/2016_12_10_072908_add_field_category_productTB.php',
-    'AddFieldFkMemberIdCart' => $baseDir . '/database/migrations/2016_12_12_155741_add_field_fk_member_id_cart.php',
     'AddFieldCommentAndTrackingOrder' => $baseDir . '/database/migrations/2016_12_14_114248_add_field_comment_and_tracking_order.php',
+    'AddFieldFkMemberIdCart' => $baseDir . '/database/migrations/2016_12_12_155741_add_field_fk_member_id_cart.php',
     'AddFieldGroupProduct' => $baseDir . '/database/migrations/2016_11_30_161648_add_field_group_product.php',
     'AddFieldImage' => $baseDir . '/database/migrations/2016_12_07_163239_add_field_image.php',
+    'AddFieldNotificationToMember' => $baseDir . '/database/migrations/2016_12_16_030803_add_field_notification_to_member.php',
     'AddFieldRemark' => $baseDir . '/database/migrations/2016_12_15_012107_add-field_remark.php',
     'AddFieldSubDistrict' => $baseDir . '/database/migrations/2016_12_15_012048_add-field_sub_district.php',
     'AddFieldUsernameUsersTB' => $baseDir . '/database/migrations/2016_12_10_054940_add_field_username_usersTB.php',

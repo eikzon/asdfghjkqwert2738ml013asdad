@@ -39,6 +39,8 @@ Route::group(['namespace' => 'FrontEnd'], function(){
   Route::group(['prefix' => 'account'], function(){
     Route::get('/', 'AccountController@index')->name('account_index');
     Route::get('profile', 'AccountController@profile')->name('account_profile');
+    Route::post('profile/update/{id}', 'AccountController@updateProfile')->name('account_update');
+    Route::post('profile/changePassword/{id}', 'AccountController@changePassword')->name('account_change_password');
     Route::get('address', 'AccountController@address')->name('account_address');
     Route::get('history', 'AccountController@history')->name('account_history');
     Route::get('history/{id}', 'AccountController@historyDetail')->name('account_history_detail');

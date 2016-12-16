@@ -24,6 +24,7 @@ class ST_Member extends Model
                            'tel',
                            'password',
                            'birthday',
+                           'notification',
                            'status'
                           ];
 
