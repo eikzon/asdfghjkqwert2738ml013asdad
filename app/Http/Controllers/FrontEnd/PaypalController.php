@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use Paypalpayment;
+use Crypt;
 
 class PaypalController extends Controller {
 
@@ -43,7 +44,7 @@ class PaypalController extends Controller {
 
     }
 
-    public function store($items)
+    public function createPayment($items)
     {
       // ### Payer
       // A resource representing a Payer that funds a payment
@@ -55,23 +56,24 @@ class PaypalController extends Controller {
       // ### Itemized information
       // (Optional) Lets you specify item wise
       // information
-      foreach($items['list']['products'] as $index => $product)
+
+      foreach($items['list'] as $index => $product)
       {
         $item = Paypalpayment::item();
-        $item->setName($product['pd_name'])
-                ->setDescription($product['pd_short_desc'])
+        $item->setName($product['products']['pd_name'])
+                ->setDescription($product['products']['pd_short_desc'])
                 ->setCurrency('THB')
                 ->setQuantity($product['od_quantity'])
                 ->setTax(0)
                 ->setPrice($product['od_price']);
-        $lists[] = $item;
+        $lists = $item;
       }
 
       $itemList = Paypalpayment::itemList();
       $itemList->setItems($lists);
 
       $details = Paypalpayment::details();
-      $details->setShipping($items['shipping'])
+      $details->setShipping($items['shipping'] ?? 0)
               ->setTax(0)
               ->setSubtotal($items['priceTotal'] - $items['shipping']);
 
