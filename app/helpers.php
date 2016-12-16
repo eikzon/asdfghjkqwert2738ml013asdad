@@ -28,3 +28,11 @@ function getImageCart($pid)
   $images = new App\Model\ST_Product_Images;
   return $images->where('fk_pd_id', $pid)->first();
 }
+
+function getVariant($pid)
+{
+  $variantMap = new App\Model\ST_Variant_Map;
+  $variantId  = $variantMap->where('fk_pd_id', $pid)->first();
+  $variant    = new App\Model\ST_Variant;
+  return $variant->where('id', $variantId->fk_vr_id)->first();
+}

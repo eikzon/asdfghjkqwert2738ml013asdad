@@ -35,12 +35,12 @@
                   $grandTotal    = $subTotal + $shippingPrice;
                 @endphp
                 <li>
-                  <a href="detail.php">
+                  <a href="{{ route('product_detail', $cart['products']->id) }}">
                     <div class="product-img">
                       <img src="{{ asset("images/products/" . getImageCart($cart->products->id)->image) }}">
                     </div>
                     <div class="product-desc">
-                      <div class="product-name">{{ $cart->products->pd_name }}<br>Size:38<br>จำนวน: {{ $cart->ct_quantity }}
+                      <div class="product-name">{{ $cart->products->pd_name }}<br>{{ getVariant($cart->products->id)->vr_text }}<br>จำนวน: {{ $cart->ct_quantity }}
                         <span class="product-price">{{ number_format((float)$totalPrice, 2) }} บาท</span>
                       </div>
                     </div>
