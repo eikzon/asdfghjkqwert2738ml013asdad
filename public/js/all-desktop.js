@@ -88,7 +88,6 @@ $(document).ready(function () {
     }
     else if($('input[name="oa_isbilling_address"]').is(':checked')) {
       $('#js-checkout').submit();
-      $('textarea[name="oa_billign_address"]').hide();
     }
     else if($billign_address == '') {
       $('textarea[name="oa_billign_address"]').focus();
