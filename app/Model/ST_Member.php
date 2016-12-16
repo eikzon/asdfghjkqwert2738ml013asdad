@@ -25,7 +25,14 @@ class ST_Member extends Model
                            'password',
                            'birthday',
                            'notification',
-                           'status'
+                           'status',
+                           'shipping_address',
+                           'shipping_province',
+                           'shipping_district',
+                           'shipping_sub_district',
+                           'shipping_postcode',
+                           'billign_address',
+                           'user_tax_Id'
                           ];
 
   protected static function boot()
