@@ -50,12 +50,6 @@
                       $collectImage = collect($imageProduct)->where('fk_pd_id', $cart->fk_product_id)->first();
                       $image        = $collectImage->image;
                     }
-
-                    $variant = '';
-                    if(!empty($productVariant))
-                    {
-                      $collectVariant = collect($productVariant)->where('fk_pd_id', $cart->fk_product_id)->first();
-                    }
                   @endphp
                   <tr>
                     <td data-title="สินค้า"><a href="{{ route('product_detail', $cart['products']->id) }}"><img src="{{ asset('images/products/' . $image) }}"></a></td>

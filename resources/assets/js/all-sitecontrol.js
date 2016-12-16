@@ -1,6 +1,4 @@
 //= include ../plugins/bower_components/jquery/dist/jquery.min.js
-
-//= include sitecontrol/sweetalert.min.js
 //= include sitecontrol/common.js
 
 //= include sitecontrol/jquery.filedrop.js

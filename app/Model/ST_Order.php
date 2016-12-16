@@ -21,6 +21,7 @@ class ST_Order extends Model
                            'od_flow_status',
                            'fk_member_id',
                            'fk_quest_id',
+                           'od_ems_track'
                           ];
 
   protected static function boot()

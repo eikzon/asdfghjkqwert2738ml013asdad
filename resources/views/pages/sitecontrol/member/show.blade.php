@@ -17,6 +17,15 @@
                 Gender : {{ ($member->gender == 0 ? 'Male' : 'Female') }}<br>
                 Mobile : {{ $member->tel }}
               </div>
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <h4 class="box-title m-t-40"><i class="ti-home"></i> Current Address </h4>
+                Address : {{ $member->shipping_address }}<br>
+                Sub District : {{ $member->shipping_sub_district }}<br>
+                District : {{ $member->shipping_district }}<br>
+                Province : {{ $member->shipping_province }}<br>
+                Postcode : {{ $member->shipping_postcode }}<br>
+                Tax Id : {{ $member->user_tax_Id }}
+              </div>
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <h3 class="box-title m-t-40"><i class="ti-time"></i> Order History</h3>
                 <table class="table product-overview" id="myTable">

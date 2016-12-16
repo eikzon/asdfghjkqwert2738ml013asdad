@@ -6,6 +6,7 @@ return [
     2 => 'Receive', 
     3 => 'Confirmed', 
     4 => 'Delivery', 
-    5 => 'Processing'
+    5 => 'Processing',
+    6 => 'Done'
   ]
 ];
