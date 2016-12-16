@@ -89,6 +89,6 @@ class ST_Order extends Model
 
   public function orderAddress()
   {
-    return $this->hasMany(ST_Order_Address::class, 'fk_order_id')->where('oa_isbilling_address', 0);;
+    return $this->hasMany(ST_Order_Address::class, 'fk_order_id');
   }
 }
