@@ -20,9 +20,63 @@ class AccountController extends Controller
   {
     return view('pages.desktop.account.login');
   }
-  public function profile()
+  public function profile(Request $request)
   {
-    return view('pages.desktop.account.profile');
+    $memberID = '';
+
+    if($request->session()->has('memberData'))
+    {
+      $memberID = $request->session()->get('memberData');
+      $member   = ST_Member::find($memberID)->first();
+
+      return view('pages.desktop.account.profile', ['member' => $member]);
+    }
+  }
+  public function updateProfile(Request $request, $id)
+  {
+    $member      = ST_Member::find($id);
+    $requestData = ['gender'       => $request->input('user-gender'),
+                    'first_name'   => $request->input('user-name'),
+                    'last_name'    => $request->input('user-lastname'),
+                    'tel'          => $request->input('user-mobile'),
+                    'notification' => $request->input('notification'),
+                    'birthday'     => date('Y-m-d', strtotime($request->input('user-birthday')))
+                   ];
+
+    if($member->update($requestData))
+      return view('pages.desktop.account.profile', ['member' => $member,
+                                                    'messageShow' => 'แก้ไขข้อมูลสมาชิกสำเร็จ']);
+    else
+      return view('pages.desktop.account.profile', ['member' => $member,
+                                                    'messageShow' => 'แก้ไขข้อมูลสมาชิกไม่สำเร็จ']);
+  }
+  public function changePassword(Request $request, $id)
+  {
+    $member          = ST_Member::find($id);
+    $currentPassword = md5($member->email . $request->input('user-password')); 
+    $newPassword     = md5($member->email . $request->input('user-newpassword'));
+
+    if($request->input('user-newpassword') != $request->input('user-newpassword-2')){
+      return view('pages.desktop.account.profile', ['member' => $member,
+                                                    'messageShow' => 'ยืนยันรหัสผ่านไม่ถูกต้องกรุณาตรวจสอบ']);
+    }
+
+    if($member->password == $currentPassword)
+    {
+      $requestData = ['password' => $newPassword];
+
+      if($member->update($requestData))
+        return view('pages.desktop.account.profile', ['member' => $member,
+                                                      'messageShow' => 'แก้ไขรหัสผ่านสำเร็จ']);
+      else
+        return view('pages.desktop.account.profile', ['member' => $member,
+                                                      'messageShow' => 'แก้ไขรหัสผ่านไม่สำเร็จ']);
+    }
+    else
+    {
+      return view('pages.desktop.account.profile', ['member' => $member,
+                                                    'messageShow' => 'รหัสผ่านปัจจุบันไม่ถูกต้องกรุณาตรวจสอบและลองใหม่อีกครัง']);
+    }
   }
   public function create()
   {
