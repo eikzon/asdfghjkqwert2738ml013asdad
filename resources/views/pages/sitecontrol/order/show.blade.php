@@ -12,19 +12,23 @@
             <hr>
             <div class="row">
               @php
-                $shipping = $order['orderAddress'][0]['oa_address'] . ' ' 
+                $shipping = '';
+                if(!empty($order['orderAddress']->first()))
+                {
+                  $shipping = $order['orderAddress'][0]['oa_address'] . ' ' 
                             . $order['orderAddress'][0]['oa_province'] . ' ' 
                             . $order['orderAddress'][0]['oa_district'] . ' ' . 
                               $order['orderAddress'][0]['oa_postcode'];
+                }
               @endphp
               <div class="col-lg-6 col-md-6 col-sm-6">
                   <h4 class="box-title m-t-40"><i class="ti-home"></i> Shipping Address </h4>
-                  {{ $order['orderAddress'][0]['oa_first_name'] . ' ' . $order['orderAddress'][0]['oa_last_name'] }}<br>
+                  {{ (!empty($order['orderAddress']->first())) ? $order['orderAddress'][0]['oa_first_name'] . ' ' . $order['orderAddress'][0]['oa_last_name'] : '' }}<br>
                   <p>{{ $shipping }}</p>
               </div>
               <div class="col-lg-6 col-md-6 col-sm-6">
                   <h4 class="box-title m-t-40"><i class="ti-home"></i> Billing Address </h4>
-                  <p>{{ (!empty($order['orderAddress'][0]['oa_isbilling_address']) ? $order['orderAddress'][0]['oa_billign_address'] : $shipping) }}</p>
+                  <p>{{ (!empty($order['orderAddress']->first()->oa_isbilling_address) ? $order['orderAddress'][0]['oa_billign_address'] : $shipping) }}</p>
               </div>
               <div class="col-lg-12 col-md-12 col-sm-12">
                   <h3 class="box-title m-t-40"><i class="ti-gift"></i> Products In Order</h3>
@@ -40,12 +44,12 @@
                       </tr>
                     </thead>
                     <tbody>
-                      @php
-                        $productPrice    = $product['products'][0]['pd_price'];
-                        $productDiscount = $product['products'][0]['pd_price_discount'];
-                        $pricePerUnit    = (!empty($productDiscount) ? $productDiscount : $productPrice);
-                      @endphp
                       @foreach($order['productLists'] as $index => $product)
+                        @php
+                          $productPrice    = $product['products'][0]['pd_price'];
+                          $productDiscount = $product['products'][0]['pd_price_discount'];
+                          $pricePerUnit    = (!empty($productDiscount) ? $productDiscount : $productPrice);
+                        @endphp
                         <tr>
                           <td>{{ $product['products'][0]['pd_code'] }}</td>
                           <td><img width="60" src="{{ asset('images/products/' . $product['products'][0]['images'][0]['image']) }}"></td>
