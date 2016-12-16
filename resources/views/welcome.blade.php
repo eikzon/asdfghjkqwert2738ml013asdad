@@ -41,9 +41,5 @@
                 <div class="title">Laravel 5</div>
             </div>
         </div>
-        <form method="post" action="{{ action('PaypalController@store') }}">
-            {{ csrf_field() }}
-            <button type="submit" value="lll">Yesss</button>
-        </form>
     </body>
 </html>

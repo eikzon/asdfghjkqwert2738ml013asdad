@@ -11,11 +11,15 @@ use View;
 
 use App\Model\ST_Wishlist;
 use App\Model\ST_Order;
+use App\Model\ST_Member;
 
 use Mail;
 
 class AccountController extends Controller
 {
+
+  public $user = '';
+
   public function index()
   {
     return view('pages.desktop.account.login');
@@ -151,14 +155,40 @@ class AccountController extends Controller
   {
     return view('pages.desktop.account.forgot_password');
   }
-  public function forgotPasswordSend()
+  public function forgotPasswordSend(Request $request)
   {
-    // Mail::send('pages.desktop.account.address', ['user' => 'this is a detail mannn'], function ($m) {
-    //     $m->from('hello@app.com', 'Your Application');
-    //     $m->to('inimz25@gmail.com', 'nongnae')->subject('Your Reminder!');
-    // });
+    $statusEmailSend = 'fail';
 
-    $statusEmailSend = (true) ? 'success' : 'fail';
+    if($request->has('email'))
+    {
+      $user = ST_Member::Email($request->input('email'))->get();
+
+      if(!empty($user[0]))
+      {
+        $newPassword = rand(0, 99999);
+        $response    = ST_Member::UpdatePassword($newPassword, $user[0]->id);
+
+        if($response)
+        {
+          $this->user      = $user;
+          Mail::send('pages.desktop.mail.forget_password', [
+                  'user'     => $user,
+                  'password' => $newPassword
+                ], function ($m) {
+                  $m->from('allwedes@all-we-design.com', 'Breaker Shoe, Your Shoe Style');
+                  $m->to($this->user[0]->email,
+                   "$this->user[0]->first_name $this->user[0]->last_name")
+                    ->subject('Forget Password :: Breaker Shoe');
+                });
+          $statusEmailSend = 'success';
+        }
+        else
+        {
+          $statusEmailSend = 'unsuccess';
+        }
+      }
+    }
+
     return redirect()->route('account_forgot_password', $statusEmailSend);
   }
   public function history()

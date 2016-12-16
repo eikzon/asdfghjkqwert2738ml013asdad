@@ -35,6 +35,14 @@ class ST_Product extends Model
     return $products;
   }
 
+  public function outOfStock()
+  {
+    return ST_Product::with('images')
+                      ->where([['pd_stock', '<', 50], ['pd_status', '>', 0]])
+                      ->orderBy('id', 'desc')
+                      ->get();
+  }
+
   public function relatedItems($id)
   {
     $products = ST_Product::with('images')
@@ -150,6 +158,7 @@ class ST_Product extends Model
     $product->pd_status         = $request->input('status');
     $product->pd_stock          = $request->input('stock');
     $product->fk_group_id       = $request->input('group');
+    $product->fk_category_id    = $request->input('category');
     $updateProduct              = $product->save();
 
     if($updateProduct)
