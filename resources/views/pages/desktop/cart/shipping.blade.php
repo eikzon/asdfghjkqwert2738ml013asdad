@@ -3,7 +3,10 @@
   @include('common.desktop.header')
 @endsection
 @section('content')
-  @include('common.desktop.account.header')
+  @include('common.desktop.account.header', [
+    'title'  => 'Shopping Cart',
+    'detail' => 'ตะกร้าสินค้า'
+  ])
   <div class="container-cart">
     <div class="center">
       @include('common.desktop.cart.step', ['step' => 2])
@@ -81,10 +84,10 @@
           <div class="blog-inside">
             <h2>2. การชำระเงิน</h2>
             <ul>
-                <li><label for="paymentselect-paypal"><input type="radio" name="paymentselect" id="paymentselect-paypal" checked="checked"><img src="{{ asset('images/ic-paypal.png') }}"><div class="radio-txt1">ชำระเงินผ่าน PayPal</div></label></li>
-                {{-- <li><label for="paymentselect-creditcard"><input type="radio" name="paymentselect" id="paymentselect-creditcard"><img src="{{ asset('images/ic-visa.png') }}"><img src="{{ asset('images/ic-master.png') }}"><div class="radio-txt2">ชำระเงินผ่าน บัตรเครดิต<br>หรือบัตรเดบิต</div></label></li> --}}
-                {{-- <li><label for="paymentselect-paysbuy"><input type="radio" name="paymentselect" id="paymentselect-paysbuy"><img src="{{ asset('images/ic-paysbuy.png') }}"><div class="radio-txt1">ชำระเงินผ่าน PaysBuy</div></label></li>
-                <li><label for="paymentselect-banktransfer"><input type="radio" name="paymentselect" id="paymentselect-banktransfer"><img src="{{ asset('images/ic-banktransfer.png') }}"><div class="radio-txt2">ชำระเงินโดยการโอนเงินเข้าบัญชีธนาคาร<br>(เอทีเอ็ม / เคาน์เตอร์ธนาคาร)</div></label></li> --}}
+                <li><label for="paymentselect-paypal"><input type="radio" name="paymentselect" id="paymentselect-paypal" type="1" checked="checked"><img src="{{ asset('images/ic-paypal.png') }}"><div class="radio-txt1">ชำระเงินผ่าน PayPal หรือบัตรเครดิต</div></label></li>
+                {{-- <li><label for="paymentselect-creditcard"><input type="radio" name="paymentselect" id="paymentselect-creditcard"><img src="{{ asset('images/ic-visa.png') }}"><img src="{{ asset('images/ic-master.png') }}"><div class="radio-txt2">ชำระเงินผ่าน บัตรเครดิต<br>หรือบัตรเดบิต</div></label></li>
+                <li><label for="paymentselect-paysbuy"><input type="radio" name="paymentselect" id="paymentselect-paysbuy"><img src="{{ asset('images/ic-paysbuy.png') }}"><div class="radio-txt1">ชำระเงินผ่าน PaysBuy</div></label></li>--}}
+                <li><label for="paymentselect-banktransfer"><input type="radio" name="paymentselect" id="paymentselect-banktransfer" type="3"><img src="{{ asset('images/ic-banktransfer.png') }}"><div class="radio-txt2">ชำระเงินโดยการโอนเงินเข้าบัญชีธนาคาร<br>(เอทีเอ็ม / เคาน์เตอร์ธนาคาร)</div></label></li>
             </ul>
           </div>
           <div class="blog-inside">

@@ -1,4 +1,6 @@
 <div class="productshead">
-  <h1>My Account</h1>
-  <span class="subhead">บัญชีของฉัน</span>
+  <h1>{{ $title }}</h1>
+  <span class="subhead">
+    {{ $detail }}
+  </span>
 </div>

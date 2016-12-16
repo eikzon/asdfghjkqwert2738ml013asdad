@@ -3,10 +3,10 @@
 @include('common.desktop.header')
 @endsection
 @section('content')
-  <div class="productshead">
-    <h1>Forgot Password?</h1>
-    <span class="subhead">ลืมรหัสผ่าน?</span>
-  </div>
+  @include('common.desktop.account.header', [
+    'title'  => 'Forgot Password?',
+    'detail' => 'ลืมรหัสผ่าน?'
+  ])
   <div class="container-login">
     <div class="blog center">
       <div class="blog-inside forgot">

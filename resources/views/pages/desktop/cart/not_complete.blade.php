@@ -11,11 +11,8 @@
     <div class="center">
       @include('common.desktop.cart.step', ['step' => 3])
       <div class="cart-complete-order">
-        <h4>เราได้รับรายการสั่งซื้อของคุณแล้ว<br>ขอขอบคุณสำหรับการสั่งซื้อสินค้ากับเรา</h4>
+        <h4>รายการสั่งซื้อนี้ไม่สมบูรณ์ กรุณาสั่งซื้ออีกครั้ง หรือติดต่อเจ้าหน้าที่<br>ขอขอบคุณสำหรับการสั่งซื้อสินค้ากับเรา</h4>
       </div>
     </div>
-    @include('common.desktop.account.history_detail',[
-      'order' => $order
-    ])
   </div>
 @endsection

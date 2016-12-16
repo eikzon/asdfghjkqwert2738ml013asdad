@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Model\ST_Member;
 use View;
 
 use App\Model\ST_Wishlist;
@@ -84,7 +83,7 @@ class AccountController extends Controller
   public function clientLogout(Request $request)
   {
     $request->session()->forget('memberData');
-    
+
     return redirect('/');
   }
 
@@ -143,10 +142,11 @@ class AccountController extends Controller
     $orders = ST_Order::ByMember($user)->get();
     return view('pages.desktop.account.history', ['orders' => $orders]);
   }
-  public function historyDetail($id)
+  public function historyDetail($type, $orderId)
   {
     $user  = 1;
-    $order = ST_Order::ByDetail($user, $id)->get();
+    $orderId = 1;
+    $order = ST_Order::ByDetail($user, $orderId)->get();
     return view('pages.desktop.account.history_detail', ['order' => $order]);
   }
   public function wishlist()

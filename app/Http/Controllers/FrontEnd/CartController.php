@@ -6,10 +6,14 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\FrontEnd\PaypalController;
 use App\Model\ST_Cart;
+use App\Model\ST_Order;
 use App\Model\ST_Product;
 use App\Model\ST_Product_Images;
 use App\Model\ST_Order_Address;
+
+use Crypt;
 
 class CartController extends Controller
 {
@@ -105,17 +109,71 @@ class CartController extends Controller
                     'oa_billign_address' => $request->input('oa_billign_address'),
                     'oa_tax_id' => $request->input('oa_tax_id')
                   ];
+    $orderClass    = new ST_Order;
+    $orderCreateId = $orderClass->createOrder($request);
 
-    $orderAddress  = new ST_Order_Address;
-    $insertAddress = $orderAddress->create($reqAddress);
-    $addressId     = $insertAddress->id;
+    if($orderCreateId)
+    {
+      $orderAddress  = new ST_Order_Address;
+      $insertAddress = $orderAddress->create($reqAddress);
 
-    d($addressId);
+      $products = ST_Cart::where('fk_member_id', 1)->get();
+      if(!$products->isEmpty())
+      {
+        $orderDetailClass = new ST_Order_Detail;
+        foreach($products as $product)
+        {
+          $orderDetailClass->createOrderDetail($product, $orderCreateId);
+          $priceTotal    += $product['ct_total'];
+          $discountTotal += $product['ct_discount'];
+          $shippingTotal += $product['ct_shipping'];
+        }
+
+        $items['list']       = $orderDetailClass->relateProduct($orderCreateId);
+        $items['orderId']    = $orderCreateId;
+        $items['priceTotal'] = $priceTotal;
+        $items['shipping']   = $shippingTotal;
+      }
+
+      dd($products);
+
+      $orderUpdateStatus = $orderClass->updateOrder([
+                              'od_price_discount' => $discountTotal ?? 0,
+                              'od_price_shipping' => $shippingTotal ?? 0,
+                              'od_price_total'    => $priceTotal ?? 0
+                            ], $orderCreateId);
+
+      (new PaypalController)->store($items);
+    }
+    else
+    {
+      return redirect()->route('cart_shipping');
+    }
   }
 
-  public function completePayment()
+  public function completePayment($type, $token)
   {
-    return view('pages.desktop.cart.complete');
+    if(empty($token))
+      return view('pages.desktop.cart.not_complete');
+
+    $user  = 1;
+    $id    = 1;
+    // $id    = Crypt::decrypt($token);
+    $orderClass = new ST_Order;
+    if($orderClass->updatePayment($id, $type))
+    {
+      $order = $orderClass->ByDetail($user, $id)->get();
+
+      if($order->isEmpty())
+        return view('pages.desktop.cart.not_complete');
+      else
+        if($type == 3)
+          return view('pages.desktop.cart.transfer', ['order' => $order]);
+        else
+          return view('pages.desktop.cart.complete', ['order' => $order]);
+    }
+
+    return view('pages.desktop.cart.not_complete');
   }
 
   public function errorPayment()

@@ -3,7 +3,10 @@
   @include('common.desktop.header')
 @endsection
 @section('content')
-  @include('common.desktop.account.header')
+  @include('common.desktop.account.header', [
+    'title'  => 'BREAKER',
+    'detail' => 'รายการสินค้า'
+  ])
   @if(!empty($productLists))
     <ul class="container-products">
       @foreach($productLists as $product)

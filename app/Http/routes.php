@@ -67,14 +67,8 @@ Route::group(['namespace' => 'FrontEnd'], function(){
     Route::get('deleteCart/{id}', 'CartController@deleteCartItems')->name('delete_cart');
     Route::get('shipping', 'CartController@shipping')->name('cart_shipping');
     Route::post('checkout', 'CartController@checkout')->name('cart_checkout');
-    Route::get('complete/1/{token}', 'CartController@completePayment')->name('cart_complete');
-    Route::get('transfer/3/{token}', 'CartController@completePayment')->name('cart_complete');
-    Route::get('error', 'CartController@errorPayment')->name('cart_error');
+    Route::get('complete/{type}/{token}', 'CartController@completePayment')->name('cart_complete');
+    Route::get('error/{type}/{token}', 'CartController@errorPayment')->name('cart_error');
     Route::post('payment', 'PaypalController@store')->name('cart_payment');
   });
-
-
 });
-
-    Route::get('list', ['as'=>'payPremium','uses'=>'PaypalController@index']);
-

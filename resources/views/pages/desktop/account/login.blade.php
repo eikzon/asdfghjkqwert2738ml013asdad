@@ -3,7 +3,10 @@
   @include('common.desktop.header')
 @endsection
 @section('content')
-  @include('common.desktop.account.header')
+  @include('common.desktop.account.header', [
+    'title'  => 'Login / Register',
+    'detail' => 'เข้าสู่ระบบ / ลงทะเบียน'
+  ])
   <div class="container-login">
     <div class="blog center">
       <div class="blog-inside login">

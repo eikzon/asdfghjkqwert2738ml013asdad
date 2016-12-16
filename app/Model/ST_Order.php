@@ -47,6 +47,23 @@ class ST_Order extends Model
     ST_Order::deleted(function ($order) {});
   }
 
+  public function createOrder($request)
+  {
+    $orderDetail = new ST_Order;
+    $orderDetail->od_code      = 12112231;
+    $orderDetail->od_status    = 1;
+    $orderDetail->fk_member_id = 1;
+    $orderDetail->od_remark    = $request->input('order-remark');
+    $orderDetail->save();
+
+    return ($orderDetail->id ?? false);
+  }
+
+  public function updateOrder($resultUpdate, $orderId)
+  {
+    return ST_Order::where('id', $orderId)->update($resultUpdate);
+  }
+
   public function scopeNow($query)
   {
     return $query;
@@ -69,6 +86,18 @@ class ST_Order extends Model
   {
     $query->where('fk_member_id', $memberId)->where('id', $orderId)->where('od_status', 1)->orwhere('od_status', 2);
     return $query;
+  }
+
+  public function updatePayment($id, $type)
+  {
+    $order = ST_Order::find($id);
+    $order->od_datetime_payment = date('Y-m-d H:i:s');
+    $order->od_payment_type     = $type;
+
+    if($order->save())
+      return true;
+
+    return false;
   }
 
   // relation
