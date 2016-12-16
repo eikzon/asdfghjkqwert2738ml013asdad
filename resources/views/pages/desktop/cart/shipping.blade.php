@@ -15,16 +15,16 @@
           <div class="blog-inside">
             <h2>1. ที่อยู่จัดส่ง</h2>
             <label for="receiver-name">ชื่อของผู้รับ<span>*</span></label>
-            <input type="text" name="oa_first_name" class="js-first-name" id="receiver-name" required>
+            <input type="text" name="oa_first_name" class="js-first-name" id="receiver-name" value="{{ $member->first_name }}" required>
             <label for="receiver-lastname">นามสกุลของผู้รับ<span>*</span></label>
-            <input type="text" name="oa_last_name" id="receiver-lastname" required>
+            <input type="text" name="oa_last_name" id="receiver-lastname" value="{{ $member->last_name }}" required>
             <label for="receiver-mobile">มือถือ<span>*</span></label>
-            <input type="text" name="oa_tel" id="receiver-mobile" required>
+            <input type="text" name="oa_tel" id="receiver-mobile" value="{{ $member->tel }}" required>
             <label for="receiver-address">ที่อยู่ (เลขที่, อาคาร/หมู่บ้าน, ซอย/ถนน)<span>*</span></label>
-            <input type="text" name="oa_address" id="receiver-address" required>
+            <input type="text" name="oa_address" id="receiver-address" value="{{ $member->shipping_address }}" required>
             <label for="receiver-province">จังหวัด<span>*</span></label>
             <select name="oa_province" id="receiver-province" required>
-                <option value="0">กรุณาเลือกจังหวัด</option>
+                <option value="0" {{ $member->shipping_province == 1 ? 'selected' : '' }}>กรุณาเลือกจังหวัด</option>
                 <option value="1">กรุงเทพมหานคร</option>
                 <option value="3">กาญจนบุรี</option>
                 <option value="6">ขอนแก่น</option>
@@ -63,23 +63,23 @@
             <label for="receiver-district">อำเภอ/เขต<span>*</span></label>
             <select name="oa_district" id="receiver-district" required>
               <option value="0">กรุณาเลือกอำเภอ/เขต</option>
-              <option value="1">พญาไท</option>
+              <option value="1" {{ $member->shipping_district == 1 ? 'selected' : '' }}>พญาไท</option>
             </select>
             <label for="receiver-subdistrict">ตำบล/แขวง<span>*</span></label>
             <select name="oa_sub_district" id="receiver-subdistrict" required>
               <option value="0">กรุณาเลือกตำบล/แขวง</option>
-              <option value="1">ดินแดง</option>
+              <option value="1" {{ $member->shipping_sub_district == 1 ? 'selected' : '' }}>ดินแดง</option>
             </select>
             <label for="receiver-postcode">รหัสไปรษณีย์<span>*</span></label>
-            <input type="text" name="oa_postcode" id="receiver-postcode" required>
+            <input type="text" name="oa_postcode" id="receiver-postcode" value="{{ $member->shipping_postcode }}" required>
             <h3>ที่อยู่ใบกำกับภาษี</h3>
             <label><input type="checkbox" name="oa_isbilling_address" id="same-address" value="1">ใช้ที่อยู่เดียวกับที่อยู่จัดส่ง</label>
             <div class="js-show-billing">
               <label for="tax-address">ชื่อและที่อยู่ใบกำกับภาษี<span>*</span></label>
-              <textarea name="oa_billign_address" id="tax-address"></textarea>
+              <textarea name="oa_billign_address" id="tax-address">{{ $member->billign_address }}</textarea>
             </div>
             <label for="tax-id">เลขประจำตัวบัตรประชาชน / Tax Id</label>
-            <input type="text" name="oa_tax_id" id="tax-id">
+            <input type="text" name="oa_tax_id" id="tax-id" value="{{ $member->user_tax_Id }}">
           </div>
           <div class="blog-inside">
             <h2>2. การชำระเงิน</h2>

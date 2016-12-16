@@ -12,6 +12,7 @@ use App\Model\ST_Order;
 use App\Model\ST_Product;
 use App\Model\ST_Product_Images;
 use App\Model\ST_Order_Address;
+use App\Model\ST_Member;
 
 use Crypt;
 
@@ -89,9 +90,21 @@ class CartController extends Controller
     ST_Cart::find($id)->delete();
   }
 
-  public function shipping()
+  public function shipping(Request $request)
   {
-    return view('pages.desktop.cart.shipping');
+    $memberID = '';
+
+    if($request->session()->has('memberData'))
+    {
+      $memberID = $request->session()->get('memberData');
+      $member   = ST_Member::find($memberID)->first();
+
+      return view('pages.desktop.cart.shipping', ['member' => $member]);
+    }
+    else
+    {
+      return redirect('/account/login');
+    }
   }
 
   public function checkout(Request $request)

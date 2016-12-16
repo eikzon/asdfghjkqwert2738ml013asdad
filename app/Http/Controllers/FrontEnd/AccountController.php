@@ -6,12 +6,11 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use View;
 
+use App\Model\ST_Member;
 use App\Model\ST_Wishlist;
 use App\Model\ST_Order;
-use App\Model\ST_Member;
-
+use View;
 use Mail;
 
 class AccountController extends Controller
@@ -23,9 +22,67 @@ class AccountController extends Controller
   {
     return view('pages.desktop.account.login');
   }
-  public function profile()
+  public function profile(Request $request)
   {
-    return view('pages.desktop.account.profile');
+    $memberID = '';
+
+    if($request->session()->has('memberData'))
+    {
+      $memberID = $request->session()->get('memberData');
+      $member   = ST_Member::find($memberID)->first();
+
+      return view('pages.desktop.account.profile', ['member' => $member]);
+    }
+    else
+    {
+      return redirect('/account/login');
+    }
+  }
+  public function updateProfile(Request $request, $id)
+  {
+    $member      = ST_Member::find($id);
+    $requestData = ['gender'       => $request->input('user-gender'),
+                    'first_name'   => $request->input('user-name'),
+                    'last_name'    => $request->input('user-lastname'),
+                    'tel'          => $request->input('user-mobile'),
+                    'notification' => $request->input('notification'),
+                    'birthday'     => date('Y-m-d', strtotime($request->input('user-birthday')))
+                   ];
+
+    if($member->update($requestData))
+      return view('pages.desktop.account.profile', ['member' => $member,
+                                                    'messageShow' => 'แก้ไขข้อมูลสมาชิกสำเร็จ']);
+    else
+      return view('pages.desktop.account.profile', ['member' => $member,
+                                                    'messageShow' => 'แก้ไขข้อมูลสมาชิกไม่สำเร็จ']);
+  }
+  public function changePassword(Request $request, $id)
+  {
+    $member          = ST_Member::find($id);
+    $currentPassword = md5($member->email . $request->input('user-password'));
+    $newPassword     = md5($member->email . $request->input('user-newpassword'));
+
+    if($request->input('user-newpassword') != $request->input('user-newpassword-2')){
+      return view('pages.desktop.account.profile', ['member' => $member,
+                                                    'messageShow' => 'ยืนยันรหัสผ่านไม่ถูกต้องกรุณาตรวจสอบ']);
+    }
+
+    if($member->password == $currentPassword)
+    {
+      $requestData = ['password' => $newPassword];
+
+      if($member->update($requestData))
+        return view('pages.desktop.account.profile', ['member' => $member,
+                                                      'messageShow' => 'แก้ไขรหัสผ่านสำเร็จ']);
+      else
+        return view('pages.desktop.account.profile', ['member' => $member,
+                                                      'messageShow' => 'แก้ไขรหัสผ่านไม่สำเร็จ']);
+    }
+    else
+    {
+      return view('pages.desktop.account.profile', ['member' => $member,
+                                                    'messageShow' => 'รหัสผ่านปัจจุบันไม่ถูกต้องกรุณาตรวจสอบและลองใหม่อีกครัง']);
+    }
   }
   public function create()
   {
@@ -92,9 +149,52 @@ class AccountController extends Controller
     // create register
     return view('pages.desktop.account.register');
   }
-  public function address()
+  public function address(Request $request)
   {
-    return view('pages.desktop.account.address');
+    $memberID = '';
+
+    if($request->session()->has('memberData'))
+    {
+      $memberID = $request->session()->get('memberData');
+      $member   = ST_Member::find($memberID)->first();
+
+      return view('pages.desktop.account.address', ['member' => $member]);
+    }
+    else
+    {
+      return redirect('/account/login');
+    }
+  }
+  public function updateShipping(Request $request, $id)
+  {
+    $member      = ST_Member::find($id);
+    $requestData = ['shipping_address'      => $request->input('shipping_address'),
+                    'shipping_province'     => $request->input('shipping_province'),
+                    'shipping_district'     => $request->input('shipping_district'),
+                    'shipping_sub_district' => $request->input('shipping_sub_district'),
+                    'shipping_postcode'     => $request->input('shipping_postcode')
+                   ];
+
+    if($member->update($requestData))
+      return view('pages.desktop.account.address', ['member'      => $member,
+                                                    'messageShow' => 'แก้ไขข้อมูลสถานที่จัดส่งสำเร็จ']);
+    else
+      return view('pages.desktop.account.address', ['member'      => $member,
+                                                    'messageShow' => 'แก้ไขข้อมูลสถานที่จัดส่งไม่สำเร็จ']);
+  }
+  public function updateBilling(Request $request, $id)
+  {
+    $member      = ST_Member::find($id);
+    $requestData = ['billign_address' => $request->input('billign_address'),
+                    'user_tax_Id'     => $request->input('user_tax_Id')
+                   ];
+
+    if($member->update($requestData))
+      return view('pages.desktop.account.address', ['member'      => $member,
+                                                    'messageShow' => 'แก้ไขข้อมูลที่อยู่ใบกำกับภาษีสำเร็จ']);
+    else
+      return view('pages.desktop.account.address', ['member'      => $member,
+                                                    'messageShow' => 'แก้ไขข้อมูลสที่อยู่ใบกำกับภาษีสำเร็จ']);
   }
   public function forgotPassword()
   {
