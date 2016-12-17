@@ -22,7 +22,7 @@
         <li class="cart"><div id="dd" class="shopping-dropdown">
           <span>{{ getCart()->count() }}</span>
           <ul class="dropdown shopping-list">
-            @if(!empty(getCart()))
+            @if(!empty(getCart()->all()))
               @foreach(getCart() as $cart)
                 @php
                   $productPrice    = $cart->products->pd_price;
@@ -47,16 +47,19 @@
                   </a>
                 </li>
               @endforeach
+              <li>
+                <div class="shopping-txt">ค่าจัดส่ง<br>ราคารวม</div>
+                <div class="shopping-price">{{ !empty($shippingPrice) ? number_format((float)$shippingPrice, 2) : '0.00' }} บาท<br>{{ !empty($grandTotal) ? number_format((float)$grandTotal, 2) : '0.00' }} บาท</div>
+              </li>
+            @else
+              <li>
+                <p align="center">ยังไม่มีสินค้าในตะกร้าช้อปปิ้งของคุณ</p>
+              </li>
             @endif
-             
-             <li>
-              <div class="shopping-txt">ค่าจัดส่ง<br>ราคารวม</div>
-              <div class="shopping-price">{{ !empty($shippingPrice) ? number_format((float)$shippingPrice, 2) : '0.00' }} บาท<br>{{ !empty($grandTotal) ? number_format((float)$grandTotal, 2) : '0.00' }} บาท</div>
-             </li>
-             <li>
-             <a href="{{ route('cart') }}" class="btn-process">ดูตะกร้าสินค้า</a>
-             </li>
-           </ul>
+            <li>
+            <a href="{{ route('cart') }}" class="btn-process">ดูตะกร้าสินค้า</a>
+            </li>
+          </ul>
         </div></li>
       </ul>
     <div class="social">
