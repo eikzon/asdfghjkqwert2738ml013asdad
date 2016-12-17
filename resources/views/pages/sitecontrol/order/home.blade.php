@@ -12,52 +12,50 @@
                     <th>Customer</th>
                     <th>Order ID</th>
                     <th>Total Price</th>
-                    <th>Quantity</th>
+                    <th>Total Shipping</th>
                     <th>Order Flow</th>
                     <th>Date</th>
-                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                @php
-                  $name = ['Elsa', 'Martin', 'Minizon', 'Rider', 'Banky', 'Rolla'];
-                  $status = ['Waiting Payment', 'Cancel', 'Receive', 'Confirmed', 'Delivery', 'Processing'];
-                @endphp
-                @for($i = 1; $i <= 5; $i++)
+                @foreach($orders as $order)
+                  @php
+                    $status = config('website.order.status.' . $order->od_flow_status);
+                  @endphp
                   <tr>
-                    <td>{{ $name[$i] }}</td>
-                    <td>#{{ rand(99, 9999) }}</td>
-                    <td>{{ number_format(rand(1000, 9999), 2) }}</td>
-                    <td>{{ rand(1, 50) }}</td>
-                    <td>{{ $status[$i] }}</td>
-                    <td>10-7-2016</td>
-                    <td> <span class="label label-success font-weight-100">Active</span> </td>
+                    <td>{{ $order['members']['first_name'] . ' ' . $order['members']['last_name'] }}</td>
+                    <td>{{ $order->od_code }}</td>
+                    <td>{{ number_format((float)$order->od_price_total, 2) }}</td>
+                    <td>{{ number_format((float)$order->od_price_shipping, 2) }}</td>
+                    <td>{{ $status }}</td>
+                    <td>{{ date('d-m-Y H:i:s', strtotime($order->created_at)) }}</td>
                     <td>
-                      <a href="{{ action('SiteControl\OrderController@show', ['id' => 1]) }}" class="text-inverse p-r-10" data-toggle="tooltip" title="Edit">
+                      <a href="{{ action('SiteControl\OrderController@show', ['id' => $order->id]) }}" class="text-inverse p-r-10" data-toggle="tooltip" title="Edit">
                         <i class="ti-eye"></i>
                       </a>
-                      <a href="javascript:void(0)" class="text-inverse" title="Delete" data-toggle="tooltip">
+                      <a href="javascript:void(0)" class="text-inverse js-delete" data-url="{{ action('SiteControl\OrderController@destroy', ['id' => $order->id]) }}" title="Delete" data-toggle="tooltip">
                         <i class="ti-trash"></i>
                       </a>
                     </td>
                   </tr>
-                @endfor
+                @endforeach
               </tbody>
           </table>
           <div class="text-right">
-            <ul class="pagination pagination-sm m-b-0">
-              <li class="disabled"> <a href="#"><i class="fa fa-angle-left"></i></a> </li>
-              <li class="active"> <a href="#">1</a> </li>
-              <li> <a href="#">2</a> </li>
-              <li> <a href="#">3</a> </li>
-              <li> <a href="#">4</a> </li>
-              <li> <a href="#">5</a> </li>
-              <li> <a href="#"><i class="fa fa-angle-right"></i></a> </li>
-            </ul>
-          </div>
+            {{ $orders->links() }}
         </div>
       </div>
     </div>
   </div>
+@endsection
+@section('script_footer')
+  @if(request()->getQueryString() == 'delete')
+    <script>actionDelete();</script>
+  @elseif(request()->getQueryString() == 'create')
+    <script>actionCreate();</script>
+  @elseif(request()->getQueryString() == 'update')
+    <script>actionUpdate();</script>
+  @endif
+  </script>
 @endsection

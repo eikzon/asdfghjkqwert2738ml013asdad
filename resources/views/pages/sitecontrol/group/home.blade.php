@@ -2,7 +2,7 @@
 @section('content')
   <div class="container-fluid">
     @include('common.sitecontrol.breadcrumb', [
-      'page'                => 'Product Group List',
+      'page'                => 'Product Group SKU',
       'displayCreateButton' => true,
       'url'                 => route('sitecontrol.group.create')
     ])
@@ -19,7 +19,6 @@
                 </tr>
               </thead>
               <tbody>
-                @php $name = ['Boot 1', 'Boot 2', 'Boot 3', 'Boot 4', 'Boot 5', 'Boot 6']; @endphp
                 @foreach($groups as $index => $group)
                   <tr>
                     <td>{{ $index + 1 }}</td>
@@ -49,15 +48,7 @@
               </tbody>
           </table>
           <div class="text-right">
-            <ul class="pagination pagination-sm m-b-0">
-              <li class="disabled"> <a href="#"><i class="fa fa-angle-left"></i></a> </li>
-              <li class="active"> <a href="#">1</a> </li>
-              <li> <a href="#">2</a> </li>
-              <li> <a href="#">3</a> </li>
-              <li> <a href="#">4</a> </li>
-              <li> <a href="#">5</a> </li>
-              <li> <a href="#"><i class="fa fa-angle-right"></i></a> </li>
-            </ul>
+            {{ $groups->links() }}
           </div>
         </div>
       </div>

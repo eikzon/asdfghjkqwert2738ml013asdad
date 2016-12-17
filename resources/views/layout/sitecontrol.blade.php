@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="csrf-token" content="{{ csrf_token() }}">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/favicon.png">
 <title>Elite Admin - is a responsive admin template</title>
 <!-- Bootstrap Core CSS -->
@@ -42,15 +42,16 @@
       </a>
       <div class="top-left-part">
         <a class="logo" href="{{ route('st-home') }}">
-          <b>
-            <img src="{{ asset('images/component/sitecontrol/logo.png') }}" alt="home" class="light-logo" />
-          </b>
-          <span class="hidden-xs">
-            <img src="{{ asset('images/component/sitecontrol/logo_text.png') }}" alt="home" class="light-logo" />
-            {{-- <img src="{{ asset('images/component/sitecontrol/logo_width.png') }}" alt="home" class="light-logo" /> --}}
-          </span>
+          <div><img src="{{ asset('images/logo_breaker.png') }}" width="90%"></div>
         </a>
       </div>
+      <ul class="nav navbar-top-links navbar-right pull-right">
+        <li class="dropdown">
+          <a class="waves-effect waves-light" href="{{ route('st-logout') }}">
+            <span class="hidden-xs">Logout</span> &nbsp;<i class="icon-logout"></i>
+          </a>
+        </li>
+      </ul>
       <ul class="nav navbar-top-links navbar-left hidden-xs">
         <li><a href="javascript:void(0)" class="open-close hidden-xs waves-effect waves-light"><i class="icon-arrow-left-circle ti-menu"></i></a></li>
         <li>
@@ -64,10 +65,18 @@
 
   <div id="page-wrapper">
     @yield('content')
-    <footer class="footer text-center"> 2016 &copy; all-we-design.com </footer>
+    <footer class="footer text-center"> 2016 © breaker-shoes.com </footer>
   </div>
 </div>
 <!-- /#wrapper -->
-<script src="{{ asset('js/all-sitecontrol.js') }}"></script>
+  <script src="{{ asset('js/all-sitecontrol.js') }}"></script>
+  @yield('script_footer')
+  @if(request()->getQueryString() == 'delete')
+    <script>actionDelete();</script>
+  @elseif(request()->getQueryString() == 'create')
+    <script>actionCreate();</script>
+  @elseif(request()->getQueryString() == 'update')
+    <script>actionUpdate();</script>
+  @endif
 </body>
 </html>

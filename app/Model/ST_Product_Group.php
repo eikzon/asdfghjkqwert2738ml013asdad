@@ -5,6 +5,8 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Model\ST_Product;
+use App\Model\ST_Variant;
+use App\Model\ST_Variant_Map;
 
 class ST_Product_Group extends Model
 {
@@ -15,20 +17,20 @@ class ST_Product_Group extends Model
 
   public function index($conditions = [])
   {
-    $groups = ST_Product_Group::all();
-    // @foreach($conditions as $key => $condition)
-    //   $setCondition .= "->where('" . $key . "', " . $condition . ")";
+    $perPage = !empty($conditions['perPage']) ? $conditions['perPage'] : 0;
 
-    $this->count = $groups->count();
-    return $groups->toArray();
+    if(!empty($conditions['status']))
+      $groups = ST_Product_Group::where('pg_status', 1)->orderBy('id', 'desc')->get();
+    else
+      $groups = ST_Product_Group::orderBy('id', 'desc')->paginate($perPage);
+
+    return $groups;
   }
 
 
-  public function list($condition = [])
+  public function productList(array $condition = [])
   {
-    // $productLists = ST_Product_Group::all()->join('ST_Product', 'pg_display_id', 'ST_Product.id');
     $productLists = (new ST_Product)->index($condition);
-
     if(!empty($productLists))
       return $productLists;
 
@@ -45,7 +47,7 @@ class ST_Product_Group extends Model
     return $result;
   }
 
-  public function edit(int $id_product)
+  public function edit($id_product)
   {
     $group = ST_Product_Group::where('id', $id_product)->first();
 
@@ -69,7 +71,7 @@ class ST_Product_Group extends Model
   private function conditionSQL($group, $request)
   {
     $group->pg_name   = $request->input('name');
-    $group->pg_status = $request->input('type');
+    $group->pg_status = $request->input('status');
     $updateGroup      = $group->save();
 
     if($updateGroup)
@@ -78,13 +80,35 @@ class ST_Product_Group extends Model
     return false;
   }
 
-  public function count()
+  public function variantsOption(int $groupId)
   {
-    return $this->count;
+    $result = self::with(['products' => function ($query){
+      $query->join('st_variant_map', 'fk_pd_id', '=', 'st_product.id')
+            ->join('st_variant', 'st_variant.id', '=', 'fk_vr_id');
+    }])->where('st_product_group.id', 1)->get()->toArray();
+
+    return $result;
   }
 
   public function products()
   {
     return $this->hasMany(ST_Product::class, 'fk_group_id');
+  }
+
+  public function variantsMap()
+  {
+    return $this->hasOne(ST_Variant_Map::class, 'fk_pd_id');
+  }
+
+  public function variantsMaps()
+  {
+    return $this->hasManyThrough(
+            ST_Variant_Map::class, ST_Product::class,
+            'id', 'fk_pd_id', 'st_product_group.id'
+           );
+     // return $this->hasManyThrough(
+     //        ST_Variant::class, ST_Variant_Map::class, ST_Product::class,
+     //        'st_variant.id', 'fk_pd_id', 'st_product.id', 'st_product_group.id'
+     //       );
   }
 }

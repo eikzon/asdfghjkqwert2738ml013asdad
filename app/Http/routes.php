@@ -16,46 +16,63 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix' => 'sitecontrol', 'namespace' => 'SiteControl'], function(){
-  Route::get('/', 'HomeController@index')->name('st-home');
-  Route::get('order', 'OrderController@index')->name('st-order');
-  // Route::get('member', 'MemberController@index')->name('st-member');
-  // Route::get('product', 'ProductController@index')->name('st-product');
-  Route::resource('product', 'ProductController', ['except' => 'show']);
-  Route::resource('order', 'OrderController');
-  Route::resource('member', 'MemberController');
-  Route::get('member/detail/{id}', 'MemberController@detail');
-  Route::resource('variant', 'VariantController');
-  Route::resource('group', 'ProductGroupController');
-  // Route::group(['prefix' => 'product'], function(){
-  //   Route::get('edit', 'ProductController@edit')->name('st-product');
-  //   Route::get('add', 'ProductController@')->name('st-product');
-  // });
+  Route::resource('login', 'AccountController');
+  Route::group(['middleware' => ['auth', 'admin']], function () {
+    Route::get('/', 'HomeController@index')->name('st-home');
+    Route::get('order', 'OrderController@index')->name('st-order');
+    Route::get('member', 'MemberController@index')->name('st-member');
+    // Route::get('product', 'ProductController@index')->name('st-product');
+    Route::resource('product', 'ProductController', ['except' => 'show']);
+    Route::post('product/uploadimages', 'ProductController@uploadImages');
+    Route::get('product/destroyimg/{pid}/{idImg}', 'ProductController@destroyImage')->name('st-destroyImage');
+    Route::resource('order', 'OrderController');
+    Route::resource('member', 'MemberController');
+    Route::get('member/detail/{id}', 'MemberController@detail');
+    Route::resource('variant', 'VariantController');
+    Route::resource('group', 'ProductGroupController');
+    Route::resource('category', 'CategoryController');
+    Route::get('logout', 'AccountController@logout')->name('st-logout');
+  });
 });
 
 Route::group(['namespace' => 'FrontEnd'], function(){
   Route::group(['prefix' => 'account'], function(){
     Route::get('/', 'AccountController@index')->name('account_index');
     Route::get('profile', 'AccountController@profile')->name('account_profile');
+    Route::post('profile/update/{id}', 'AccountController@updateProfile')->name('account_update');
+    Route::post('profile/changePassword/{id}', 'AccountController@changePassword')->name('account_change_password');
+    Route::post('profile/updateShipping/{id}', 'AccountController@updateShipping')->name('account_update_shipping');
+    Route::post('profile/updateBilling/{id}', 'AccountController@updateBilling')->name('account_update_billing');
     Route::get('address', 'AccountController@address')->name('account_address');
     Route::get('history', 'AccountController@history')->name('account_history');
+    Route::get('history/{id}', 'AccountController@historyDetail')->name('account_history_detail');
     Route::get('wishlist', 'AccountController@wishlist')->name('account_wishlist');
+    Route::get('wishlist/{pid}', 'AccountController@wishlistAdd')->name('account_wishlist_add');
+    Route::get('wishlist/destroy/{pid}/{id}', 'AccountController@wishlistDestroy')->name('account_wishlist_delete');
     Route::get('register', 'AccountController@create')->name('account_create');
     Route::post('register', 'AccountController@store')->name('account_store');
     Route::get('logout', 'AccountController@destroy')->name('account_logout');
     Route::get('login', 'AccountController@login')->name('account_login');
+    Route::get('client_login', 'AccountController@clientLogin')->name('client_login');
+    Route::get('client_logout', 'AccountController@clientLogout')->name('client_logout');
     Route::get('forgot_password', 'AccountController@fogot_password')->name('account_forgot_password');
+    Route::post('forgot_password', 'AccountController@forgotPasswordSend')->name('account_forgot_password_send');
   });
 
   Route::group(['prefix' => 'product'], function(){
-    Route::get('/', 'ProductController@index')->name('product_list');
+    Route::get('category/{id}', 'ProductController@index')->name('product_list');
     Route::get('{id}', 'ProductController@show')->name('product_detail');
   });
 
   Route::group(['prefix' => 'cart'], function(){
     Route::get('/', 'CartController@index')->name('cart');
+    Route::post('addToCart', 'CartController@addToCart')->name('add_to_cart');
+    Route::post('updateCart', 'CartController@updateCartItems')->name('update_cart');
+    Route::get('deleteCart/{id}', 'CartController@deleteCartItems')->name('delete_cart');
     Route::get('shipping', 'CartController@shipping')->name('cart_shipping');
-    Route::get('complete', 'CartController@completePayment')->name('cart_complete');
-    Route::get('error', 'CartController@errorPayment')->name('cart_error');
+    Route::post('checkout', 'CartController@checkout')->name('cart_checkout');
+    Route::get('complete/{type}/{token}', 'CartController@completePayment')->name('cart_complete');
+    Route::get('error/{type}/{token}', 'CartController@errorPayment')->name('cart_error');
+    Route::post('payment', 'PaypalController@store')->name('cart_payment');
   });
 });
-

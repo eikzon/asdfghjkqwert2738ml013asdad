@@ -17,42 +17,46 @@
                 Gender : {{ ($member->gender == 0 ? 'Male' : 'Female') }}<br>
                 Mobile : {{ $member->tel }}
               </div>
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <h4 class="box-title m-t-40"><i class="ti-home"></i> Current Address </h4>
+                Address : {{ $member->shipping_address }}<br>
+                Sub District : {{ $member->shipping_sub_district }}<br>
+                District : {{ $member->shipping_district }}<br>
+                Province : {{ $member->shipping_province }}<br>
+                Postcode : {{ $member->shipping_postcode }}<br>
+                Tax Id : {{ $member->user_tax_Id }}
+              </div>
               <div class="col-lg-12 col-md-12 col-sm-12">
-                <h3 class="box-title m-t-40"><i class="ti-time"></i> Products In Order</h3>
+                <h3 class="box-title m-t-40"><i class="ti-time"></i> Order History</h3>
                 <table class="table product-overview" id="myTable">
                   <thead>
                     <tr>
-                        <th>Customer</th>
                         <th>Order ID</th>
                         <th>Total Price</th>
-                        <th>Quantity</th>
+                        <th>Total Shipping</th>
                         <th>Order Flow</th>
                         <th>Date</th>
-                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     @php
-                      $name = ['Elsa', 'Martin', 'Minizon', 'Rider', 'Banky', 'Rolla'];
-                      $status = ['Waiting Payment', 'Cancel', 'Receive', 'Confirmed', 'Delivery', 'Processing'];
+                      $status = ['Cancel', 'Waiting Payment', 'Receive', 'Confirmed', 'Delivery', 'Processing'];
                     @endphp
-                    @for($i = 1; $i <= 5; $i++)
+                    @foreach($member->orders as $order)
                       <tr>
-                        <td>{{ $name[$i] }}</td>
-                        <td>#{{ rand(99, 9999) }}</td>
-                        <td>{{ number_format(rand(1000, 9999), 2) }}</td>
-                        <td>{{ rand(1, 50) }}</td>
-                        <td>{{ $status[$i] }}</td>
-                        <td>10-7-2016</td>
-                        <td> <span class="label label-warning font-weight-100">Processing</span> </td>
+                        <td>{{ $order->od_code }}</td>
+                        <td>{{ number_format((float)$order->od_price_total, 2) }}</td>
+                        <td>{{ number_format((float)$order->od_price_shipping, 2) }}</td>
+                        <td>{{ $status[$order->od_flow_status] }}</td>
+                        <td>{{ date('d-m-Y H:i:s', strtotime($order->created_at)) }}</td>
                         <td>
-                          <a href="{{ action('SiteControl\OrderController@show', ['id' => 1]) }}" class="text-inverse p-r-10" data-toggle="tooltip" title="Edit">
+                          <a href="{{ action('SiteControl\OrderController@show', ['id' => $order->id]) }}" class="text-inverse p-r-10" data-toggle="tooltip" title="Edit">
                             <i class="ti-eye"></i>
                           </a>
                         </td>
                       </tr>
-                    @endfor
+                    @endforeach
                   </tbody>
                 </table>
               </div>

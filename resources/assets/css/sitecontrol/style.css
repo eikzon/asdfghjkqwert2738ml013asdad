@@ -1150,10 +1150,16 @@ pre {
   color: #ffffff;
 }
 
+.logo img {
+  padding-left: 10%;
+  padding-top: 10px;
+}
+
 .top-left-part {
   width: 220px;
   float: left;
   background: #ffffff;
+  height: 60px;
 }
 
 .top-left-part a {
@@ -1845,6 +1851,10 @@ table.dataTable thead .sorting:after {
   font-weight: 500;
   text-transform: uppercase;
   font-size: 14px;
+}
+
+.login .form-group:last-child {
+  margin-bottom: 0;
 }
 
 .panel {
@@ -4644,7 +4654,7 @@ table.focus-on tbody tr.focused td {
 
 /* Login- register pages */
 .login-register {
-  background: url(../../plugins/images/login-register.jpg) no-repeat center (center / cover) !important;
+  background: url(../images/login-register.jpg) no-repeat center (center / cover) !important;
   height: 100%;
   position: fixed;
 }

@@ -28,8 +28,3 @@ $(function() {
     $('.shopping-dropdown').removeClass('active');
   });
 });
-
-Galleria.loadTheme('js/galleria.classic.min.js');
-Galleria.run('#galleria');
-
-var swiper = new Swiper('.swiper-container', { });

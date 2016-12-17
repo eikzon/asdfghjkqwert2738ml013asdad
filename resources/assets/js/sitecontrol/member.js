@@ -15,24 +15,23 @@ $(document).ready(function () {
         status: $status
       },
       success: function(result) {
-        window.location.reload();
+        actionUpdate();
+        setTimeout(function(){ window.location.reload(); }, 3000);
       }
     });
   });
 
   $('.js-member-delete').on('click', function() {
-    if(confirm('You won\'t be able to revert this!') == true)
-    {
-      $.ajax({
-        type: 'POST',
-        url: $(this).data('url'),
-        data: {
-          _method: 'DELETE'
-        },
-        success: function(result) {
-          window.location.reload();
-        }
-      });
-    }
+    $.ajax({
+      type: 'POST',
+      url: $(this).data('url'),
+      data: {
+        _method: 'DELETE'
+      },
+      success: function(result) {
+        actionDelete();
+        setTimeout(function(){ window.location.reload(); }, 3000);
+      }
+    });
   });
 });

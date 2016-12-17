@@ -13,9 +13,7 @@ class ST_Variant extends Model
 
   public function index()
   {
-    $variants    = ST_Variant::all();
-    $this->count = $variants->count();
-    return $variants->toArray();
+    return ST_Variant::orderBy('id', 'desc')->paginate(config('website.common.perPage.siteControl'));
   }
 
   public function getType()
@@ -46,7 +44,7 @@ class ST_Variant extends Model
     return $result;
   }
 
-  public function edit(int $id_product)
+  public function edit($id_product)
   {
     $variant = ST_Variant::where('id', $id_product)->first();
 
@@ -78,10 +76,5 @@ class ST_Variant extends Model
       return true;
 
     return false;
-  }
-
-  public function count()
-  {
-    return $this->count;
   }
 }

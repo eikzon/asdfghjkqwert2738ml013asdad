@@ -14,14 +14,20 @@ class ProductGroupController extends Controller
 
   public function __construct()
   {
+    parent::__construct();
     $this->st_product_group = new ST_Product_Group;
   }
 
   public function index()
   {
-    return view('pages.sitecontrol.group.home', [
-      'groups' => $this->st_product_group->index(),
-    ]);
+    $groups = $this->st_product_group->index();
+
+    if($groups->currentPage() > $groups->lastPage())
+      return redirect()->route('sitecontrol.group.index');
+    else
+      return view('pages.sitecontrol.group.home', [
+        'groups' => $groups,
+      ]);
   }
 
   public function create()
@@ -35,12 +41,12 @@ class ProductGroupController extends Controller
   public function store(Request $request)
   {
     if($this->st_product_group->store($request))
-      return redirect()->route('sitecontrol.group.index');
+      return redirect()->route('sitecontrol.group.index', 'create');
     else
       return redirect()->route('sitecontrol.group.create');
   }
 
-  public function edit(int $id)
+  public function edit($id)
   {
     if(!empty($id))
     {
@@ -60,15 +66,15 @@ class ProductGroupController extends Controller
 
   public function update(Request $request)
   {
-    if($this->st_product_group->updategroup($request))
-      return redirect()->route('sitecontrol.group.index');
+    if($this->st_product_group->updateVariant($request))
+      return redirect()->route('sitecontrol.group.index', 'update');
     else
       return redirect()->route('sitecontrol.group.edit', ['id' => $request->input('id')]);
   }
 
-  public function destroy(int $id)
+  public function destroy($id)
   {
     ST_Product_Group::destroy($id);
-    return redirect()->route('sitecontrol.group.index');
+    return redirect()->route('sitecontrol.group.index', 'delete');
   }
 }
