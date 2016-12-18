@@ -22180,10 +22180,11 @@ header:before,
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) inset, 0 -3px 2px rgba(0, 0, 0, 0.1); }
 
 #dropbox .message {
-  font-size: 11px;
+  font-size: 13px;
   text-align: center;
   padding-top: 160px;
-  display: block; }
+  display: block;
+  color: #666; }
 
 #dropbox .message i {
   color: #ccc;

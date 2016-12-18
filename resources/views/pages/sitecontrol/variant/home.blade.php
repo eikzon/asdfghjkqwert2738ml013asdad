@@ -14,8 +14,8 @@
                 <tr>
                   <th>No.</th>
                   <th>Name</th>
-                  <th>Text or Size</th>
-                  {{-- <th>Type</th> --}}
+                  <th>Color or Size</th>
+                  <th>Type</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -25,13 +25,13 @@
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $variant['vr_name'] }}</td>
                     <td>
-                      @if($variant['vr_type'] === 2)
+                      {{-- @if($variant['vr_type'] === 2)
                         <img width="60" src="{{ asset('images/products/img-' . $variant['vr_text'] . '.jpg') }}">
-                      @else
+                      @else --}}
                         {{ $variant['vr_text'] }}
-                      @endif
+                      {{-- @endif --}}
                     </td>
-                    {{-- <td>{{ ($variant['vr_type'] === 2) ? 'Image' : 'Text' }}</td> --}}
+                    <td>{{ ($variant['vr_type'] === 2) ? 'Color' : 'Size' }}</td>
                     <td>
                       <a href="{{ route('sitecontrol.variant.edit', $variant['id']) }}"
                          class="text-inverse p-r-10"

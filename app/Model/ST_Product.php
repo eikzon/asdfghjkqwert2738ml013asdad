@@ -15,7 +15,7 @@ class ST_Product extends Model
 
   protected $dates    = ['deleted_at'];
   protected $table    = 'st_product';
-  protected $fillable = ['pd_code', 'pd_name', 'pd_short_desc', 'pd_long_desc', 'pd_price', 'pd_discount', 'pd_price_discount', 'pd_badge', 'pd_status', 'pd_stock', 'fk_group_id', 'fk_category_id'];
+  protected $fillable = ['pd_code', 'pd_name', 'pd_short_desc', 'pd_long_desc', 'pd_price', 'pd_discount', 'pd_price_discount', 'pd_badge', 'pd_status', 'pd_stock', 'fk_group_id', 'fk_category_id', 'keyGenerate'];
 
   public function index($conditions = [])
   {
@@ -69,7 +69,8 @@ class ST_Product extends Model
       'pd_status'         => $request->input('status'),
       'pd_stock'          => $request->input('stock'),
       'fk_group_id'       => $request->input('group'),
-      'fk_category_id'    => $request->input('category')
+      'fk_category_id'    => $request->input('category'),
+      'keyGenerate'       => $request->input('keyGenerate')
     ]);
 
     if($request->has('variant.*') && $result)
@@ -83,7 +84,7 @@ class ST_Product extends Model
       }
     }
 
-    $this->updateIdImages($request->input('code'), $result->id);
+    $this->updateIdImages($request->input('keyGenerate'), $result->id);
 
     return $result;
   }
@@ -105,8 +106,8 @@ class ST_Product extends Model
     if(empty($product))
       return false;
 
-    $variantsMap       = ST_Variant_Map::all()->where('fk_pd_id', $id_product);
-    $variantsMapResult = !empty($variantsMap) ? $variantsMap->toArray() : NULL;
+    $variantsMap       = ST_Variant_Map::where('fk_pd_id', $id_product)->get();
+    $variantsMapResult = !$variantsMap->isEmpty() ? $variantsMap->toArray() : NULL;
 
     return ['product'     => $product->toArray(),
             'variantsMap' => $variantsMapResult];
@@ -117,7 +118,7 @@ class ST_Product extends Model
     $product = ST_Product::find($request->input('id'));
     $result  = $this->conditionSQL($product, $request);
 
-    $this->updateIdImages($request->input('code'), $request->input('id'));
+    $this->updateIdImages($request->input('keyGenerate'), $request->input('id'));
 
     if($request->has('variant.*') && $result)
     {
@@ -159,6 +160,7 @@ class ST_Product extends Model
     $product->pd_stock          = $request->input('stock');
     $product->fk_group_id       = $request->input('group');
     $product->fk_category_id    = $request->input('category');
+    $product->pd_code           = $request->input('code');
     $updateProduct              = $product->save();
 
     if($updateProduct)
@@ -167,7 +169,7 @@ class ST_Product extends Model
     return false;
   }
 
-  public function list($categoryId)
+  public function listProduct($categoryId)
   {
     $products = ST_Product::with('images')
                   ->with('sku')
@@ -178,6 +180,11 @@ class ST_Product extends Model
                   ->orderBy('id', 'desc')
                   ->get();
     return $products;
+  }
+
+  public static function clearView()
+  {
+    ST_Product::where([['id', '!=', '']])->update(['count_view' => 0]);
   }
 
   public function variants()

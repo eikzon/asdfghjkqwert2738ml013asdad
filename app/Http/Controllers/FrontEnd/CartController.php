@@ -152,9 +152,9 @@ class CartController extends Controller
       }
 
       $orderUpdateStatus = $orderClass->updateOrder([
-                              'od_price_discount' => $discountTotal ?? 0,
-                              'od_price_shipping' => $shippingTotal ?? 0,
-                              'od_price_total'    => $priceTotal ?? 0
+                              'od_price_discount' => !empty($discountTotal) ? $discountTotal : 0,
+                              'od_price_shipping' => !empty($shippingTotal) ? $shippingTotal : 0,
+                              'od_price_total'    => !empty($priceTotal) ? $priceTotal : 0
                             ], $orderCreateId);
 
       if($request->input('paymentselect') == 3)

@@ -13,6 +13,8 @@ use App\Model\ST_Product_Group;
 use App\Model\ST_Variant;
 use App\Model\ST_Order;
 use App\Model\ST_Member;
+use App\Model\ST_Category;
+use App\Model\ST_StartDateCountsView;
 
 class Controller extends BaseController
 {
@@ -21,8 +23,8 @@ class Controller extends BaseController
   public function __construct()
   {
     $product = (new ST_Product)->index()->total();
-    $order = (new ST_Order)->now()->get()->count();
-    $member = (new ST_Member)->now()->get()->count();
+    $order   = (new ST_Order)->now()->get()->count();
+    $member  = (new ST_Member)->now()->get()->count();
     $sku     = (new ST_Product_Group)->index()->total();
     $variant = (new ST_Variant)->index()->total();
 
@@ -34,6 +36,24 @@ class Controller extends BaseController
       'variant' => (!empty($variant) ? $variant : 0),
     ];
 
-    view()->share('count', $allCount);
+    view()->share([
+      'count'          => $allCount,
+      'categoriesList' => (new ST_Category)->show()
+    ]);
+
+    $startDayofWeek = date('Y-m-d', strtotime('-' . date('w') . ' days'));
+    if($startDayofWeek == date('Y-m-d'))
+    {
+      $responseDate = ST_StartDateCountsView::first();
+      if($responseDate->startdate != $startDayofWeek)
+      {
+        ST_StartDateCountsView::truncate();
+        $setDate = new ST_StartDateCountsView;
+        $setDate->startdate = $startDayofWeek;
+        $setDate->save();
+
+        ST_Product::clearView();
+      }
+    }
   }
 }

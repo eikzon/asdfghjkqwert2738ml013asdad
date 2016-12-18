@@ -13,7 +13,7 @@ trait UploadImageTrait {
       case 'product' :
         $path   = 'images/products/';
         $width  = 620;
-        $height = 434;
+        $height = 260;
         break;
       case 'variant' :
         $path   = 'images/variant/';
@@ -26,7 +26,7 @@ trait UploadImageTrait {
     Image::make($request->file('pic'))->resize($width, $height)->save($path . $imageName);
 
     if($type == 'product')
-      (new ST_Product_Images)->createImages($imageName, $request->input('code'));
+      (new ST_Product_Images)->createImages($imageName, $request->input('keyGenerate'));
     elseif($type == 'variant')
       session()->put(['variantImage' => $imageName]);
 

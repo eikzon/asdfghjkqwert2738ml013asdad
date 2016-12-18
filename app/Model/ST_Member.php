@@ -53,10 +53,10 @@ class ST_Member extends Model
     ST_Member::deleted(function ($member) {});
   }
 
-  public static function UpdatePassword($password, $uid)
+  public static function UpdatePassword($password, $email, $uid)
   {
     $user           = self::find($uid);
-    $user->password = Hash::make($password);
+    $user->password = md5($email . $password);
     if($user->save())
       return true;
 
@@ -71,6 +71,20 @@ class ST_Member extends Model
   public function scopeNow($query)
   {
     return $query;
+  }
+
+  public function scopeThisWeek($query)
+  {
+    $day = date('w');
+    $week_start = date('Y-m-d', strtotime('-'.$day.' days')) . ' 00:00:00';
+    $week_end = date('Y-m-d', strtotime('+'.(6-$day).' days')) . ' 59:59:59';
+    // dd($week_start . ' ' . $week_end);
+    return $query->where([
+                          ['created_at', '>=', $week_start],
+                          ['created_at', '<=', $week_end],
+                          ['status', '!=', 0],
+                        ])
+                 ->limit(5);
   }
 
   public function scopeEmail($query, $email)

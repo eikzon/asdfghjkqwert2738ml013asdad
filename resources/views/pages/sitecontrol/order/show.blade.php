@@ -16,16 +16,16 @@
                 $orderAddress = $order['orderAddress']->first();
                 if(!empty($orderAddress))
                 {
-                  $shipping = 'Address       : ' . $orderAddress->oa_address . '<br>' 
-                            . 'Sub District   : ' . $orderAddress->oa_sub_district . '<br>' 
-                            . 'District   : ' . $orderAddress->oa_district . '<br>' 
-                            . 'Province      : ' . $orderAddress->oa_province . '<br>' 
+                  $shipping = 'Address       : ' . $orderAddress->oa_address . '<br>'
+                            . 'Sub District   : ' . $orderAddress->oa_sub_district . '<br>'
+                            . 'District   : ' . $orderAddress->oa_district . '<br>'
+                            . 'Province      : ' . $orderAddress->oa_province . '<br>'
                             . 'Postcode : ' . $orderAddress->oa_postcode . '<br>'
                             . 'Tel : ' . $orderAddress->oa_tel;
 
                   $billing = 'Address : ' . (!empty($orderAddress->oa_isbilling_address) ? $orderAddress->oa_billign_address : $shipping)
                              . '<br>' . 'Tax Id : ' . $orderAddress->oa_tax_id;
-                } 
+                }
               @endphp
               <div class="col-lg-6 col-md-6 col-sm-6">
                   <h4 class="box-title m-t-40"><i class="ti-home"></i> Shipping Address </h4>
@@ -62,7 +62,7 @@
                           <td>{{ $productList->products->first()->pd_code }}</td>
                           <td><img width="60" src="{{ asset('images/products/' . getImageCart($productList->id)->image) }}"></td>
                           <td>{{ $productList->products->first()->pd_name }}</td>
-                          <td>{{ getVariant($productList->id)->vr_text }}</td>
+                          <td>{{ !empty(getVariant($productList->id)->vr_text) ? getVariant($productList->id)->vr_text : '' }}</td>
                           <td>{{ number_format((float)$pricePerUnit, 2) }}</td>
                           <td>{{ $productList->od_quantity }}</td>
                           <td>{{ number_format($productList->od_price, 2) }}</td>

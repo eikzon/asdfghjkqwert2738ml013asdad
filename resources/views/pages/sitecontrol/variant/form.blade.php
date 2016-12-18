@@ -14,6 +14,29 @@
                                 <div class="row">
                                   <div class="col-md-6">
                                     <div class="form-group">
+                                      <label class="control-label">Variant Type</label>
+                                      <div class="radio-list">
+                                        <label class="radio-inline">
+                                          <div class="radio radio-info">
+                                            <input type="radio" name="type" id="type-text" value="1"
+                                            @if($variant['vr_type'] != 2) checked @endif>
+                                            <label for="type-text">Size</label>
+                                          </div>
+                                        </label>
+                                        <label class="radio-inline p-0">
+                                          <div class="radio radio-info">
+                                            <input type="radio" name="type" id="type-image" value="2"
+                                            @if($variant['vr_type'] === 2) checked @endif>
+                                            <label for="type-image">Color</label>
+                                          </div>
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-6">
+                                    <div class="form-group">
                                       <label class="control-label">Variant Name</label>
                                       <input type="text" id="name" name="name" class="form-control"
                                              placeholder="Variant Name"
@@ -21,30 +44,9 @@
                                              value="{{ $variant['vr_name'] or '' }}">
                                     </div>
                                   </div>
-                                  {{-- <div class="col-md-6">
-                                    <div class="form-group">
-                                      <label class="control-label">Variant Type</label>
-                                      <div class="radio-list">
-                                        <label class="radio-inline">
-                                          <div class="radio radio-info">
-                                            <input type="radio" name="type" id="type-text" value="1"
-                                            @if($variant['vr_type'] != 2) checked @endif>
-                                            <label for="type-text">Text or Size</label>
-                                          </div>
-                                        </label>
-                                        <label class="radio-inline p-0">
-                                          <div class="radio radio-info">
-                                            <input type="radio" name="type" id="type-image" value="2"
-                                            @if($variant['vr_type'] === 2) checked @endif>
-                                            <label for="type-image">Image</label>
-                                          </div>
-                                        </label>
-                                      </div>
-                                    </div>
-                                  </div> --}}
                                   <div class="col-md-6">
                                     <div class="form-group">
-                                      <label class="control-label">Variant Text Or Size</label>
+                                      <label class="control-label">Variant Color Or Size</label>
                                       <input type="text" id="text" name="text" class="form-control"
                                              placeholder="Variant Size"
                                              required=""
@@ -52,7 +54,27 @@
                                     </div>
                                   </div>
                                 </div>
-                                <input type="hidden" name="type" value="1"> {{-- Text Type --}}
+                                {{-- <div class="row"> --}}
+                                  {{-- <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label class="control-label">Variant Text Or Size</label>
+                                      <input type="text" id="text" name="text" class="form-control"
+                                             placeholder="Variant Size"
+                                             required=""
+                                             value="{{ $variant['vr_text'] or '' }}">
+                                    </div>
+                                  </div> --}}
+                                  {{-- <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label class="control-label">Variant Image</label>
+                                      <input type="text" id="text" name="color" class="form-control"
+                                             placeholder="Variant Color"
+                                             required=""
+                                             value="{{ $variant['vr_text'] or '' }}">
+                                    </div>
+                                  </div> --}}
+                                {{-- </div> --}}
+                                {{-- <input type="hidden" name="type" value="1"> --}}
                                 {{-- <div class="row">
                                   <div class="col-lg-12">
                                     <label class="control-label">Variant Image</label>

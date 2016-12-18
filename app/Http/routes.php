@@ -27,7 +27,7 @@ Route::group(['prefix' => 'sitecontrol', 'namespace' => 'SiteControl'], function
     Route::get('product/destroyimg/{pid}/{idImg}', 'ProductController@destroyImage')->name('st-destroyImage');
     Route::resource('order', 'OrderController');
     Route::resource('member', 'MemberController');
-    Route::get('member/detail/{id}', 'MemberController@detail');
+    Route::get('member/detail/{id}', 'MemberController@detail')->name('member_detail');
     Route::resource('variant', 'VariantController');
     Route::resource('group', 'ProductGroupController');
     Route::resource('category', 'CategoryController');
@@ -55,7 +55,7 @@ Route::group(['namespace' => 'FrontEnd'], function(){
     Route::get('login', 'AccountController@login')->name('account_login');
     Route::get('client_login', 'AccountController@clientLogin')->name('client_login');
     Route::get('client_logout', 'AccountController@clientLogout')->name('client_logout');
-    Route::get('forgot_password', 'AccountController@fogot_password')->name('account_forgot_password');
+    Route::get('forgot_password', 'AccountController@forgotPassword')->name('account_forgot_password');
     Route::post('forgot_password', 'AccountController@forgotPasswordSend')->name('account_forgot_password_send');
   });
 

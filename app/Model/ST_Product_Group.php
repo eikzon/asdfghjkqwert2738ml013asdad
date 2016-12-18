@@ -80,12 +80,12 @@ class ST_Product_Group extends Model
     return false;
   }
 
-  public function variantsOption(int $groupId)
+  public function variantsOption($groupId)
   {
     $result = self::with(['products' => function ($query){
       $query->join('st_variant_map', 'fk_pd_id', '=', 'st_product.id')
             ->join('st_variant', 'st_variant.id', '=', 'fk_vr_id');
-    }])->where('st_product_group.id', 1)->get()->toArray();
+    }])->where('st_product_group.id', $groupId)->get()->toArray();
 
     return $result;
   }

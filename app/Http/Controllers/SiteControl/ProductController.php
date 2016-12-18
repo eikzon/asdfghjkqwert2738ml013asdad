@@ -29,7 +29,7 @@ class ProductController extends Controller
   {
     $products = $this->st_product->index(['perPage' => config('website.common.perPage.siteControl')]);
 
-    if($products->currentPage() > $products->lastPage())
+    if(($products->currentPage() > $products->lastPage()) && $products->total())
       return redirect()->route('sitecontrol.product.index');
     else
       return view('pages.sitecontrol.product.home', [
@@ -42,7 +42,7 @@ class ProductController extends Controller
     return view('pages.sitecontrol.product.form', [
       'product'        => null,
       'groups'         => (new ST_Product_Group)->index(['status' => true]),
-      'categories'     => (new ST_Category)->index(),
+      'categories'     => (new ST_Category)->show(),
       'variantsResult' => (new ST_Variant)->getType(),
       'state'          => 'store'
     ]);
@@ -73,8 +73,8 @@ class ProductController extends Controller
         'product'        => $result['product'],
         'variantsResult' => (new ST_Variant)->getType(),
         'variantsMap'    => $variantsMap,
-        'groups'         => (new ST_Product_Group)->index(),
-        'categories'     => (new ST_Category)->index(),
+        'groups'         => (new ST_Product_Group)->index(['status' => true]),
+        'categories'     => (new ST_Category)->show(),
         'state'          => 'update'
       ]);
     }
@@ -98,7 +98,7 @@ class ProductController extends Controller
 
   public function uploadImages(Request $request)
   {
-    if(!empty($request->file('pic')) && !empty($request->input('code')))
+    if(!empty($request->file('pic')) && !empty($request->input('keyGenerate')))
       return $this->uploadTraits($request, 'product');
   }
 

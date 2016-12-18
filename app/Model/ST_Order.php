@@ -58,7 +58,7 @@ class ST_Order extends Model
     $orderDetail->od_payment_type = $request->input('paymentselect');
     $orderDetail->save();
 
-    return ($orderDetail->id ?? false);
+    return !empty($orderDetail->id) ? $orderDetail->id : false;
   }
 
   public function updateOrder($resultUpdate, $orderId)
@@ -80,7 +80,11 @@ class ST_Order extends Model
 
   public function scopeByMember($query, $memberId)
   {
-    $query->where('fk_member_id', $memberId)->where('od_status', 1)->orwhere('od_status', 2)->orderBy('id', 'desc');
+    $query->where([
+              ['fk_member_id', '=', $memberId],
+              ['od_status', '>', 0],
+            ])
+          ->orderBy('id', 'desc');
     return $query;
   }
 

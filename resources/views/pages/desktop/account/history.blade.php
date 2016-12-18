@@ -2,10 +2,11 @@
 @section('header')
   @include('common.desktop.header')
 @endsection
+@section('title', 'ประวัติการสั่งซื้อ')
 @section('content')
   @include('common.desktop.account.header', [
     'title'  => 'My Account',
-    'detail' => 'บัญชีของฉัน'
+    'detail' => 'ประวัติการสั่งซื้อ'
   ])
   <div class="container-myaccount">
     @include('common.desktop.account.menu', ['page' => 'history'])
@@ -49,7 +50,7 @@
                                       @endif
                                     </td>
                                     <td data-title="เลขพัสดุ(EMS) :">
-                                      {{ $order['od_tracking'] ?? '-' }}
+                                      {{ !empty($order['od_ems_track']) ? $order['od_ems_track'] : '-' }}
                                     </td>
                                 </tr>
                               @endforeach
