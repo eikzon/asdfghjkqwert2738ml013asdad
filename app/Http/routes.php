@@ -79,4 +79,8 @@ Route::group(['namespace' => 'FrontEnd'], function(){
     Route::get('error/{type}/{token}', 'CartController@errorPayment')->name('cart_error');
     Route::post('payment', 'PaypalController@store')->name('cart_payment');
   });
+
+  Route::post('option_province', 'ProvincesController@options')->name('option_province');
+  Route::post('option_amphures', 'ProvincesController@optionsAmphures')->name('option_amphures');
+  Route::post('optionsDistricts', 'ProvincesController@optionsDistricts')->name('option_districts');
 });
