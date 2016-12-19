@@ -93,6 +93,14 @@
               </span>
             </a>
           </li>
+          <li>
+            <a href="{{ route('sitecontrol.platform.edit', 1) }}" class="waves-effect">
+              <i class="linea-icon linea-basic fa-fw" data-icon="&#xe006;"></i>
+              <span class="hide-menu">
+                Platform Student
+              </span>
+            </a>
+          </li>
           <li><a href="{{ route('st-logout') }}" class="waves-effect"><i class="icon-logout fa-fw"></i> <span class="hide-menu">Log out</span></a></li>
       </ul>
   </div>

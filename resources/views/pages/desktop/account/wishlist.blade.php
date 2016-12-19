@@ -2,10 +2,11 @@
 @section('header')
   @include('common.desktop.header')
 @endsection
+@section('title', 'สินค้าที่น่าสนใจ')
 @section('content')
   @include('common.desktop.account.header', [
     'title'  => 'My Account',
-    'detail' => 'บัญชีของฉัน'
+    'detail' => 'สินค้าที่น่าสนใจ'
   ])
   <div class="container-myaccount">
     @include('common.desktop.account.menu', ['page' => 'wishlist'])

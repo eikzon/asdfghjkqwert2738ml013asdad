@@ -13,11 +13,12 @@
                               <div class="row">
                                 <div class="col-md-6">
                                   <div class="form-group">
-                                    <label class="control-label">Product Code</label>
-                                    <input type="text" name="code" id="code" class="form-control"
-                                           placeholder="Product Name"
-                                           readonly
-                                           value="{{ $product['pd_code'] or ('#PD' . sprintf('%06d', rand(1,999999))) }}">
+                                    <label class="control-label">
+                                      Product Code</label>
+                                      <input type="text" name="code" id="code" class="form-control"
+                                             placeholder="Product Code" value="{{ $product['pd_code'] or '' }}" required>
+                                      <input type="hidden" name="keyGenerate"
+                                             value="{{ $product['keyGenerate'] or (date('d') . time()) }}">
                                   </div>
                                 </div>
                                 <div class="col-md-6">
@@ -99,7 +100,7 @@
                                   </div>
                                   <div class="col-md-6">
                                     <div class="form-group">
-                                      <label class="control-label">Stock</label>
+                                      <label class="control-label">Stock <span class="text-danger">(when below 50 ea, just notify in dashboard page)</span></label>
                                       <input type="text" name="stock" id="stock" required="" class="form-control" placeholder="Quantity Per Stock" value="{{ $product['pd_stock'] or '' }}">
                                     </div>
                                   </div>
@@ -150,7 +151,7 @@
                                 <!--/row-->
                                 @if(!empty($product['images']))
                                   <div class="col-lg-12">
-                                    <h3 class="box-title m-t-20">Product Images</h3>
+                                    <h3 class="box-title m-t-20">Product Images <span class="text-danger">(Unlimited)</span></h3>
                                     @foreach($product['images'] as $image)
                                       <div class="col-md-3">
                                         <div class="product-img">
@@ -166,7 +167,7 @@
                                   </div>
                                 @endif
                                 <div class="col-lg-12">
-                                  <h3 class="box-title m-t-20">Upload Image</h3>
+                                  <h3 class="box-title m-t-20">Upload Image <span class="text-danger">(Recommend : w 620px * h 435px)</span></h3>
                                   <div id="dropbox" data-url="/sitecontrol/product/uploadimages">
                                     <span class="message">Drop images here to upload. <br /><i>(they will only be visible to you)</i></span>
                                   </div>
@@ -199,7 +200,7 @@
                                       </select>
                                     </div>
                                   </div>
-                                  <div class="col-md-6">
+                                  {{-- <div class="col-md-6">
                                     <div class="form-group">
                                       <label class="control-label">Select Variant</label>
                                       <select class="form-control" name="variant[]" data-placeholder="Choose a Category" tabindex="1">
@@ -216,9 +217,47 @@
                                         @endif
                                       </select>
                                     </div>
+                                  </div> --}}
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label class="control-label">Select Variant Color</label>
+                                      <select class="form-control" name="variant[]" data-placeholder="Choose a Category" tabindex="1">
+                                        <option value="">None</option>
+                                        @if(!empty($variantsResult['images']))
+                                          @foreach($variantsResult['images'] as $image)
+                                            <option value="{{ $image['id'] }}"
+                                              @if(!empty($variantsMap[$image['id']]))
+                                                selected
+                                              @endif>
+                                              {{ $image['vr_name'] }}
+                                            </option>
+                                          @endforeach
+                                        @endif
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label class="control-label">Select Variant Size</label>
+                                      <select class="form-control" name="variant[]" data-placeholder="Choose a Category" tabindex="1">
+                                        <option value="">None</option>
+                                        @if(!empty($variantsResult['text']))
+                                          @foreach($variantsResult['text'] as $text)
+                                            <option value="{{ $text['id'] }}"
+                                              @if(!empty($variantsMap[$text['id']]))
+                                                selected
+                                              @endif>
+                                              {{ $text['vr_name'] }}
+                                            </option>
+                                          @endforeach
+                                        @endif
+                                      </select>
+                                    </div>
                                   </div>
                                 </div>
-                                </div>
+                              </div>
                                 {{-- <div class="row">
                                   <div class="col-md-6">
                                     <div class="form-group">

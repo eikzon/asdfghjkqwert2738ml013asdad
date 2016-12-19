@@ -20,7 +20,7 @@ class ST_Wishlist extends Model
     return ST_Wishlist::where('fk_member_id', $memberId)->where('fk_product_id', $pid)->first();
   }
 
-  public function list($memberId = 0)
+  public function listAll($memberId = 0)
   {
     $products = ST_Wishlist::with('products')->with('images')->where('fk_member_id', $memberId)->get();
 

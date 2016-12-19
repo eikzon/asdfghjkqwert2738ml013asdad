@@ -2,6 +2,7 @@
 @section('header')
   @include('common.desktop.header')
 @endsection
+@section('title', @$product['pd_name'])
 @section('content')
   @include('common.desktop.account.header', [
     'title'  => 'BREAKER',
@@ -23,7 +24,8 @@
         </div>
       </div>
       <div class="desc">
-        <div class="wrap"><form method="post" action="{{ route('add_to_cart') }}">
+        <div class="wrap">
+        <form method="post" action="{{ route('add_to_cart') }}">
           <div class="name">{{ $product['pd_name'] }}</div>
           <div class="price">
             @if(!empty($product['pd_price_discount']))
@@ -37,12 +39,15 @@
             Item Code : {{ $product['pd_code'] }}
           </div>
           @if(!empty($variants[0]['products']))
-            <div class="shortdesc">{{ $variants[0]['pg_name'] }} :
+            <div class="shortdesc">
               @if(count($variants[0]['products']) > 1)
-                <select class="select-size">
+                {{ $variants[0]['pg_name'] }} :
+                <select class="select-size js-variant-change-option" data-url="{{ url('/') }}">
                   @foreach($variants[0]['products'] as $variant)
                     <option @if($variant['pd_status'] == 2) disabled="disabled" @endif
-                            value="{{ $variant['id'] }}">
+                            @if($variant['fk_pd_id'] == $product['id']) selected @endif
+                            value="{{ $variant['id'] }}"
+                            data-pid="{{ $variant['fk_pd_id'] }}">
                       {{ $variant['vr_name'] }}
                       @if($variant['pd_status'] == 2) [Out of Stock] @endif
                     </option>
@@ -66,25 +71,25 @@
           @endif
           <div class="shortdesc">{!! $product['pd_short_desc'] !!}</div><!-- .shortdesc -->
           <div class="shortdesc">
-            @if(request()->session()->has('memberData'))
-              @if(!empty($product['pd_stock']))
-                <input type="text" name="ct_quantity" id="quantity" value="1" size="1" class="box-qty">
-                <input type="hidden" name="fk_product_id" id="quantity" value="{{ $product['id'] }}" size="1" class="box-qty">
-                {{ csrf_field() }}
+            @if(!empty($product['pd_stock']))
+              <input type="text" name="ct_quantity" id="quantity" value="1" size="1" class="box-qty">
+              <input type="hidden" name="fk_product_id" id="quantity" value="{{ $product['id'] }}" size="1" class="box-qty">
+              {{ csrf_field() }}
+              @if(request()->session()->has('memberData'))
                 <input type="submit" name="addcart" id="addcart" value="สั่งซื้อสินค้า" title="สั่งซื้อสินค้า" class="btn-addcart" data-url={{ route('add_to_cart') }} data-pid="{{ $product['id'] }}">
+              @else
+                <input type="button" class="btn-addcart" value="สั่งซื้อสินค้า" title="สั่งซื้อสินค้า" onclick="alert('กรุณาทำการสมัครสมาชิก และเข้าสู่ระบบเพื่อซื้อสินค้า');">
               @endif
-              <a
-                @if(!empty($product['wishlist']))
-                  href="{{ route('account_wishlist_delete', [$product['id'], $product['wishlist']->id]) }}"
-                @else
-                  href="{{ route('account_wishlist_add', $product['id']) }}"
-                @endif
-                class="btn-wishlist @if(!empty($product['wishlist'])) active @endif">
-                สินค้าที่น่าสนใจ
-              </a>
-            @else
-              กรุณาทำการสมัครสมาชิก และเข้าสู่ระบบเพื่อซื้อสินค้า<br>
             @endif
+            <a
+              @if(!empty($product['wishlist']))
+                href="{{ route('account_wishlist_delete', [$product['id'], $product['wishlist']->id]) }}"
+              @else
+                href="{{ route('account_wishlist_add', $product['id']) }}"
+              @endif
+              class="btn-wishlist @if(!empty($product['wishlist'])) active @endif">
+              สินค้าที่น่าสนใจ
+            </a>
           </div>
           <div class="social">
             <span class='st_facebook_vcount' displayText='Facebook'></span>
@@ -101,9 +106,10 @@
       </div>
     </div><!-- .infomation -->
   </div><!-- .detailproducts -->
-  @if(!empty($relatedItems))
-    @php $count = $relatedItems->count(); @endphp
-    <div class="related">
+
+  <div class="related">
+    @if(!$relatedItems->isEmpty())
+      @php $count = $relatedItems->count(); @endphp
       <div class="header-related">Related Products</div>
       <div class="swiper-container">
         <ul class="related-products swiper-wrapper">
@@ -120,10 +126,11 @@
         @endif
       </div>
       <div class="clear"></div>
-      <a href="javascript:history.back();" class="btprevious">ย้อนกลับ</a>
-      <div class="clear"></div>
-    </div>
-  @endif
+    @endif
+    <a href="javascript:history.back();" class="btprevious">ย้อนกลับ</a>
+    <div class="clear"></div>
+  </div>
+
 @endsection
 @section('script_footer')
 <script>
@@ -131,7 +138,7 @@
     {{ session()->forget('errorMsg') }}
     alert('สินค้าไม่เพียงพอสำหรับความต้องการ');
   @endif
-  Galleria.loadTheme('/js/galleria.classic.min.js');
+  Galleria.loadTheme('{{ asset('js/galleria.classic.min.js') }}');
   Galleria.run('#galleria');
 </script>
 <script>

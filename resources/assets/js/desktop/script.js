@@ -28,3 +28,9 @@ $(function() {
     $('.shopping-dropdown').removeClass('active');
   });
 });
+
+$(function(){
+  $('.js-variant-change-option').change(function(){
+    window.location = $(this).data('url') + '/product/' + $(this).val();
+  });
+});

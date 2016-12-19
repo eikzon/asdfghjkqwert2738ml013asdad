@@ -5,7 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
-<title>My Account | Breaker เบรกเกอร์ : สั่งได้ดั่งใจ</title>
+<title>@yield('title') | Breaker เบรกเกอร์ : สั่งได้ดั่งใจ</title>
+<meta name="Keywords" content="breaker,เบรกเกอร์,รองเท้าผ้าใบ,รองเท้านักเรียน,รองเท้าฟุตบอล,รองเท้าฟุตซอล,รองเท้าสตั๊ด,รองเท้ากีฬา,shoes,futsal,soccer,sport" />
+<meta name="Description" content="Breaker เบรกเกอร์ รองเท้าผ้าใบ รองเท้าฟุตบอล รองเท้าฟุตซอล รองเท้าสตั๊ด รองเท้ากีฬา" />
 <link rel="stylesheet" media="all" href="{{ asset('css/desktop.css') }}"/>
 <!--[if lt IE 9]>
 <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>

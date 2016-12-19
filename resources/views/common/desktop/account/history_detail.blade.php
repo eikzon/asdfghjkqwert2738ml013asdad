@@ -80,7 +80,7 @@
               </tr>
               <tr>
                 <td>ค่าจัดส่ง</td>
-                <td colspan="2">{{ $order[0]['od_price_shipping'] ?? 'ฟรี' }}</td>
+                <td colspan="2">{{ !empty($order[0]['od_price_shipping']) ? $order[0]['od_price_shipping'] : 'ฟรี' }}</td>
               </tr>
               <tr>
                 <td>ราคารวม</td>

@@ -2,6 +2,7 @@
 @section('header')
   @include('common.desktop.header')
 @endsection
+@section('title', 'การสั่งซื้อไม่สมบูรณ์')
 @section('content')
   @include('common.desktop.account.header', [
     'title'  => 'Shopping Cart',

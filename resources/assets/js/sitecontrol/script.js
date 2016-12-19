@@ -13,7 +13,7 @@ $(function(){
     maxfilesize: 2,
 		url: urlUpload,
 		// url: '/breakershoes/onsite/sitecontrol/product/uploadimages',
-		data: {'code': $('input[name="code"]').val()},
+		data: {'keyGenerate': $('input[name="keyGenerate"]').val()},
 
 		uploadFinished:function(i,file,response){
 			$.data(file).addClass('done');

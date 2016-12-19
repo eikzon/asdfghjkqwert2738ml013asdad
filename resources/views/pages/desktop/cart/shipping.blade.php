@@ -2,6 +2,7 @@
 @section('header')
   @include('common.desktop.header')
 @endsection
+@section('title', 'การจัดส่งและชำระเงิน')
 @section('content')
   @include('common.desktop.account.header', [
     'title'  => 'Shopping Cart',
@@ -53,7 +54,7 @@
             <label><input type="checkbox" name="oa_isbilling_address" id="same-address" value="1">ใช้ที่อยู่เดียวกับที่อยู่จัดส่ง</label>
             <div class="js-show-billing">
               <label for="tax-address">ชื่อและที่อยู่ใบกำกับภาษี<span>*</span></label>
-              <textarea name="oa_billign_address" id="tax-address">{{ $member->billign_address }}</textarea>
+              <textarea name="oa_billign_address" id="tax-address" rows="5">{{ $member->billign_address }}</textarea>
             </div>
             <label for="tax-id">เลขประจำตัวบัตรประชาชน / Tax Id</label>
             <input type="text" name="oa_tax_id" id="tax-id" value="{{ $member->user_tax_Id }}">

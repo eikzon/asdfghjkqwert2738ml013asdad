@@ -3,7 +3,9 @@
 @endphp
 <div class="container">
   <div class="header">
-    <a href="{{ url('/') }}" class="logo"><img src="{{ asset('images/logo_breaker.png') }}" alt="รองเท้า Breaker"/></a>
+    <a href="{{ url('/') }}" class="logo">
+      <img src="{{ asset('images/logo_breaker.png') }}" alt="รองเท้า Breaker"/>
+    </a>
     <ul class="topnav">
         @if(!request()->session()->has('memberData'))
           <li class="login"><a href="{{ route('account_login') }}">เข้าสู่ระบบ</a></li>
@@ -19,7 +21,8 @@
             </ul>
           </li>
         @endif
-        <li class="cart"><div id="dd" class="shopping-dropdown">
+        <li class="cart">
+        <div id="dd" class="shopping-dropdown">
           <span>{{ getCart()->count() }}</span>
           <ul class="dropdown shopping-list">
             @if(!empty(getCart()->all()))
@@ -39,11 +42,14 @@
                     <div class="product-img">
                       <img src="{{ asset("images/products/" . getImageCart($cart->products->id)->image) }}">
                     </div>
-                    <div class="product-desc">
-                      <div class="product-name">{{ $cart->products->pd_name }}<br>{{ getVariant($cart->products->id)->vr_text }}<br>จำนวน: {{ $cart->ct_quantity }}
-                        <span class="product-price">{{ number_format((float)$totalPrice, 2) }} บาท</span>
+                    @if(!empty($cart->products))
+                      <div class="product-desc">
+                        <div class="product-name">{{ $cart->products->pd_name }}
+                          <br>{{ !empty(getVariant($cart->products->id)->vr_text) ? getVariant($cart->products->id)->vr_text : '' }}<br>จำนวน: {{ $cart->ct_quantity }}
+                          <span class="product-price">{{ number_format((float)$totalPrice, 2) }} บาท</span>
+                        </div>
                       </div>
-                    </div>
+                    @endif
                   </a>
                 </li>
               @endforeach
@@ -75,17 +81,18 @@
   </div>
   <ul class="menum">
     <li><a href="{{ url('/') }}">HOME</a></li>
-    <li><a href="">PRODUCTS</a>
-      <ul class="submenu">
-        <li><a href="{{ route('product_list', 1) }}">
-          <img src="{{ asset('images/menu_futsal.png') }}" alt="FUTSAL"/>
-          </a>
-        </li>
-        <li><a href="{{ route('product_list', 2) }}"><img src="{{ asset('images/menu_football.png') }}" alt="Football"/></a></li>
-        <li><a href="{{ route('product_list', 3) }}"><img src="{{ asset('images/menu_running.png') }}" alt="RUNNING"/></a></li>
-        <li><a href="{{ route('product_list', 4) }}"><img src="{{ asset('images/menu_badminton.png') }}" alt="Badminton"/></a></li>
-        <li><a href="{{ route('product_list', 5) }}"><img src="{{ asset('images/menu_student.png') }}" alt="STUDENT"/></a></li>
-      </ul><!-- .submenu -->
+    <li><a>PRODUCTS</a>
+      @if(!empty($categoriesList))
+        <ul class="submenu">
+          @foreach($categoriesList as $category)
+            <li>
+              <a href="{{ route('product_list', $category['id']) }}">
+                <img src="{{ asset('images/' . $category['ct_image']) }}" alt="{{ $category['ct_name'] }}"/>
+              </a>
+            </li>
+          @endforeach
+        </ul><!-- .submenu -->
+      @endif
     </li>
     <li><a href="{{ $absurl }}csr/">CSR</a></li>
     <li><a href="{{ $absurl }}news/">EVENT</a></li>
@@ -97,26 +104,24 @@
 <ul class="menu">
     <div class="container">
     <li><a href="{{ $absurl }}">HOME</a></li>
-    <li><a href="">PRODUCTS</a>
-      <div class="submenu">
-        <div class="container">
-          <ul>
-            <li><a href="{{ route('product_list', 1) }}"><img src="{{ asset('images/menu_futsal.png') }}" alt="FUTSAL"/></a></li>
-          </ul>
-          <ul>
-            <li><a href="{{ route('product_list', 2) }}"><img src="{{ asset('images/menu_football.png') }}" alt="Football"/></a></li>
-          </ul>
-          <ul>
-            <li><a href="{{ route('product_list', 3) }}"><img src="{{ asset('images/menu_running.png') }}" alt="RUNNING"/></a></li>
-          </ul>
-          <ul>
-            <li><a href="{{ route('product_list', 4) }}"><img src="{{ asset('images/menu_badminton.png') }}" alt="Badminton"/></a></li>
-          </ul>
-          <ul>
-            <li><a href="{{ route('product_list', 5) }}"><img src="{{ asset('images/menu_student.png') }}" alt="STUDENT"/></a></li>
-          </ul>
-        </div><!-- .container -->
-      </div><!-- .submenu -->
+    <li><a>PRODUCTS</a>
+      @if(!empty($categoriesList))
+        <div class="submenu">
+          <div class="container">
+            @foreach($categoriesList as $category)
+              <ul>
+                <li>
+                  <a href="{{ route('product_list', $category['id']) }}">
+                    <img src="{{ asset('images/' . $category['ct_image']) }}"
+                         width="200" height="150"
+                         alt="{{ $category['ct_name'] }}"/>
+                  </a>
+                </li>
+              </ul>
+            @endforeach
+          </div><!-- .container -->
+        </div><!-- .submenu -->
+      @endif
     </li>
     <li><a href="{{ $absurl }}csr/">CSR</a></li>
     <li><a href="{{ $absurl }}news/">EVENT</a></li>

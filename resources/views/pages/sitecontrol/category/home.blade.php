@@ -14,7 +14,8 @@
                 <tr>
                   <th>No.</th>
                   <th width="30%">Name</th>
-                  <th width="30%">Image</th>
+                  <th width="25%">Image</th>
+                  <th width="20%">Status</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -25,6 +26,11 @@
                     <td>{{ $category['ct_name'] }}</td>
                     <td>
                       <img src="{{ asset('images/' . $category['ct_image']) }}" width="100">
+                    </td>
+                    <td>
+                      <span class="label label-{{ config('website.product.status.color.' . $category['ct_status']) }} font-weight-100">
+                        {{ config('website.product.status.text.' . $category['ct_status']) }}
+                      </span>
                     </td>
                     <td>
                       <a href="{{ route('sitecontrol.category.edit', $category['id']) }}"

@@ -1,10 +1,12 @@
 <li @if(!empty($slide)) class="swiper-slide" @endif>
   <div class="{{ config('website.product.badges')[$product['pd_badge']] }}"></div>
   <div class="frame">
-    @if(!empty($product['images'][0]['image']))
-      <a href="{{ route('product_detail', $product['id']) }}" title="{{ $product['pd_name'] }}">
-        <img src="{{ asset('images/products/' . $product['images'][0]['image']) }}"/>
-      </a>
+    @if(!$product['images']->isEmpty())
+      @if(!empty($product['images'][0]['image']))
+        <a href="{{ route('product_detail', $product['id']) }}" title="{{ $product['pd_name'] }}">
+          <img src="{{ asset('images/products/' . $product['images'][0]['image']) }}" height="100%" />
+        </a>
+      @endif
     @endif
   </div>
   <div class="line"></div>

@@ -8,7 +8,7 @@
 <meta name="author" content="">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/favicon.png">
-<title>Elite Admin - is a responsive admin template</title>
+<title>Breaker shoes - Administrator</title>
 <!-- Bootstrap Core CSS -->
 <link href="{{ asset('css/sitecontrol.css') }}" rel="stylesheet">
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -30,9 +30,9 @@
 </head>
 <body>
 <!-- Preloader -->
-{{-- <div class="preloader">
+<div class="preloader">
   <div class="cssload-speeding-wheel"></div>
-</div> --}}
+</div>
 <div id="wrapper">
 
   <nav class="navbar navbar-default navbar-static-top m-b-0">

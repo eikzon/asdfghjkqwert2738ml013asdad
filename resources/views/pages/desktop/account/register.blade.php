@@ -2,38 +2,44 @@
 @section('header')
   @include('common.desktop.header')
 @endsection
+@section('title', 'สมัครสมาชิก')
 @section('content')
   @include('common.desktop.account.header', [
     'title'  => 'My Account',
-    'detail' => 'บัญชีของฉัน'
+    'detail' => 'สมัครสมาชิก'
   ])
   <div class="container-regis">
     <div class="blog center">
         <div class="blog-inside">
             <h2>New Member</h2>
-            <p>กรุณาใช้อีเมล์ที่มีอยู่จริงในการสมัครสมาชิก<br>email และ password นี้จะนำไปใช้ในการเข้าสู่ระบบของเว็บไซต์<br><br><span>*กรอกข้อมูล</p>
-            <form method="post" action="login.php" class="form-style regis">
+            <p>กรุณาใช้อีเมล์ที่มีอยู่จริงในการสมัครสมาชิก<br>email และ password นี้จะนำไปใช้ในการเข้าสู่ระบบของเว็บไซต์<br><br><span>*กรอกข้อมูล</span></p>
+            @if(request()->getQueryString() == 'fail')
+              <p><span>* ไม่สามารถบันทึกข้อมูลได้ กรุณากรอกใหม่อีกครั้ง</span></p>
+            @elseif(request()->getQueryString() == 'passwordWrong')
+              <p><span>* กรุณาตรวจสอบรหัสผ่านคุณ และต้องมากกว่า 5 ตัวอักษร</span></p>
+            @endif
+            <form method="post" action="{{ route('account_store') }}" class="form-style regis">
                 <div class="form-left">
                     <label for="user-email">อีเมล์<span>*</span></label>
-                    <input type="email" name="user-email" id="user-email" autofocus>
+                    <input type="email" name="email" id="user-email" required autofocus>
                     <label for="user-password">รหัสผ่าน<span>*</span></label>
-                    <input type="password" name="user-password" id="user-password">
+                    <input type="password" name="password" maxlength="20" id="user-password">
                     <label for="user-password-2">ยืนยันรหัสผ่าน<span>*</span></label>
-                    <input type="password" name="user-password-2" id="user-password-2">
+                    <input type="password" name="repassword" maxlength="20" id="user-password-2">
                     <label for="user-name">ชื่อ<span>*</span></label>
-                    <input type="text" name="user-name" id="user-name">
+                    <input type="text" name="firstname" required id="user-name">
                     <label for="user-lastname">นามสกุล<span>*</span></label>
-                    <input type="text" name="user-lastname" id="user-lastname">
+                    <input type="text" name="lastname" required id="user-lastname">
                     <label for="user-birthday">วันเกิด<span>*</span></label>
-                    <input type="date" name="user-birthday" id="user-birthday">
+                    <input type="date" name="birthday" required id="user-birthday">
                     <label for="user-gender">เพศ<span>*</span></label>
-                    <select name="user-gender" id="user-gender">
-                        <option value="0">กรุณาเลือกเพศ</option>
+                    <select name="gender" required id="user-gender">
+                        <option value="">กรุณาเลือกเพศ</option>
                         <option>ชาย</option>
                         <option>หญิง</option>
                     </select>
                     <label for="user-mobile">มือถือ<span>*</span></label>
-                    <input type="tel" name="user-mobile" id="user-mobile">
+                    <input type="tel" name="mobile" maxlength="10" required id="user-mobile">
                 </div>
                 <div class="form-right">
                     <label for="user-address-no">ที่อยู่ เลขที่<span>*</span></label>
@@ -62,10 +68,11 @@
                 </div>
                 <div class="clear"></div>
                 <div class="center accept-area">
-                    <label><input type="checkbox" name="accept-regis" id="accept-regist">ต้องการรับข่าวสารและโปรโมชั่นต่างๆ จาก Breaker-shoes.com</label>
+                    <label><input type="checkbox" name="subscribe" value="1" id="accept-regist">ต้องการรับข่าวสารและโปรโมชั่นต่างๆ จาก Breaker-shoes.com</label>
                     <p>กด ลงทะเบียน เพื่อเป็นการสร้างบัญชีผู้ใช้งาน และยอมรับเงื่อนไขการใช้งาน และนโยบายข้อมูลความเป็นส่วนตัว</p>
                     <input type="submit" name="btn-regis" id="btn-regis" value="ลงทะเบียน">
                 </div>
+                {{ csrf_field() }}
             </form>
         </div>
     </div>

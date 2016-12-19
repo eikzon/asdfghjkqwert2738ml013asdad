@@ -2,10 +2,11 @@
 @section('header')
 @include('common.desktop.header')
 @endsection
+@section('title', 'ลืมรหัสผ่าน')
 @section('content')
   @include('common.desktop.account.header', [
     'title'  => 'Forgot Password?',
-    'detail' => 'ลืมรหัสผ่าน?'
+    'detail' => 'ลืมรหัสผ่าน'
   ])
   <div class="container-login">
     <div class="blog center">

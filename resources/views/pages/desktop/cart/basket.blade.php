@@ -2,6 +2,7 @@
 @section('header')
   @include('common.desktop.header')
 @endsection
+@section('title', 'ตะกร้าสินค้า')
 @section('content')
   @include('common.desktop.account.header', [
     'title'  => 'Shopping Cart',

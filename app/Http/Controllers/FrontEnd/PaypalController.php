@@ -72,7 +72,7 @@ class PaypalController extends Controller {
       $itemList = Paypalpayment::itemList();
       $itemList->setItems($lists);
 
-      $shipping = ($items['shipping'] ?? 0);
+      $shipping = !empty($items['shipping']) ? $items['shipping'] : 0;
       $subTotal = ($items['priceTotal'] - $items['shipping']);
       $details = Paypalpayment::details();
       $details->setShipping("{$shipping}")

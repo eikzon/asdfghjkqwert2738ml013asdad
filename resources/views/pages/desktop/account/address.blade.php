@@ -2,10 +2,11 @@
 @section('header')
   @include('common.desktop.header')
 @endsection
+@section('title', 'ที่อยู่สมาชิก')
 @section('content')
   @include('common.desktop.account.header', [
     'title'  => 'My Account',
-    'detail' => 'บัญชีของฉัน'
+    'detail' => 'ที่อยู่สมาชิก'
   ])
   <div class="container-myaccount">
     @include('common.desktop.account.menu', ['page' => 'address'])
@@ -66,9 +67,12 @@
     </div>
   </div>
 @endsection
-<script type="text/javascript">
-  @if(!empty($messageShow))
-    alert('{{ $messageShow }}');
-    window.location = '{{ route('account_address') }}';
-  @endif
-</script>
+@section('script_footer')
+  <script type="text/javascript">
+    @if(!empty($messageShow))
+      alert('{{ $messageShow }}');
+      window.location = '{{ route('account_address') }}';
+    @endif
+  </script>
+@endsection
+

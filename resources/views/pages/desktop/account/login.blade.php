@@ -2,6 +2,7 @@
 @section('header')
   @include('common.desktop.header')
 @endsection
+@section('title', 'เข้าสู่ระบบ / ลงทะเบียน')
 @section('content')
   @include('common.desktop.account.header', [
     'title'  => 'Login / Register',
@@ -15,6 +16,10 @@
         <form method="get" action="{{ route('client_login') }}" class="form-style login">
           @if(!empty($messageError))
             <label style="color: red;">* {{ $messageError }}</label>
+          @endif
+
+          @if(request()->getQueryString() == 'forLogin')
+            <label style="color: green;">* สามารถเข้าสู่ระบบเพื่อทำการสั่งซื้อสินค้าได้เลย</label>
           @endif
           <label for="user-email">อีเมล์<span>*</span></label>
           <input type="text" name="email" id="user-email" value="{{ !empty($inputEmail) ? $inputEmail : '' }}" autofocus required>

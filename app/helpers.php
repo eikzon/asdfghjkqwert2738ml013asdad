@@ -36,7 +36,6 @@ function getVariant($pid)
   $variant    = new App\Model\ST_Variant;
   return $variant->where('id', $variantId->fk_vr_id)->first();
 }
-
 function getProvinces()
 {
   $provinces = new App\Model\ST_Provinces;
@@ -74,4 +73,12 @@ function getDistrictId($districtName)
   $districts = new App\Model\ST_Districts;
   $district  = $districts->where('name_th', $districtName)->orderBy('name_th', 'asc')->first();
   return $district;
+function random_str($length, $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
+{
+    $str = '';
+    $max = mb_strlen($keyspace, '8bit') - 1;
+    for ($i = 0; $i < $length; ++$i) {
+        $str .= $keyspace[random_int(0, $max)];
+    }
+    return $str;
 }

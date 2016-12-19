@@ -2,6 +2,7 @@
 @section('header')
   @include('common.desktop.header')
 @endsection
+@section('title', 'บัญชีของฉัน')
 @section('content')
   @include('common.desktop.account.header', [
     'title'  => 'My Account',
@@ -56,9 +57,11 @@
     </div>
   </div>
 @endsection
-<script type="text/javascript">
-  @if(!empty($messageShow))
-    alert('{{ $messageShow }}');
-    window.location = '{{ route('account_profile') }}';
-  @endif
-</script>
+@section('script_footer')
+  <script type="text/javascript">
+    @if(!empty($messageShow))
+      alert('{{ $messageShow }}');
+      window.location = '{{ route('account_profile') }}';
+    @endif
+  </script>
+@endsection

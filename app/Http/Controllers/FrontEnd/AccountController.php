@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Illuminate\Support\Facades\Validator;
+
 use App\Model\ST_Member;
 use App\Model\ST_Wishlist;
 use App\Model\ST_Order;
@@ -92,7 +94,7 @@ class AccountController extends Controller
   public function login(Request $request)
   {
     if($request->session()->has('memberData'))
-      return redirect('/');
+      return redirect()->route('account_profile');
     else
       return view('pages.desktop.account.login');
   }
@@ -114,7 +116,7 @@ class AccountController extends Controller
 
           $request->session()->put('memberData', $setSession);
 
-          return redirect('/');
+          return redirect()->route('account_profile');
         }
         else
         {
@@ -144,10 +146,48 @@ class AccountController extends Controller
     return redirect('/');
   }
 
-  public function store()
+  public function store(Request $request)
   {
-    // create register
-    return view('pages.desktop.account.register');
+    // $validator = Validator::make($request->all(), [
+    //   'email'    => 'max:60',
+    //   // 'email'    => 'exists:st_member,email|max:60',
+    //   'password' => 'min:6|max:20',
+    // ]);
+
+    // if ($validator->fails()) {
+    //     return redirect()->route('account_create')
+    //             ->withErrors($validator)
+    //             ->withInput();
+    // }
+
+    if($request->has('password') && $request->input('password') == $request->input('repassword'))
+    {
+      $registerMember = new ST_Member;
+      $registerMember->gender     = $request->input('gender');
+      $registerMember->first_name = $request->input('firstname');
+      $registerMember->last_name  = $request->input('lastname');
+      $registerMember->email      = $request->input('email');
+      $registerMember->tel        = $request->input('mobile');
+      $registerMember->password   = md5($request->input('email') . $request->input('password'));
+      $registerMember->birthday   = $request->input('birthday');
+      $registerMember->status     = 1;
+
+      $registerMember->shipping_address      = $request->input('address');
+      $registerMember->shipping_province     = $request->input('province');
+      $registerMember->shipping_district     = $request->input('city');
+      $registerMember->shipping_sub_district = $request->input('district');
+      $registerMember->shipping_postcode     = $request->input('postcode');
+      $registerMember->notification          = !empty($request->input('subscribe')) ? $request->input('subscribe') : 0;
+
+      if($registerMember->save())
+        return redirect()->route('account_login', 'forLogin');
+      else
+        return redirect()->route('account_create', 'fail');
+    }
+    else
+    {
+      return redirect()->route('account_create', 'passwordWrong');
+    }
   }
   public function address(Request $request)
   {
@@ -210,8 +250,8 @@ class AccountController extends Controller
 
       if(!empty($user[0]))
       {
-        $newPassword = rand(0, 99999);
-        $response    = ST_Member::UpdatePassword($newPassword, $user[0]->id);
+        $newPassword = random_str(12);
+        $response    = ST_Member::UpdatePassword($newPassword, $request->input('email'), $user[0]->id);
 
         if($response)
         {
@@ -238,21 +278,23 @@ class AccountController extends Controller
   }
   public function history()
   {
-    $user = 1;
+    $user   = request()->session()->get('memberData')['id'];
     $orders = ST_Order::ByMember($user)->get();
     return view('pages.desktop.account.history', ['orders' => $orders]);
   }
-  public function historyDetail($type, $orderId)
+  public function historyDetail($orderId, $type = '')
   {
-    $user  = 1;
-    $orderId = 1;
+    $user  = request()->session()->get('memberData')['id'];
     $order = ST_Order::ByDetail($user, $orderId)->get();
+    if($order->isEmpty())
+      return redirect()->route('account_history');
+
     return view('pages.desktop.account.history_detail', ['order' => $order]);
   }
   public function wishlist()
   {
     // auth()->user()->id = 0;
-    $wishlists = (new ST_Wishlist)->list(1);
+    $wishlists = (new ST_Wishlist)->listAll(1);
     return view('pages.desktop.account.wishlist', ['wishlists' => $wishlists]);
   }
 

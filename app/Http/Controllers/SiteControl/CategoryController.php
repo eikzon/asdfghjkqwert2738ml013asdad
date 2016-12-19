@@ -71,8 +71,10 @@ class CategoryController extends Controller
   {
     $imageName = '';
     if(!empty($request->file('image')))
+    {
       $imageName = 'category-' . rand(1, 900) . time() . '.' . $request->file('image')->getClientOriginalExtension();
       Image::make($request->file('image'))->resize(200, 150)->save('images/' . $imageName);
+    }
 
     if($this->st_category->updateCategory($request, $imageName))
       return redirect()->route('sitecontrol.category.index', 'update');
