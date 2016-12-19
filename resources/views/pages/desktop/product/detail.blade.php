@@ -24,7 +24,8 @@
         </div>
       </div>
       <div class="desc">
-        <div class="wrap"><form method="post" action="{{ route('add_to_cart') }}">
+        <div class="wrap">
+        <form method="post" action="{{ route('add_to_cart') }}">
           <div class="name">{{ $product['pd_name'] }}</div>
           <div class="price">
             @if(!empty($product['pd_price_discount']))

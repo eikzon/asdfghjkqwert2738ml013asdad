@@ -33,7 +33,8 @@ gulp.task("include-js", function(cb) {
   pump([
     gulp.src([
       'resources/assets/js/all-sitecontrol.js',
-      'resources/assets/js/all-desktop.js'
+      'resources/assets/js/all-desktop.js',
+      'resources/assets/js/all-platform.js'
     ]),
     include(),
     gulp.dest("public/js")

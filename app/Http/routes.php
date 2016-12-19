@@ -32,6 +32,7 @@ Route::group(['prefix' => 'sitecontrol', 'namespace' => 'SiteControl'], function
     Route::resource('group', 'ProductGroupController');
     Route::resource('category', 'CategoryController');
     Route::get('logout', 'AccountController@logout')->name('st-logout');
+    Route::resource('platform', 'PlatformController', ['except' => 'show']);
   });
 });
 
@@ -61,12 +62,15 @@ Route::group(['namespace' => 'FrontEnd'], function(){
 
   Route::group(['prefix' => 'product'], function(){
     Route::get('category/{id}', 'ProductController@index')->name('product_list');
-    Route::get('{id}', 'ProductController@show')->name('product_detail');
+    Route::get('platform/{id}', 'ProductController@platform')->name('platform_student');
+    Route::post('platformCompareVariant', 'ProductController@platformCompareVariant')->name('platform_compare_variant');
+    // Route::get('{id}', 'ProductController@show')->name('product_detail');
   });
 
   Route::group(['prefix' => 'cart'], function(){
     Route::get('/', 'CartController@index')->name('cart');
     Route::post('addToCart', 'CartController@addToCart')->name('add_to_cart');
+    Route::post('addToCartMoreVariant', 'CartController@addToCartMoreVariant')->name('add_to_cart_more_variant');
     Route::post('updateCart', 'CartController@updateCartItems')->name('update_cart');
     Route::get('deleteCart/{id}', 'CartController@deleteCartItems')->name('delete_cart');
     Route::get('shipping', 'CartController@shipping')->name('cart_shipping');

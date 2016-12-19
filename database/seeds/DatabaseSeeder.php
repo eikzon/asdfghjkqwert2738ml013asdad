@@ -13,5 +13,9 @@ class DatabaseSeeder extends Seeder
     {
       $this->call(UsersTableSeeder::class);
       $this->call(CategoryTableSeeder::class);
+      $this->call(Variant::class);
+      $this->call(Products::class);
+      $this->call(VariantGruop::class);
+      $this->call(VariantMap::class);
     }
 }

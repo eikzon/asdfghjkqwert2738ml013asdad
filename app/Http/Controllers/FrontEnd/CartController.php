@@ -14,6 +14,7 @@ use App\Model\ST_Product_Images;
 use App\Model\ST_Order_Address;
 use App\Model\ST_Order_Detail;
 use App\Model\ST_Member;
+use App\Model\ST_Variant_Map;
 
 use Crypt;
 
@@ -39,6 +40,45 @@ class CartController extends Controller
 
   public function addToCart(Request $request)
   {
+    $product    = ST_Product::find($request->input('fk_product_id'));
+    $cart       = new ST_Cart;
+    $updateCart = ST_Cart::where('fk_member_id', $request->session()->get('memberData')['id'])
+                           ->where('fk_product_id', $request->input('fk_product_id'));
+
+    if(!empty($updateCart->first()->ct_quantity))
+      $sumQuantity = $updateCart->first()->ct_quantity + $request->input('ct_quantity');
+    else
+      $sumQuantity = $request->input('ct_quantity');
+
+    if(!empty($product))
+    {
+      if($sumQuantity <= $product->pd_stock)
+      {
+        if(empty($updateCart->first()))
+        {
+          $cart->create($request->all());
+        }
+        else
+        {
+          $requestData = ['ct_quantity' => $sumQuantity, 'fk_product_id' => $request->input('fk_product_id')];
+          $updateCart->update($requestData);
+        }
+      }
+      else
+      {
+        $request->session()->put('errorMsg', 'สินค้าไม่เพียงพอสำหรับความต้องการ');
+      }
+    }
+
+    return redirect()->back();
+  }
+
+  public function addToCartMoreVariant(Request $request)
+  {
+    $pidSize  = (new ST_Variant_Map)->compareVariant($request->input('size'));
+    $pidColor = (new ST_Variant_Map)->compareVariant($request->input('color'));
+    // ST_Variant_Map::where('fk_vr_id', $request->input('color'))->get(['fk_pd_id']);
+
     $product    = ST_Product::find($request->input('fk_product_id'));
     $cart       = new ST_Cart;
     $updateCart = ST_Cart::where('fk_member_id', $request->session()->get('memberData')['id'])

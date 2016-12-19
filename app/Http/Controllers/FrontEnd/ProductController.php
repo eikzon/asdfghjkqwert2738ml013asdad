@@ -11,11 +11,15 @@ use App\Model\ST_Product;
 use App\Model\ST_Product_Group;
 use App\Model\ST_Category;
 use App\Model\ST_Wishlist;
+use App\Model\ST_Platform;
 
 class ProductController extends Controller
 {
   public function index($id)
   {
+    if($id == 5)
+      return redirect()->route('platform_student', $id);
+
     $productLists = (new ST_Product)->listProduct($id);
     return view('pages.desktop.product.list',[
       'productLists' => $productLists,
@@ -48,5 +52,44 @@ class ProductController extends Controller
       'relatedItems' => $relatedItems,
       'variants'     => $variants
     ]);
+  }
+
+  public function platform($categoryId)
+  {
+    $platformResult = (new ST_Platform)->show(1);
+
+    $tab1 = $platformResult['first'];
+    $tab2 = $platformResult['second'];
+    $tab3 = $platformResult['third'];
+
+    $productClass = new ST_Product;
+
+    $variantOptions[1] = $productClass->platFormCategory($tab1);
+    $variantOptions[2] = $productClass->platFormCategory($tab2);
+    $variantOptions[3] = $productClass->platFormCategory($tab3);
+
+    // dd($variantOptions);
+
+    return view('pages.desktop.platform.student',[
+      'variantOptions' => $variantOptions,
+      'platform'       => $platformResult['detail']
+      // 'category'       => ST_Category::getDetail($categoryId)
+    ]);
+  }
+
+  public function platformCompareVariant(Request $request)
+  {
+    dd($request->all());
+    $result = ST_Product::where([
+                  ['size_vr_id', '=', $request->input('size')],
+                  ['color_vr_id', '=', $request->input('color')],
+                  ['pd_status', '=', 1]
+                ])
+                ->get('id, pd_price, pd_price_discount');
+
+    $response['id']    = $result->id;
+    $response['price'] = $result->pd_price - $result->pd_price_discount;
+
+    return json_encode($response);
   }
 }

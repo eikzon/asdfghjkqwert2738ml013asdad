@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Model\ST_Product_Images;
 use App\Model\ST_Variant_Map;
+use App\Model\ST_Variant;
 
 class ST_Product extends Model
 {
@@ -182,6 +183,86 @@ class ST_Product extends Model
     return $products;
   }
 
+  public function platFormCategory($groupId)
+  {
+    $result = [];
+
+    $products = ST_Product::whereIn('fk_group_id', $groupId)
+                            ->where([
+                              ['fk_category_id', '=', 5],
+                              ['pd_status', '>', 0]
+                            ])->get();
+
+    foreach($products as $product)
+    {
+      $result['size'][]['id']  = $product->size_vr_id;
+      $result['color'][]['id'] = $product->color_vr_id;
+    }
+
+    $result['size']  = collect($result['size'])->unique('id')->toArray();
+    $result['color'] = collect($result['color'])->unique('id')->toArray();
+
+    // dd($result);
+    foreach($result['size'] as $size)
+    {
+      $resultSize = ST_Variant::find($size['id']);
+      $detail['size'][] = ['id' => $size['id'], 'name' => $resultSize->vr_text];
+    }
+
+    foreach($result['color'] as $color)
+    {
+      $resultColor = ST_Variant::find($color['id']);
+      $detail['color'][] = ['id' => $color['id'], 'name' => $resultColor->vr_text];
+    }
+
+    // $variantDetailColor = [];
+    // $result = [];
+    // $products = ST_Product_Group::with(['products' => function ($query){
+    //                                 $query->where('fk_category_id', 5);
+    //                               }])
+    //                               ->whereIn('id', $groupId)
+    //                               ->get()->toArray();
+
+    // foreach($products[0]['products'] as $product)
+    //   $pid[] = $product['id'];
+
+    // foreach($products as $detail)
+    //   foreach($detail['products'] as $product)
+    //     $pid[] = $product['id'];
+
+    // if(!empty($pid))
+    // {
+    //   foreach($pid as $id)
+    //   {
+    //     $variant = ST_Variant_Map::where('fk_pd_id', $id)->get(['fk_vr_id'])->toArray();
+
+    //     $variantDetail = ST_Variant::whereIn('id', $variant)->get(['vr_text', 'id', 'vr_type'])->toArray();
+
+    //     $variantDetailSize = collect($variantDetail)->where('vr_type', 1);
+    //     $variantDetailColor = collect($variantDetail)->where('vr_type', 2);
+
+    //     foreach($variantDetailSize as $variantValue)
+    //       $result['size'][] = [
+    //                           'id'   => $variantValue['id'],
+    //                           'name' => $variantValue['vr_text'],
+    //                           'vid'  => $variantValue['id']
+    //                         ];
+
+    //     foreach($variantDetailColor as $variantValue)
+    //       $result['color'][] = [
+    //                             'id'   => $variantValue['id'],
+    //                             'name' => $variantValue['vr_text'],
+    //                             'vid'  => $variantValue['id']
+    //                           ];
+    //   }
+
+    //   $result['size']  = collect($result['size'])->unique('vid')->toArray();
+    //   $result['color'] = collect($result['color'])->unique('vid')->toArray();
+    // }
+
+    return $detail;
+  }
+
   public static function clearView()
   {
     ST_Product::where([['id', '!=', '']])->update(['count_view' => 0]);
@@ -189,7 +270,17 @@ class ST_Product extends Model
 
   public function variants()
   {
-    return $this->hasMany(ST_Variant_Map::class, 'fk_pd_id', '');
+    return $this->hasMany(ST_Variant_Map::class, 'fk_pd_id');
+  }
+
+  public function products()
+  {
+    return $this->hasMany(ST_Product::class, 'fk_category_id')->where([['pd_status', '>', 0]]);
+  }
+
+  public function variantDetail()
+  {
+    return $this->hasOne(ST_Variant::class, 'fk_vr_id');
   }
 
   public function images()

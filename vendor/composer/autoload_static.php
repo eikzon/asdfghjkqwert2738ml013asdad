@@ -324,6 +324,7 @@ class ComposerStaticInit4855c9ae886595b304697b2d9602ef55
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
+        'FieldVariantTbProduct' => __DIR__ . '/../..' . '/database/migrations/2016_12_18_162705_field_variant_tb_product.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
         'File_Iterator_Factory' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Factory.php',
@@ -793,6 +794,7 @@ class ComposerStaticInit4855c9ae886595b304697b2d9602ef55
         'PHP_Token_XOR_EQUAL' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD_FROM' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
+        'Products' => __DIR__ . '/../..' . '/database/seeds/Products.php',
         'SebastianBergmann\\Comparator\\ArrayComparator' => __DIR__ . '/..' . '/sebastian/comparator/src/ArrayComparator.php',
         'SebastianBergmann\\Comparator\\Comparator' => __DIR__ . '/..' . '/sebastian/comparator/src/Comparator.php',
         'SebastianBergmann\\Comparator\\ComparisonFailure' => __DIR__ . '/..' . '/sebastian/comparator/src/ComparisonFailure.php',
@@ -841,6 +843,7 @@ class ComposerStaticInit4855c9ae886595b304697b2d9602ef55
         'StVariant' => __DIR__ . '/../..' . '/database/migrations/2016_11_23_032707_st_variant.php',
         'StVariantMap' => __DIR__ . '/../..' . '/database/migrations/2016_11_23_033602_st_variant_map.php',
         'TableCategory' => __DIR__ . '/../..' . '/database/migrations/2016_12_15_163606_Table_Category.php',
+        'TbPlatform' => __DIR__ . '/../..' . '/database/migrations/2016_12_18_174421_tb_platform.php',
         'TbProductGroup' => __DIR__ . '/../..' . '/database/migrations/2016_11_30_025737_tb_product_group.php',
         'TbStartDateCountsView' => __DIR__ . '/../..' . '/database/migrations/2016_12_17_125502_tb_startDateCountsView.php',
         'TbWishlist' => __DIR__ . '/../..' . '/database/migrations/2016_12_02_063836_tb_wishlist.php',
@@ -849,6 +852,9 @@ class ComposerStaticInit4855c9ae886595b304697b2d9602ef55
         'UpdateFieldVariantTb' => __DIR__ . '/../..' . '/database/migrations/2016_11_30_162422_update_field_variant_tb.php',
         'UsersController' => __DIR__ . '/../..' . '/database/migrations/2016_12_10_052500_UsersController.php',
         'UsersTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UsersTableSeeder.php',
+        'Variant' => __DIR__ . '/../..' . '/database/seeds/Variant.php',
+        'VariantGruop' => __DIR__ . '/../..' . '/database/seeds/VariantGruop.php',
+        'VariantMap' => __DIR__ . '/../..' . '/database/seeds/VariantMap.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

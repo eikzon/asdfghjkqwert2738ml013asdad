@@ -66,8 +66,9 @@ class ProductController extends Controller
       if(!$result)
         return redirect()->route('sitecontrol.product.index');
 
-      foreach($result['variantsMap'] as $variant)
-        $variantsMap[$variant['fk_vr_id']] = true;
+      if(!empty($result['variantsMap']))
+        foreach($result['variantsMap'] as $variant)
+          $variantsMap[$variant['fk_vr_id']] = true;
 
       return view('pages.sitecontrol.product.form', [
         'product'        => $result['product'],
