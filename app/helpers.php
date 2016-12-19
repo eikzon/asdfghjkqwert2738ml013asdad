@@ -73,6 +73,8 @@ function getDistrictId($districtName)
   $districts = new App\Model\ST_Districts;
   $district  = $districts->where('name_th', $districtName)->orderBy('name_th', 'asc')->first();
   return $district;
+}
+
 function random_str($length, $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
 {
     $str = '';
