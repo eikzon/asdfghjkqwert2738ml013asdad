@@ -77,7 +77,7 @@ class ST_Member extends Model
   {
     $day        = date('w');
     $week_start = date('Y-m-d', strtotime('-'.$day.' days')) . ' 00:00:00';
-    $week_end   = date('Y-m-d', strtotime('+'.(6-$day).' days')) . ' 59:59:59';
+    $week_end   = date('Y-m-d', strtotime('+'.(6-$day).' days')) . ' 00:00:00';
 
     return $query->where([
                           ['created_at', '>=', $week_start],

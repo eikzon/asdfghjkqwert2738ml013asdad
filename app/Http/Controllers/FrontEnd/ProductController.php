@@ -17,7 +17,7 @@ class ProductController extends Controller
 {
   public function index($id)
   {
-    if($id == 5)
+    if($id == 1)
       return redirect()->route('platform_student', $id);
 
     $productLists = (new ST_Product)->listProduct($id);

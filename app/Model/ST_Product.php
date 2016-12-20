@@ -195,7 +195,7 @@ class ST_Product extends Model
 
     $products = ST_Product::whereIn('fk_group_id', $groupId)
                             ->where([
-                              ['fk_category_id', '=', 5],
+                              ['fk_category_id', '=', 1],
                               ['pd_status', '>', 0]
                             ])->get();
 
