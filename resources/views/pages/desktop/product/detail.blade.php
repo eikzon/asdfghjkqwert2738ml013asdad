@@ -76,7 +76,7 @@
               <input type="hidden" name="fk_product_id" id="quantity" value="{{ $product['id'] }}" size="1" class="box-qty">
               {{ csrf_field() }}
               @if(request()->session()->has('memberData'))
-                <input type="submit" name="addcart" id="addcart" value="สั่งซื้อสินค้า" title="สั่งซื้อสินค้า" class="btn-addcart" data-url={{ route('add_to_cart') }} data-pid="{{ $product['id'] }}">
+                <input type="submit" name="addcart" id="addcart" value="สั่งซื้อสินค้า" title="สั่งซื้อสินค้า" class="btn-addcart" data-url="{{ route('add_to_cart') }}" data-pid="{{ $product['id'] }}">
               @else
                 <input type="button" class="btn-addcart" value="สั่งซื้อสินค้า" title="สั่งซื้อสินค้า" onclick="alert('กรุณาทำการสมัครสมาชิก และเข้าสู่ระบบเพื่อซื้อสินค้า');">
               @endif

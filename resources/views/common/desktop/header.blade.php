@@ -25,44 +25,11 @@
         <div id="dd" class="shopping-dropdown">
           <span>{{ getCart()->count() }}</span>
           <ul class="dropdown shopping-list">
-            @if(!empty(getCart()))
-              @foreach(getCart() as $cart)
-                @php
-                  $productPrice    = $cart->products->pd_price;
-                  $productDiscount = $cart->products->pd_price_discount;
-
-                  $pricePerUnit  = !empty($productDiscount) ? $productDiscount : $productPrice;
-                  $totalPrice    = $pricePerUnit * $cart->ct_quantity;
-                  @$subTotal    += $totalPrice;
-                  $shippingPrice = ($subTotal < 499) ? 50 : 0;
-                  $grandTotal    = $subTotal + $shippingPrice;
-                @endphp
-                <li>
-                  <a href="{{ route('product_detail', $cart['products']->id) }}">
-                    <div class="product-img">
-                      <img src="{{ asset("images/products/" . getImageCart($cart->products->id)->image) }}">
-                    </div>
-                    @if(!empty($cart->products))
-                      <div class="product-desc">
-                        <div class="product-name">{{ $cart->products->pd_name }}
-                          <br>{{ !empty(getVariant($cart->products->id)->vr_text) ? getVariant($cart->products->id)->vr_text : '' }}<br>จำนวน: {{ $cart->ct_quantity }}
-                          <span class="product-price">{{ number_format((float)$totalPrice, 2) }} บาท</span>
-                        </div>
-                      </div>
-                    @endif
-                  </a>
-                </li>
-              @endforeach
-            @endif
-
-             <li>
-              <div class="shopping-txt">ค่าจัดส่ง<br>ราคารวม</div>
-              <div class="shopping-price">{{ !empty($shippingPrice) ? number_format((float)$shippingPrice, 2) : '0.00' }} บาท<br>{{ !empty($grandTotal) ? number_format((float)$grandTotal, 2) : '0.00' }} บาท</div>
-             </li>
-             <li>
-             <a href="{{ route('cart') }}" class="btn-process">ดูตะกร้าสินค้า</a>
-             </li>
-           </ul>
+            @include('common.desktop.cart.list')
+            <li>
+              <a href="{{ route('cart') }}" class="btn-process">ดูตะกร้าสินค้า</a>
+            </li>
+          </ul>
         </li>
       </ul>
     <div class="social">

@@ -64,7 +64,7 @@ Route::group(['namespace' => 'FrontEnd'], function(){
     Route::get('category/{id}', 'ProductController@index')->name('product_list');
     Route::get('platform/{id}', 'ProductController@platform')->name('platform_student');
     Route::post('platformCompareVariant', 'ProductController@platformCompareVariant')->name('platform_compare_variant');
-    // Route::get('{id}', 'ProductController@show')->name('product_detail');
+    Route::get('{id}', 'ProductController@show')->name('product_detail');
   });
 
   Route::group(['prefix' => 'cart'], function(){

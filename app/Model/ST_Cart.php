@@ -60,6 +60,11 @@ class ST_Cart extends Model
     return $query;
   }
 
+  public static function clearItems()
+  {
+    self::where('fk_member_id', request()->session()->get('memberData')['id'])->delete();
+  }
+
   public function products()
   {
     return $this->belongsTo(ST_Product::class, 'fk_product_id');

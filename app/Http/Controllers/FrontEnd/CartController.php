@@ -75,10 +75,6 @@ class CartController extends Controller
 
   public function addToCartMoreVariant(Request $request)
   {
-    $pidSize  = (new ST_Variant_Map)->compareVariant($request->input('size'));
-    $pidColor = (new ST_Variant_Map)->compareVariant($request->input('color'));
-    // ST_Variant_Map::where('fk_vr_id', $request->input('color'))->get(['fk_pd_id']);
-
     $product    = ST_Product::find($request->input('fk_product_id'));
     $cart       = new ST_Cart;
     $updateCart = ST_Cart::where('fk_member_id', $request->session()->get('memberData')['id'])
@@ -95,7 +91,7 @@ class CartController extends Controller
       {
         if(empty($updateCart->first()))
         {
-          $cart->create($request->all());
+          $cart->create($request->only(['fk_product_id', 'ct_quantity']));
         }
         else
         {
@@ -173,7 +169,7 @@ class CartController extends Controller
       $orderAddress  = new ST_Order_Address;
       $insertAddress = $orderAddress->create($reqAddress);
 
-      $products = ST_Cart::where('fk_member_id', 1)->get();
+      $products = ST_Cart::where('fk_member_id', $request->session()->get('memberData')['id'])->get();
       if(!$products->isEmpty())
       {
         $orderDetailClass = new ST_Order_Detail;
@@ -196,6 +192,9 @@ class CartController extends Controller
                               'od_price_shipping' => !empty($shippingTotal) ? $shippingTotal : 0,
                               'od_price_total'    => !empty($priceTotal) ? $priceTotal : 0
                             ], $orderCreateId);
+
+      ST_Cart::clearItems();
+      ST_Product::clearStock($products);
 
       if($request->input('paymentselect') == 3)
       {

@@ -39,7 +39,7 @@ class ST_Product extends Model
   public function outOfStock()
   {
     return ST_Product::with('images')
-                      ->where([['pd_stock', '<', 50], ['pd_status', '>', 0]])
+                      ->where([['pd_stock', '<', 50], ['pd_status', '=', 1]])
                       ->orderBy('id', 'desc')
                       ->get();
   }
@@ -71,7 +71,9 @@ class ST_Product extends Model
       'pd_stock'          => $request->input('stock'),
       'fk_group_id'       => $request->input('group'),
       'fk_category_id'    => $request->input('category'),
-      'keyGenerate'       => $request->input('keyGenerate')
+      'keyGenerate'       => $request->input('keyGenerate'),
+      'color_vr_id'       => $request->input('variant.0'),
+      'size_vr_id'        => $request->input('variant.1')
     ]);
 
     if($request->has('variant.*') && $result)
@@ -162,6 +164,8 @@ class ST_Product extends Model
     $product->fk_group_id       = $request->input('group');
     $product->fk_category_id    = $request->input('category');
     $product->pd_code           = $request->input('code');
+    $product->color_vr_id       = $request->input('variant.0');
+    $product->size_vr_id        = $request->input('variant.1');
     $updateProduct              = $product->save();
 
     if($updateProduct)
@@ -185,7 +189,9 @@ class ST_Product extends Model
 
   public function platFormCategory($groupId)
   {
-    $result = [];
+    $result['size']  = [];
+    $result['color'] = [];
+    $detail          = [];
 
     $products = ST_Product::whereIn('fk_group_id', $groupId)
                             ->where([
@@ -199,20 +205,24 @@ class ST_Product extends Model
       $result['color'][]['id'] = $product->color_vr_id;
     }
 
-    $result['size']  = collect($result['size'])->unique('id')->toArray();
-    $result['color'] = collect($result['color'])->unique('id')->toArray();
-
-    // dd($result);
-    foreach($result['size'] as $size)
+    if($result['size'])
     {
-      $resultSize = ST_Variant::find($size['id']);
-      $detail['size'][] = ['id' => $size['id'], 'name' => $resultSize->vr_text];
+      $result['size']  = collect($result['size'])->unique('id')->toArray();
+      foreach($result['size'] as $size)
+      {
+        $resultSize = ST_Variant::find($size['id']);
+        $detail['size'][] = ['id' => $size['id'], 'name' => $resultSize->vr_text];
+      }
     }
 
-    foreach($result['color'] as $color)
+    if($result['color'])
     {
-      $resultColor = ST_Variant::find($color['id']);
-      $detail['color'][] = ['id' => $color['id'], 'name' => $resultColor->vr_text];
+      $result['color'] = collect($result['color'])->unique('id')->toArray();
+      foreach($result['color'] as $color)
+      {
+        $resultColor = ST_Variant::find($color['id']);
+        $detail['color'][] = ['id' => $color['id'], 'name' => $resultColor->vr_text];
+      }
     }
 
     // $variantDetailColor = [];
@@ -261,6 +271,19 @@ class ST_Product extends Model
     // }
 
     return $detail;
+  }
+
+  public static function clearStock($products)
+  {
+    foreach($products as $product)
+    {
+      $productReduce = self::find($product->fk_product_id);
+      if($productReduce->pd_stock > 0)
+      {
+        $productReduce->pd_stock -= $product->ct_quantity;
+        $productReduce->save();
+      }
+    }
   }
 
   public static function clearView()

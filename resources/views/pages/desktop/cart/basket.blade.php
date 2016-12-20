@@ -59,7 +59,7 @@
                         <p>{{ $cart['products']->pd_name }}
                           <span>
                             Item Code : {{ $cart['products']->pd_code }}<br>
-                            {{ getVariant($cart->products->id)->vr_text }}
+                            {{ @getVariant($cart->products->id)->vr_text }}
                           </span>
                         </p>
                       </a>

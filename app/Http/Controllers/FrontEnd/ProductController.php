@@ -61,12 +61,18 @@ class ProductController extends Controller
     $tab1 = $platformResult['first'];
     $tab2 = $platformResult['second'];
     $tab3 = $platformResult['third'];
+    $tab4 = $platformResult['fourth'];
+    $tab5 = $platformResult['fifth'];
+    $tab6 = $platformResult['sixth'];
 
     $productClass = new ST_Product;
 
     $variantOptions[1] = $productClass->platFormCategory($tab1);
     $variantOptions[2] = $productClass->platFormCategory($tab2);
     $variantOptions[3] = $productClass->platFormCategory($tab3);
+    $variantOptions[4] = $productClass->platFormCategory($tab4);
+    $variantOptions[5] = $productClass->platFormCategory($tab5);
+    $variantOptions[6] = $productClass->platFormCategory($tab6);
 
     // dd($variantOptions);
 
@@ -79,16 +85,23 @@ class ProductController extends Controller
 
   public function platformCompareVariant(Request $request)
   {
-    dd($request->all());
     $result = ST_Product::where([
                   ['size_vr_id', '=', $request->input('size')],
                   ['color_vr_id', '=', $request->input('color')],
                   ['pd_status', '=', 1]
                 ])
-                ->get('id, pd_price, pd_price_discount');
-
-    $response['id']    = $result->id;
-    $response['price'] = $result->pd_price - $result->pd_price_discount;
+                ->get(['id', 'pd_price', 'pd_price_discount'])
+                ->toArray();
+    if(!empty($result))
+    {
+      $response['status'] = true;
+      $response['id']     = $result[0]['id'];
+      $response['price']  = $result[0]['pd_price'] - $result[0]['pd_price_discount'];
+    }
+    else
+    {
+      $response['status'] = false;
+    }
 
     return json_encode($response);
   }

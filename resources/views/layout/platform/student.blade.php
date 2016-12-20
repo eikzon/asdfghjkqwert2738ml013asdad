@@ -56,24 +56,45 @@ $(document).ready(function(){
   });
 })
 jQuery(function () {
-  jQuery('.showSingle').click(function () {
-    var index = $(this).parent().index(),
-    newTarget = jQuery('.detailproducts').eq(index);
-    jQuery('.detailproducts,.detailproducts2,.detailproducts3').not(newTarget).slideUp('500')
-    newTarget.delay('500').slideToggle('500')
-  return false;
-  });
   jQuery('.showSingle1').click(function () {
     var index = $(this).parent().index(),
-    newTarget = jQuery('.detailproducts2').eq(index);
-    jQuery('.detailproducts2,.detailproducts,.detailproducts3').not(newTarget).slideUp('500')
+    newTarget = jQuery('.detailproducts1').eq(index);
+    jQuery('.detailproducts1,.detailproducts2,.detailproducts3,.detailproducts4,.detailproducts5,.detailproducts6').not(newTarget).slideUp('500')
     newTarget.delay('500').slideToggle('500')
   return false;
   });
   jQuery('.showSingle2').click(function () {
     var index = $(this).parent().index(),
+    newTarget = jQuery('.detailproducts2').eq(index);
+    jQuery('.detailproducts1,.detailproducts2,.detailproducts3,.detailproducts4,.detailproducts5,.detailproducts6').not(newTarget).slideUp('500')
+    newTarget.delay('500').slideToggle('500')
+  return false;
+  });
+  jQuery('.showSingle3').click(function () {
+    var index = $(this).parent().index(),
     newTarget = jQuery('.detailproducts3').eq(index);
-    jQuery('.detailproducts3,.detailproducts,.detailproducts2').not(newTarget).slideUp('500')
+    jQuery('.detailproducts1,.detailproducts2,.detailproducts3,.detailproducts4,.detailproducts5,.detailproducts6').not(newTarget).slideUp('500')
+    newTarget.delay('500').slideToggle('500')
+  return false;
+  });
+  jQuery('.showSingle4').click(function () {
+    var index = $(this).parent().index(),
+    newTarget = jQuery('.detailproducts4').eq(index);
+    jQuery('.detailproducts1,.detailproducts2,.detailproducts3,.detailproducts4,.detailproducts5,.detailproducts6').not(newTarget).slideUp('500')
+    newTarget.delay('500').slideToggle('500')
+  return false;
+  });
+  jQuery('.showSingle5').click(function () {
+    var index = $(this).parent().index(),
+    newTarget = jQuery('.detailproducts5').eq(index);
+    jQuery('.detailproducts1,.detailproducts2,.detailproducts3,.detailproducts4,.detailproducts5,.detailproducts6').not(newTarget).slideUp('500')
+    newTarget.delay('500').slideToggle('500')
+  return false;
+  });
+  jQuery('.showSingle6').click(function () {
+    var index = $(this).parent().index(),
+    newTarget = jQuery('.detailproducts6').eq(index);
+    jQuery('.detailproducts1,.detailproducts2,.detailproducts3,.detailproducts4,.detailproducts5,.detailproducts6').not(newTarget).slideUp('500')
     newTarget.delay('500').slideToggle('500')
   return false;
   });

@@ -604,7 +604,7 @@
 
           if ('hidden' in document) return 'hidden';
           for (var i = 0; i < prefixes.length; i++) {
-            if ((prefixes[i] + 'Hidden') in document)
+            if ((prefixes[i] + 'Hidden') in document) 
             methods.pauseInvisible.visProp = prefixes[i] + 'Hidden';
           }
           if (methods.pauseInvisible.visProp) {
@@ -619,7 +619,7 @@
                 else (slider.vars.initDelay > 0) ? setTimeout(slider.play, slider.vars.initDelay) : slider.play(); //Didn't init before: simply init or wait for it
               }
             });
-          }
+          }       
         },
         isHidden: function() {
           return document[methods.pauseInvisible.visProp] || false;
@@ -3157,11 +3157,11 @@ jQuery(document).ready(function() {
 	/*
 	*   Examples - images
 	*/
-
+	
 	$("a#example1").fancybox({
 		'titleShow'     : false
 	});
-
+		
 	$("a#example2").fancybox({
 		'titleShow'     : false,
 		'transitionIn'	: 'elastic',
@@ -3169,23 +3169,23 @@ jQuery(document).ready(function() {
 		'easingIn'      : 'easeOutBack',
 		'easingOut'     : 'easeInBack'
 	});
-
+	
 	$("a#example3").fancybox({
 	    'titleShow'     : false,
 		'transitionIn'	: 'none',
 		'transitionOut'	: 'none'
 	});
-
+	
 	$("a#example4").fancybox();
-
+	
 	$("a#example5").fancybox({
 		'titlePosition'  : 'inside'
 	});
-
+	
 	$("a#example6").fancybox({
 		'titlePosition'  : 'over'
 	});
-
+	
 	$("a[rel=example_group]").fancybox({
 		'transitionIn'		: 'none',
 		'transitionOut'		: 'none',
@@ -3194,26 +3194,26 @@ jQuery(document).ready(function() {
 		    return '<span id="fancybox-title-over">Image ' +  (currentIndex + 1) + ' / ' + currentArray.length + ' ' + title + '</span>';
 		}
 	});
-
+	
 	/*
 	*   Examples - various
 	*/
-
+	
 	$(".various").fancybox({
 		'transitionIn'	: 'none',
 		'transitionOut'	: 'none'
 	});
-
+	
 	$("#various1").fancybox({
 		'titlePosition'		: 'inside',
 		'transitionIn'		: 'none',
 		'transitionOut'		: 'none'
 	});
-
+	
 	$("#various2").fancybox({
 		'modal' : true
 	});
-
+	
 	$("#various3").fancybox({
 		ajax : {
 		    type	: "POST",
@@ -3226,7 +3226,7 @@ jQuery(document).ready(function() {
 		    type	: "POST"
 		}
 	});
-
+			
 	$("#various5").fancybox({
 		//'width'				: '75%',
 		//'height'			: '75%',
@@ -3235,7 +3235,7 @@ jQuery(document).ready(function() {
 		'transitionOut'		: 'none',
 		'type'				: 'iframe'
 	});
-
+	
 	$(".popuper").fancybox({
 		//'width'				: '75%',
 		//'height'			: '75%',
@@ -3244,14 +3244,14 @@ jQuery(document).ready(function() {
 		'transitionOut'		: 'none',
 		'type'				: 'iframe'
 	});
-
+	
 	$("#various6").fancybox({
 	    'padding'           : 0,
         'autoScale'     	: false,
         'transitionIn'		: 'none',
 		'transitionOut'		: 'none'
 	});
-
+	
 	$("#various7").fancybox({
 		onStart		:	function() {
 			return window.confirm('Continue?');
@@ -3269,9 +3269,9 @@ jQuery(document).ready(function() {
             alert('Closed!');
 		}
 	});
-
+	
 	$("#various8, #various9").fancybox();
-
+	
 	/*
 	*   Examples - manual call
 	*/
@@ -3286,7 +3286,7 @@ jQuery(document).ready(function() {
 			'transitionOut'	: 'elastic'
 		});
     });
-
+    
     $("#manual2").click(function() {
 		$.fancybox([
 			'http://farm5.static.flickr.com/4044/4286199901_33844563eb.jpg',
@@ -3303,11 +3303,11 @@ jQuery(document).ready(function() {
 			'changeFade'        : 0
 		});
 	});
-
+			
 	/*
 	*   Tips & Tricks
 	*/
-
+	
 	$("#tip3").fancybox({
 	    'transitionIn'	: 'none',
 		'transitionOut'	: 'none',
@@ -3348,15 +3348,15 @@ jQuery(document).ready(function() {
 		    $("#login_error").hide();
 		}
 	});
-
+    
 	$("#login_form").bind("submit", function() {
-
+	
 	    if ($("#login_name").val().length < 1 || $("#login_pass").val().length < 1) {
 	        $("#login_error").show();
 	        $.fancybox.resize();
 	        return false;
 	    }
-
+	    
 	    $.fancybox.showActivity();
 
 		$.ajax({
@@ -3371,7 +3371,7 @@ jQuery(document).ready(function() {
 
 		return false;
 	});
-
+	
 	$("#tip6").fancybox({
 		'transitionIn'		: 'none',
 		'transitionOut'		: 'none',
@@ -3381,7 +3381,7 @@ jQuery(document).ready(function() {
 		'height'			: 500,
 		'scrolling'   		: 'no'
 	});
-
+	
 	function formatTitle(title, currentArray, currentIndex, currentOpts) {
 	    return '<div id="tip7-title"><span><a href="javascript:;" onclick="$.fancybox.close();"><img src="/data/closelabel.gif" /></a></span>' + (title && title.length ? '<b>' + title + '</b>' : '' ) + 'Image ' + (currentIndex + 1) + ' of ' + currentArray.length + '</div>';
 	}
@@ -3391,10 +3391,10 @@ jQuery(document).ready(function() {
 		'titlePosition' 	: 'inside',
 		'titleFormat'		: formatTitle
 	});
-
-
+	
+	
 	// Next JS snippets are only for fancybox.net
-
+	
 	/*
 	*   Donate link
 	*/
@@ -3406,7 +3406,7 @@ jQuery(document).ready(function() {
 	/*
 	*   Zebra-stripping table
 	*/
-
+	
 	$("table.options tr:even").addClass('even');
 
 });
@@ -3451,22 +3451,33 @@ $(function(){
 $(function(){
   $('.js-platform-option').on('change', function() {
     line = $(this).data('line');
+    $('input[type="submit"][data-line="' + line + '"]').attr('disabled', true);
 
     if($('select[name="size"][data-line="' + line + '"]').val() && $('select[name="color"][data-line="' + line + '"]').val())
     {
       $.ajax({
         type: 'POST',
         url: $(this).data('url'),
-
+        datatype: 'json',
         data: {
           _method: 'POST',
+          _token: $('input[name="_token"]').val(),
           size: $('select[name="size"][data-line="' + line + '"]').val(),
           color: $('select[name="color"][data-line="' + line + '"]').val()
         },
         success: function(result) {
           result = $.parseJSON(result);
-          $('.js-price-display-' + line).html(result.price);
-          $('input[name="pid_' + line + '"]').val(result.id);
+          if(result.status)
+          {
+            $('.js-price-display-' + line).html(result.price);
+            $('.input-pid-' + line).val(result.id);
+            $('input[type="submit"][data-line="' + line + '"]').attr('disabled', false);
+          }
+          else
+          {
+            $('.js-price-display-' + line).html('-');
+            $('input[type="submit"][data-line="' + line + '"]').attr('disabled', true);
+          }
         }
       });
     }

@@ -410,7 +410,7 @@ a: hover {
   }
 }
 
-.detailproducts, .detailproducts2, .detailproducts3 {
+.detailproducts1, .detailproducts2, .detailproducts3, .detailproducts4, .detailproducts5, .detailproducts6 {
   display: none;
   margin: 0 auto;
   padding: 40px 0;
@@ -418,7 +418,7 @@ a: hover {
   float: left;
 }
 
-.detailproducts h2, .detailproducts2 h2, .detailproducts3 h2 {
+.detailproducts1 h2, .detailproducts2 h2, .detailproducts3 h2, .detailproducts4 h2, .detailproducts5 h2, .detailproducts6 h2 {
   margin: 0 0 10px 0;
   padding: 0;
   font-family: "SukhumvitSet", Helvetica, Arial, sans-serif;
@@ -426,7 +426,7 @@ a: hover {
   font-weight: normal;
 }
 
-.detailproducts ul, .detailproducts2 ul, .detailproducts3 ul {
+.detailproducts1 ul, .detailproducts2 ul, .detailproducts3 ul, .detailproducts4 ul, .detailproducts5 ul, .detailproducts6 ul {
   margin: 0 30%;
   padding: 0;
   width: 40%;
@@ -434,7 +434,7 @@ a: hover {
   list-style: none;
 }
 
-.detailproducts ul li, .detailproducts2 ul li, .detailproducts3 ul li {
+.detailproducts1 ul li, .detailproducts2 ul li, .detailproducts3 ul li, .detailproducts4 ul li, .detailproducts5 ul li, .detailproducts6 ul li {
   margin: 0;
   padding: 10px 0;
   width: 100%;
@@ -442,7 +442,7 @@ a: hover {
   font-size: 16px;
 }
 
-.detailproducts ul li h3, .detailproducts2 ul li h3, .detailproducts3 ul li h3 {
+.detailproducts1 ul li h3, .detailproducts2 ul li h3, .detailproducts3 ul li h3, .detailproducts4 ul li h3, .detailproducts5 ul li h3, .detailproducts6 ul li h3 {
   margin: 0;
   padding: 0;
   font-family: "SukhumvitSet", Helvetica, Arial, sans-serif;
@@ -451,20 +451,20 @@ a: hover {
 }
 
 @media screen and (max-width: 667px) {
-  .detailproducts, .detailproducts2, .detailproducts3 {
+  .detailproducts1, .detailproducts2, .detailproducts3, .detailproducts4, .detailproducts5, .detailproducts6 {
     padding: 20px 0;
   }
 
-  .detailproducts h2, .detailproducts2 h2, .detailproducts3 h2 {
+  .detailproducts1 h2, .detailproducts2 h2, .detailproducts3 h2, .detailproducts4 h2, .detailproducts5 h2, .detailproducts6 h2 {
     font-size: 20px;
   }
 
-  .detailproducts ul, .detailproducts2 ul, .detailproducts3 ul {
+  .detailproducts1 ul, .detailproducts2 ul, .detailproducts3 ul, .detailproducts4 ul, .detailproducts5 ul, .detailproducts6 ul {
     margin: 0 5%;
     width: 90%;
   }
 
-  .detailproducts ul li h3, .detailproducts2 ul li h3, .detailproducts3 ul li h3 {
+  .detailproducts ul li h3, .detailproducts2 ul li h3, .detailproducts3 ul li h3, .detailproducts4 ul li h3, .detailproducts5 ul li h3, .detailproducts6 ul li h3 {
     font-size: 16px;
   }
 }
@@ -871,4 +871,9 @@ html[xmlns] .slides {
 
 .imgslide {
   visibility: hidden;
+}
+
+.productshoes .wraper input.btn-addcart:disabled {
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
 }

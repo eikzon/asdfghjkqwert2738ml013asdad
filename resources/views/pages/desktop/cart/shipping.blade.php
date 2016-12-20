@@ -94,25 +94,8 @@
           <div class="blog-inside">
             <h2>3. สรุปการสั่งซื้อ</h2>
             <ul class="summary-list">
-              <li><a href="#"><div class="product-img"><img src="products/images/BC-006_GN_4.jpg"></div>
-                <div class="product-desc">
-                  <div class="product-name">Breaker King Knit<br>BC006-GN / 39 / Multicolor<br>จำนวน: 1<span class="product-price">1,550 บาท</span></div>
-                </div>
-              </a></li>
-              <li><a href="#"><div class="product-img"><img src="products/images/BC-006_GN_4.jpg"></div>
-                <div class="product-desc">
-                  <div class="product-name">Breaker King Knit<br>BC006-GN / 39 / Multicolor<br>จำนวน: 1<span class="product-price">1,550 บาท</span></div>
-                </div>
-              </a></li>
-              <li>
-                <div class="shopping-txt">ค่าจัดส่ง<br>ราคารวม</div>
-                <div class="shopping-price">0.00 บาท<br>1,879 บาท</div>
-              </li>
-              <li>
-                <label for="order-remark">หมายเหตุ</label>
-                <textarea name="order-remark" id="order-remark"></textarea>
-              </li>
-             </ul>
+              @include('common.desktop.cart.list')
+            </ul>
             <button type="submit" class="btn continue-proceed">ดำเนินการชำระเงิน</button>
           </div>
           {{ csrf_field() }}
