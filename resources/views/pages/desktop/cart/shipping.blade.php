@@ -24,55 +24,32 @@
             <label for="receiver-address">ที่อยู่ (เลขที่, อาคาร/หมู่บ้าน, ซอย/ถนน)<span>*</span></label>
             <input type="text" name="oa_address" id="receiver-address" value="{{ $member->shipping_address }}" required>
             <label for="receiver-province">จังหวัด<span>*</span></label>
-            <select name="oa_province" id="receiver-province" required>
-                <option value="0" {{ $member->shipping_province == 1 ? 'selected' : '' }}>กรุณาเลือกจังหวัด</option>
-                <option value="1">กรุงเทพมหานคร</option>
-                <option value="3">กาญจนบุรี</option>
-                <option value="6">ขอนแก่น</option>
-                <option value="7">จันทบุรี</option>
-                <option value="8">ฉะเชิงเทรา</option>
-                <option value="9">ชลบุรี</option>
-                <option value="14">เชียงราย</option>
-                <option value="13">เชียงใหม่</option>
-                <option value="15">ตรัง</option>
-                <option value="17">ตาก</option>
-                <option value="19">นครปฐม</option>
-                <option value="22">นครศรีธรรมราช</option>
-                <option value="24">นนทบุรี</option>
-                <option value="27">บุรีรัมย์</option>
-                <option value="28">ปทุมธานี</option>
-                <option value="30">ปราจีนบุรี</option>
-                <option value="37">พิษณุโลก</option>
-                <option value="41">ภูเก็ต</option>
-                <option value="43">มุกดาหาร</option>
-                <option value="47">ร้อยเอ็ด</option>
-                <option value="49">ระยอง</option>
-                <option value="50">ราชบุรี</option>
-                <option value="52">ลำปาง</option>
-                <option value="56">สกลนคร</option>
-                <option value="57">สงขลา</option>
-                <option value="59">สมุทรปราการ</option>
-                <option value="60">สมุทรสงคราม</option>
-                <option value="61">สมุทรสาคร</option>
-                <option value="63">สระบุรี</option>
-                <option value="66">สุพรรณบุรี</option>
-                <option value="67">สุราษฎร์ธานี</option>
-                <option value="68">สุรินทร์</option>
-                <option value="73">อุดรธานี</option>
-                <option value="76">อุบลราชธานี</option>
+            <select name="oa_province" id="receiver-province" class="js-option-provinces" data-url="{{ route('option_province') }}" required>
+              <option value="0">กรุณาเลือกจังหวัด</option>
+              @foreach(getProvinces() as $province)
+                <option value="{{ $province->name_th }}" {{ $member->shipping_province == $province->name_th ? 'selected' : '' }}>{{ $province->name_th }}</option>
+              @endforeach
             </select>
             <label for="receiver-district">อำเภอ/เขต<span>*</span></label>
-            <select name="oa_district" id="receiver-district" required>
+            <select name="oa_district" class="js-option-amphure" id="receiver-district" data-url="{{ route('option_amphures') }}" id="receiver-district" required>
               <option value="0">กรุณาเลือกอำเภอ/เขต</option>
-              <option value="1" {{ $member->shipping_district == 1 ? 'selected' : '' }}>พญาไท</option>
+              @if(!empty($member->shipping_district))
+                @foreach(getAmphures(getProvinceId($member->shipping_province)->id) as $ampture)
+                  <option value="{{ $ampture->name_th }}" {{ $member->shipping_district == $ampture->name_th ? 'selected' : '' }}>{{ $ampture->name_th }}</option>
+                @endforeach
+              @endif
             </select>
             <label for="receiver-subdistrict">ตำบล/แขวง<span>*</span></label>
-            <select name="oa_sub_district" id="receiver-subdistrict" required>
+            <select name="oa_sub_district" data-url="{{ route('option_districts') }}" class="js-option-district" id="receiver-subdistrict" required>
               <option value="0">กรุณาเลือกตำบล/แขวง</option>
-              <option value="1" {{ $member->shipping_sub_district == 1 ? 'selected' : '' }}>ดินแดง</option>
+              @if(!empty($member->shipping_sub_district))
+                @foreach(@getDistricts(getAmphureId($member->shipping_district)->id) as $district)
+                  <option value="{{ $district->name_th }}" {{ $member->shipping_sub_district == $district->name_th ? 'selected' : '' }}>{{ $district->name_th }}</option>
+                @endforeach
+              @endif
             </select>
             <label for="receiver-postcode">รหัสไปรษณีย์<span>*</span></label>
-            <input type="text" name="oa_postcode" id="receiver-postcode" value="{{ $member->shipping_postcode }}" required>
+            <input type="text" name="oa_postcode" class="js-zipcode" id="receiver-postcode" maxlength="5" value="{{ $member->shipping_postcode }}" required>
             <h3>ที่อยู่ใบกำกับภาษี</h3>
             <label><input type="checkbox" name="oa_isbilling_address" id="same-address" value="1">ใช้ที่อยู่เดียวกับที่อยู่จัดส่ง</label>
             <div class="js-show-billing">

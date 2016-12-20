@@ -276,11 +276,15 @@ class AccountController extends Controller
 
     return redirect()->route('account_forgot_password', $statusEmailSend);
   }
-  public function history()
+  public function history(Request $request)
   {
     $user   = request()->session()->get('memberData')['id'];
     $orders = ST_Order::ByMember($user)->get();
-    return view('pages.desktop.account.history', ['orders' => $orders]);
+    
+    if($request->session()->has('memberData'))
+      return view('pages.desktop.account.history', ['orders' => $orders]);
+    else
+      return view('pages.desktop.account.login');
   }
   public function historyDetail($orderId, $type = '')
   {
@@ -291,11 +295,15 @@ class AccountController extends Controller
 
     return view('pages.desktop.account.history_detail', ['order' => $order]);
   }
-  public function wishlist()
+  public function wishlist(Request $request)
   {
     // auth()->user()->id = 0;
     $wishlists = (new ST_Wishlist)->listAll(1);
-    return view('pages.desktop.account.wishlist', ['wishlists' => $wishlists]);
+
+    if($request->session()->has('memberData'))
+      return view('pages.desktop.account.wishlist', ['wishlists' => $wishlists]);
+    else
+      return view('pages.desktop.account.login');
   }
 
   // public function wishlistAdd()

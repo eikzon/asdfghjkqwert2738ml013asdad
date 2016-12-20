@@ -37,4 +37,55 @@ $(document).ready(function () {
       }
     });
   });
+
+  $('.js-option-provinces').on('change', function() {
+    $provinceName = $('.js-option-provinces').val();
+
+    $.ajax({
+      type: 'POST',
+      url: $(this).data('url'),
+      data: {
+        _method: 'POST',
+        province: $provinceName
+      },
+      success: function(result) {
+        $('.js-option-amphure').html(result['amphures']);
+        $('.js-option-district').html(result['district']);
+        $('.js-zipcode').val(result['zipcode']);
+      }
+    });
+  });
+
+  $('.js-option-amphure').on('change', function() {
+    $amphureName = $('.js-option-amphure').val();
+
+    $.ajax({
+      type: 'POST',
+      url: $(this).data('url'),
+      data: {
+        _method: 'POST',
+        amphure: $amphureName
+      },
+      success: function(result) {
+        $('.js-option-district').html(result['district']);
+        $('.js-zipcode').val(result['zipcode']);
+      }
+    });
+  });
+
+  $('.js-option-district').on('change', function() {
+    $districtName = $('.js-option-district').val();
+
+    $.ajax({
+      type: 'POST',
+      url: $(this).data('url'),
+      data: {
+        _method: 'POST',
+        districts: $districtName
+      },
+      success: function(result) {
+        $('.js-zipcode').val(result['zipcode']);
+      }
+    });
+  });
 });
