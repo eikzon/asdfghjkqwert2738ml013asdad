@@ -15,7 +15,8 @@
                 Last Name : {{ $member->last_name }}<br>
                 Birthday : {{ date('d-m-Y', strtotime($member->birthday)) }}<br>
                 Gender : {{ ($member->gender == 0 ? 'Male' : 'Female') }}<br>
-                Mobile : {{ $member->tel }}
+                Mobile : {{ $member->tel }}<br>
+                Notification: {{ $member->notification == 1 ? 'ต้องการรับข่าวสารและโปรโมชั่น' : 'ไม่ต้องการรับข่าวสารและโปรโมชั่น' }}
               </div>
               <div class="col-lg-6 col-md-6 col-sm-6">
                 <h4 class="box-title m-t-40"><i class="ti-home"></i> Current Address </h4>
