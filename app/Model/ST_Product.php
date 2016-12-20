@@ -94,7 +94,7 @@ class ST_Product extends Model
 
   public function show($id)
   {
-    $resultProduct = self::with('images')->with('sku')->find($id);
+    $resultProduct = self::with('images')->with('sku')->with('category')->find($id);
 
     if(!empty($resultProduct))
       return $resultProduct->toArray();
@@ -211,7 +211,8 @@ class ST_Product extends Model
       foreach($result['size'] as $size)
       {
         $resultSize = ST_Variant::find($size['id']);
-        $detail['size'][] = ['id' => $size['id'], 'name' => $resultSize->vr_text];
+        if($resultSize)
+          $detail['size'][] = ['id' => $size['id'], 'name' => $resultSize->vr_text];
       }
     }
 
@@ -221,7 +222,8 @@ class ST_Product extends Model
       foreach($result['color'] as $color)
       {
         $resultColor = ST_Variant::find($color['id']);
-        $detail['color'][] = ['id' => $color['id'], 'name' => $resultColor->vr_text];
+        if($resultColor)
+          $detail['color'][] = ['id' => $color['id'], 'name' => $resultColor->vr_text];
       }
     }
 
@@ -314,5 +316,10 @@ class ST_Product extends Model
   public function sku()
   {
     return $this->hasOne(ST_Product_Group::class, 'id', 'fk_group_id');
+  }
+
+  public function category()
+  {
+    return $this->hasOne(ST_Category::class, 'id', 'fk_category_id');
   }
 }

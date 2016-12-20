@@ -5,8 +5,8 @@
 @section('title', @$product['pd_name'])
 @section('content')
   @include('common.desktop.account.header', [
-    'title'  => 'BREAKER',
-    'detail' => $product['pd_name']
+    'title'  => $product['category']['ct_name'],
+    'detail' => $product['category']['ct_description']
   ])
   <div class="detailproducts">
     <div class="topdesc">
@@ -99,12 +99,14 @@
         </form></div><!-- .wrap -->
       </div><!-- .desc -->
     </div><!-- .topdesc -->
-    <div class="infomation">
-      <div class="name">{{ $product['pd_name'] }}</div><!-- .name -->
-      <div class="longdesc">
-        {!! $product['pd_long_desc'] !!}
-      </div>
-    </div><!-- .infomation -->
+    @if(!empty($product['pd_long_desc']))
+      <div class="infomation">
+        <div class="name">{{ $product['pd_name'] }}</div><!-- .name -->
+        <div class="longdesc">
+          {!! $product['pd_long_desc'] !!}
+        </div>
+      </div><!-- .infomation -->
+    @endif
   </div><!-- .detailproducts -->
 
   <div class="related">

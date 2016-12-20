@@ -17,15 +17,17 @@
               <p><span>* ไม่สามารถบันทึกข้อมูลได้ กรุณากรอกใหม่อีกครั้ง</span></p>
             @elseif(request()->getQueryString() == 'passwordWrong')
               <p><span>* กรุณาตรวจสอบรหัสผ่านคุณ และต้องมากกว่า 5 ตัวอักษร</span></p>
+            @elseif(request()->getQueryString() == 'wrong-email')
+              <p><span>* ไม่สามารถใช้ Email นี้ในการสมัครซ้ำได้ค่ะ</span></p>
             @endif
             <form method="post" action="{{ route('account_store') }}" class="form-style regis">
                 <div class="form-left">
                     <label for="user-email">อีเมล์<span>*</span></label>
                     <input type="email" name="email" id="user-email" required autofocus>
                     <label for="user-password">รหัสผ่าน<span>*</span></label>
-                    <input type="password" name="password" maxlength="20" id="user-password">
+                    <input type="password" name="password" minlength="6" maxlength="20" id="user-password">
                     <label for="user-password-2">ยืนยันรหัสผ่าน<span>*</span></label>
-                    <input type="password" name="repassword" maxlength="20" id="user-password-2">
+                    <input type="password" name="repassword" minlength="6" maxlength="20" id="user-password-2">
                     <label for="user-name">ชื่อ<span>*</span></label>
                     <input type="text" name="firstname" required id="user-name">
                     <label for="user-lastname">นามสกุล<span>*</span></label>

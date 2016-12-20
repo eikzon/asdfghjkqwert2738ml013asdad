@@ -148,17 +148,12 @@ class AccountController extends Controller
 
   public function store(Request $request)
   {
-    // $validator = Validator::make($request->all(), [
-    //   'email'    => 'max:60',
-    //   // 'email'    => 'exists:st_member,email|max:60',
-    //   'password' => 'min:6|max:20',
-    // ]);
+    $validator = Validator::make($request->all(), [
+      'email' => 'unique:st_member,email'
+    ]);
 
-    // if ($validator->fails()) {
-    //     return redirect()->route('account_create')
-    //             ->withErrors($validator)
-    //             ->withInput();
-    // }
+    if($validator->fails())
+      return redirect()->route('account_create', 'wrong-email');
 
     if($request->has('password') && $request->input('password') == $request->input('repassword'))
     {
@@ -280,7 +275,7 @@ class AccountController extends Controller
   {
     $user   = request()->session()->get('memberData')['id'];
     $orders = ST_Order::ByMember($user)->get();
-    
+
     if($request->session()->has('memberData'))
       return view('pages.desktop.account.history', ['orders' => $orders]);
     else

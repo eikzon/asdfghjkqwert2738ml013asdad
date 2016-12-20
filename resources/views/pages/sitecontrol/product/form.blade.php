@@ -167,7 +167,7 @@
                                   </div>
                                 @endif
                                 <div class="col-lg-12">
-                                  <h3 class="box-title m-t-20">Upload Image <span class="text-danger">(Recommend : w 620px * h 435px)</span></h3>
+                                  <h3 class="box-title m-t-20">Upload Image <span class="text-danger">(Recommend : w 620px * h 260px)</span></h3>
                                   <div id="dropbox" data-url="/sitecontrol/product/uploadimages">
                                     <span class="message">Drop images here to upload. <br /><i>(they will only be visible to you)</i></span>
                                   </div>

@@ -75,10 +75,10 @@ class ST_Member extends Model
 
   public function scopeThisWeek($query)
   {
-    $day = date('w');
+    $day        = date('w');
     $week_start = date('Y-m-d', strtotime('-'.$day.' days')) . ' 00:00:00';
-    $week_end = date('Y-m-d', strtotime('+'.(6-$day).' days')) . ' 59:59:59';
-    // dd($week_start . ' ' . $week_end);
+    $week_end   = date('Y-m-d', strtotime('+'.(6-$day).' days')) . ' 59:59:59';
+
     return $query->where([
                           ['created_at', '>=', $week_start],
                           ['created_at', '<=', $week_end],
