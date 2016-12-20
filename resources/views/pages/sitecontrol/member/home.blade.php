@@ -12,7 +12,7 @@
                 <th>No.</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Date</th>
+                <th>Register Date</th>
                 <th>Status</th>
                 <th>Actions</th>
               </tr>
