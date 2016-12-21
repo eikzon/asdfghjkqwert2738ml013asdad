@@ -66,7 +66,7 @@
                       <option value="0">กรุณาเลือกตำบล/แขวง</option>
                     </select>
                     <label for="user-postcode">รหัสไปรษณีย์<span>*</span></label>
-                    <input type="text" name="user-postcode" class="js-zipcode" maxlength="5" id="user-postcode" value="">
+                    <input type="text" name="user-postcode" maxlength="5" id="user-postcode" value="">
                 </div>
                 <div class="clear"></div>
                 <div class="center accept-area">

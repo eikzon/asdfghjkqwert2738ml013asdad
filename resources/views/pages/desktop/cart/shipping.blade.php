@@ -49,7 +49,7 @@
               @endif
             </select>
             <label for="receiver-postcode">รหัสไปรษณีย์<span>*</span></label>
-            <input type="text" name="oa_postcode" class="js-zipcode" id="receiver-postcode" maxlength="5" value="{{ $member->shipping_postcode }}" required>
+            <input type="text" name="oa_postcode" id="receiver-postcode" maxlength="5" value="{{ $member->shipping_postcode }}" required>
             <h3>ที่อยู่ใบกำกับภาษี</h3>
             <label><input type="checkbox" name="oa_isbilling_address" id="same-address" value="1">ใช้ที่อยู่เดียวกับที่อยู่จัดส่ง</label>
             <div class="js-show-billing">
