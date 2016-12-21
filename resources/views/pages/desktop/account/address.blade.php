@@ -45,7 +45,7 @@
                   @endif
                 </select>
                 <label for="user-postcode">รหัสไปรษณีย์<span>*</span></label>
-                <input type="text" name="shipping_postcode" class="js-zipcode" maxlength="5" id="user-postcode" value="{{ $member->shipping_postcode }}">
+                <input type="text" name="shipping_postcode" maxlength="5" id="user-postcode" value="{{ $member->shipping_postcode }}">
                 {{ csrf_field() }}
                 <input type="submit" name="save-pass" id="save-pass" value="บันทึกข้อมูล">
               </form>

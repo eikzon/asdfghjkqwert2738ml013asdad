@@ -51,7 +51,6 @@ $(document).ready(function () {
       success: function(result) {
         $('.js-option-amphure').html(result['amphures']);
         $('.js-option-district').html(result['district']);
-        $('.js-zipcode').val(result['zipcode']);
       }
     });
   });
@@ -68,23 +67,6 @@ $(document).ready(function () {
       },
       success: function(result) {
         $('.js-option-district').html(result['district']);
-        $('.js-zipcode').val(result['zipcode']);
-      }
-    });
-  });
-
-  $('.js-option-district').on('change', function() {
-    $districtName = $('.js-option-district').val();
-
-    $.ajax({
-      type: 'POST',
-      url: $(this).data('url'),
-      data: {
-        _method: 'POST',
-        districts: $districtName
-      },
-      success: function(result) {
-        $('.js-zipcode').val(result['zipcode']);
       }
     });
   });
