@@ -123,10 +123,7 @@
     </div><!-- .topdesc -->
     @if(!empty($product['pd_long_desc']))
       <div class="infomation">
-        <div class="name">{{ $product['pd_name'] }}</div><!-- .name -->
-        <div class="longdesc">
-          {!! $product['pd_long_desc'] !!}
-        </div>
+        {!! $product['pd_long_desc'] !!}
       </div><!-- .infomation -->
     @endif
   </div><!-- .detailproducts -->
