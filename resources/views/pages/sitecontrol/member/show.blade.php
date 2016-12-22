@@ -25,6 +25,7 @@
                 District : {{ $member->shipping_district }}<br>
                 Province : {{ $member->shipping_province }}<br>
                 Postcode : {{ $member->shipping_postcode }}<br>
+                Billing Address : {{ $member->billign_address }}<br>
                 Tax Id : {{ $member->user_tax_Id }}
               </div>
               <div class="col-lg-12 col-md-12 col-sm-12">
