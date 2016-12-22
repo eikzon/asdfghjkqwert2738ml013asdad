@@ -7,7 +7,7 @@
       $pricePerUnit  = !empty($productDiscount) ? $productDiscount : $productPrice;
       $totalPrice    = $pricePerUnit * $cart->ct_quantity;
       @$subTotal    += $totalPrice;
-      $shippingPrice = ($subTotal < 499) ? 50 : 0;
+      $shippingPrice = ($subTotal < 1000) ? 50 : 0;
       $grandTotal    = $subTotal + $shippingPrice;
     @endphp
     <li>
