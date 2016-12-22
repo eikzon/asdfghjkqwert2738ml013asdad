@@ -79,7 +79,8 @@
             </div>
           @endif
           <div class="stock">
-            @if(!empty($product['sku']['pg_name'])) {{ $product['sku']['pg_name'] }} | @endif
+            {{-- @if(!empty($product['sku']['pg_name'])) {{ $product['sku']['pg_name'] }} | @endif --}}
+            Men's {{ title_case($product['category']['ct_name']) }} Boots | <span>
             @if(!empty($product['pd_stock']) && $product['pd_status'] == 1)
               In Stock
             @else

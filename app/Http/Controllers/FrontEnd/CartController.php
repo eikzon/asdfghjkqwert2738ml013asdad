@@ -153,6 +153,9 @@ class CartController extends Controller
     $orderClass    = new ST_Order;
     $orderCreateId = $orderClass->createOrder($request);
 
+    if($request->has('oa_isbilling_address'))
+      $billingAddress = $request->input('oa_address') . ' ' . $request->input('oa_province') . ' ' . $request->input('oa_district') . ' ' . $request->input('oa_sub_district') . ' ' . $request->input('oa_postcode');
+
     $reqAddress = [
                     'oa_first_name' => $request->input('oa_first_name'),
                     'oa_last_name' => $request->input('oa_last_name'),
@@ -163,7 +166,7 @@ class CartController extends Controller
                     'oa_sub_district' => $request->input('oa_sub_district'),
                     'oa_postcode' => $request->input('oa_postcode'),
                     'oa_isbilling_address' => !empty($request->input('oa_isbilling_address')) ? $request->input('oa_isbilling_address') : 0,
-                    'oa_billign_address' => $request->input('oa_billign_address'),
+                    'oa_billign_address' => !empty($billingAddress) ? $billingAddress : $request->input('oa_billign_address'),
                     'oa_tax_id' => $request->input('oa_tax_id'),
                     'fk_order_id' => $orderCreateId
                   ];

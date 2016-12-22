@@ -20,9 +20,10 @@
     {{ number_format($price, 2) }} Baht
   </span><br>
   <span class="desc">
-    @if(!empty($product['sku']['pg_name']))
+    {{-- @if(!empty($product['sku']['pg_name']))
       {{ $product['sku']['pg_name'] }} |
-    @endif
+    @endif --}}
+    Men's {{ title_case(@$category->ct_name) }} Boots |
     @if(!empty($product['pd_stock']) && $product['pd_status'] == 1)
       In Stock
     @else

@@ -46,12 +46,13 @@ class ST_Product extends Model
 
   public function relatedItems($id)
   {
+    $detailBelongsTo = ST_Product::find($id);
     $products = ST_Product::with('images')
                   ->with('sku')
                   ->where('id', '!=', $id)
                   ->where('pd_status', 1)
-                  ->orwhere('pd_status', 2)
-                  ->get();
+                  ->where('fk_category_id', $detailBelongsTo->fk_category_id)
+                  ->orwhere('pd_status', 2)->get();
 
     return $products;
   }
@@ -182,6 +183,7 @@ class ST_Product extends Model
                       ['fk_category_id', '=', $categoryId],
                       ['pd_status', '>', 0]
                     ])
+                  ->groupBy('fk_group_id')
                   ->orderBy('id', 'desc')
                   ->get();
     return $products;
