@@ -44,28 +44,28 @@
                     <input type="tel" name="mobile" maxlength="10" required id="user-mobile">
                 </div>
                 <div class="form-right">
-                    <label for="user-address-no">ที่อยู่ เลขที่<span>*</span></label>
+                    <label for="user-address-no">ที่อยู่ เลขที่</label>
                     <input type="text" name="user-address-no" id="user-address-no">
                     <label for="user-address-village">อาคาร / หมู่บ้าน</label>
                     <input type="text" name="user-address-village" id="user-address-village">
                     <label for="user-address-road">ซอย / ถนน</label>
                     <input type="text" name="user-address-road" id="user-address-road">
-                    <label for="user-province">จังหวัด<span>*</span></label>
+                    <label for="user-province">จังหวัด</label>
                     <select name="user-province" id="user-province" class="js-option-provinces" data-url="{{ route('option_province') }}" required>
                       <option value="0">กรุณาเลือกจังหวัด</option>
                       @foreach(getProvinces() as $province)
                         <option value="{{ $province->name_th }}">{{ $province->name_th }}</option>
                       @endforeach
                     </select>
-                    <label for="user-district">อำเภอ/เขต<span>*</span></label>
+                    <label for="user-district">อำเภอ/เขต</label>
                     <select name="user-district" class="js-option-amphure" id="user-district" data-url="{{ route('option_amphures') }}" id="receiver-district" required>
                       <option value="0">กรุณาเลือกอำเภอ/เขต</option>
                     </select>
-                    <label for="user-subdistrict">ตำบล/แขวง<span>*</span></label>
+                    <label for="user-subdistrict">ตำบล/แขวง</label>
                     <select name="user-subdistrict" data-url="{{ route('option_districts') }}" class="js-option-district" id="user-subdistrict" required>
                       <option value="0">กรุณาเลือกตำบล/แขวง</option>
                     </select>
-                    <label for="user-postcode">รหัสไปรษณีย์<span>*</span></label>
+                    <label for="user-postcode">รหัสไปรษณีย์</label>
                     <input type="text" name="user-postcode" maxlength="5" id="user-postcode" value="">
                 </div>
                 <div class="clear"></div>

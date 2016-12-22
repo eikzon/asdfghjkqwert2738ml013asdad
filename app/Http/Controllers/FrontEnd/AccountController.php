@@ -149,7 +149,7 @@ class AccountController extends Controller
   public function store(Request $request)
   {
     $validator = Validator::make($request->all(), [
-      'email' => 'unique:st_member,email'
+      'email' => 'unique:st_member,email,0,status'
     ]);
 
     if($validator->fails())
@@ -293,7 +293,7 @@ class AccountController extends Controller
   public function wishlist(Request $request)
   {
     // auth()->user()->id = 0;
-    $wishlists = (new ST_Wishlist)->listAll(1);
+    $wishlists = (new ST_Wishlist)->listAll($request->session()->get('memberData')['id']);
 
     if($request->session()->has('memberData'))
       return view('pages.desktop.account.wishlist', ['wishlists' => $wishlists]);
@@ -315,8 +315,7 @@ class AccountController extends Controller
   }
   public function wishlistAdd($id)
   {
-    (new ST_Wishlist)->store($id);
-
+    $response = (new ST_Wishlist)->store($id);
     return redirect()->route('product_detail', $id);
   }
   public function wishlistDestroy($pid, $id)

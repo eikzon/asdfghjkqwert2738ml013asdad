@@ -32,10 +32,12 @@ class ST_Wishlist extends Model
 
   public function store($pid)
   {
-    $result = ST_Wishlist::create([
-      'fk_product_id' => $pid,
-      'fk_member_id'  => 1
-    ]);
+    $result = false;
+    if(!empty(request()->session()->get('memberData')['id']))
+      $result = ST_Wishlist::create([
+        'fk_product_id' => $pid,
+        'fk_member_id'  => request()->session()->get('memberData')['id']
+      ]);
 
     return $result;
   }

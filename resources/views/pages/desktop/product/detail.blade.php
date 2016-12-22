@@ -38,23 +38,43 @@
           <div class="shortdesc">
             Item Code : {{ $product['pd_code'] }}
           </div>
-          @if(!empty($variants[0]['products']))
+          @php
+            $groupVariants = \App\Model\ST_Product::groupVariant($product['fk_group_id'], $product['fk_category_id']);
+
+          @endphp
+          @if(!empty($groupVariants))
             <div class="shortdesc">
-              @if(count($variants[0]['products']) > 1)
-                {{ $variants[0]['pg_name'] }} :
+              @if(count($groupVariants) > 1)
+                Size :
+                {{-- {{ $variants[0]['pg_name'] }} : --}}
+                {{-- {{ dd($groupVariants) }} --}}
                 <select class="select-size js-variant-change-option" data-url="{{ url('/') }}">
-                  @foreach($variants[0]['products'] as $variant)
-                    <option @if($variant['pd_status'] == 2) disabled="disabled" @endif
-                            @if($variant['fk_pd_id'] == $product['id']) selected @endif
-                            value="{{ $variant['id'] }}"
-                            data-pid="{{ $variant['fk_pd_id'] }}">
-                      {{ $variant['vr_name'] }}
-                      @if($variant['pd_status'] == 2) [Out of Stock] @endif
-                    </option>
+                  @foreach($groupVariants as $variant)
+                    @if(!empty($variant['variant']))
+                      <option @if($variant['status'] == 2) disabled="disabled" @endif
+                              @if($variant['id'] == $product['id']) selected @endif
+                              data-pid="{{ $variant['id'] }}"
+                              value="{{ $variant['id'] }}">
+                        {{ $variant['variant'][0]['vr_text'] }}
+                        @if($variant['status'] == 2) [Out of Stock] @endif
+                      </option>
+                    @endif
                   @endforeach
                 </select>
               @else
-                {{ $variants[0]['products'][0]['vr_name'] }}
+                @php
+                  $resultVariants = \App\Model\ST_Variant::getVariant([$product['size_vr_id']]);
+                @endphp
+                @if(!empty($resultVariants))
+                  @foreach($resultVariants as $value)
+                    @if($value['vr_type'] == 1)
+                      {{-- @php $displayVariants[] = 'Color : ' . $value['vr_text']; @endphp
+                    @else --}}
+                      @php $displayVariants[] = 'Size : ' . $value['vr_text']; @endphp
+                    @endif
+                  @endforeach
+                  {{ implode(' | ', $displayVariants) }}
+                @endif
               @endif
             </div>
           @endif
@@ -81,15 +101,17 @@
                 <input type="button" class="btn-addcart" value="สั่งซื้อสินค้า" title="สั่งซื้อสินค้า" onclick="alert('กรุณาทำการสมัครสมาชิก และเข้าสู่ระบบเพื่อซื้อสินค้า');">
               @endif
             @endif
-            <a
-              @if(!empty($product['wishlist']))
-                href="{{ route('account_wishlist_delete', [$product['id'], $product['wishlist']->id]) }}"
-              @else
-                href="{{ route('account_wishlist_add', $product['id']) }}"
-              @endif
-              class="btn-wishlist @if(!empty($product['wishlist'])) active @endif">
-              สินค้าที่น่าสนใจ
-            </a>
+            @if(request()->session()->has('memberData'))
+              <a
+                @if(!empty($product['wishlist']))
+                  href="{{ route('account_wishlist_delete', [$product['id'], $product['wishlist']->id]) }}"
+                @else
+                  href="{{ route('account_wishlist_add', $product['id']) }}"
+                @endif
+                class="btn-wishlist @if(!empty($product['wishlist'])) active @endif">
+                สินค้าที่น่าสนใจ
+              </a>
+            @endif
           </div>
           <div class="social">
             <span class='st_facebook_vcount' displayText='Facebook'></span>

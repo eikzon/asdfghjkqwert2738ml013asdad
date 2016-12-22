@@ -18,8 +18,11 @@
         @if(!empty($cart->products))
           <div class="product-desc">
             <div class="product-name">{{ $cart->products->pd_name }}
-              <br>
-                {{-- {{ !empty(getVariant($cart->products->id)->vr_text) ? getVariant($cart->products->id)->vr_text : '' }} --}}
+              {{-- {{ !empty(getVariant($cart->products->id)->vr_text) ? getVariant($cart->products->id)->vr_text : '' }} --}}
+              @php
+                $resultVariants = \App\Model\ST_Variant::getVariant([$cart->products->size_vr_id]);
+                echo !empty($resultVariants) ? '<br>Size : ' . $resultVariants[0]['vr_text'] : NULL;
+              @endphp
               <br>จำนวน: {{ $cart->ct_quantity }} รายการ
               <span class="product-price">{{ number_format((float)$totalPrice, 2) }} บาท</span>
             </div>

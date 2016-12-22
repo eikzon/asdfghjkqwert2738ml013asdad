@@ -77,4 +77,22 @@ class ST_Variant extends Model
 
     return false;
   }
+
+  public static function getVariant($variant = [])
+  {
+    if(!empty($variant))
+    {
+      foreach($variant as $value)
+      {
+        $result     = self::where('id', $value)->get(['vr_text', 'vr_type']);
+        if(!$result->isEmpty())
+          $response = $result->toArray();
+      }
+
+      if(!empty($response))
+        return $response;
+    }
+
+    return [];
+  }
 }

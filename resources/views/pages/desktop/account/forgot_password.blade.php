@@ -15,11 +15,11 @@
         <p>กรุณากรอก Email ของคุณ ระบบจะทำการส่งรหัสผ่านไปยัง Email ที่คุณได้ลงทะเบียนไว้</p>
         @if(request()->getQueryString() == 'success')
           <p>
-            <span>* ได้ส่งรหัสผ่านใหม่แจ้งไปยังอีเมล์ของคุณเเล้ว กรุณาตรวจสอบ</span>
+            <span style="color: green">* ได้ส่งรหัสผ่านใหม่ไปยังอีเมล์ของคุณเเล้ว กรุณาตรวจสอบ</span>
           </p>
-        @else
+        @elseif(request()->getQueryString() == 'fail')
           <p>
-            <span>ไม่สามารถส่งรหัสผ่านใหม่ได้ กรุณากรอกข้อมูลอีกครั้งหรือติดต่อเจ้าหน้าที่</span>
+            <span style="color: crimson">* ไม่สามารถส่งรหัสผ่านใหม่ได้ กรุณากรอกข้อมูลอีกครั้งหรือติดต่อเจ้าหน้าที่</span>
           </p>
         @endif
         <form method="post" action="{{ route('account_forgot_password_send') }}" class="form-style login">

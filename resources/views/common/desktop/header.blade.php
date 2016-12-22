@@ -1,37 +1,12 @@
 @php
-  $absurl = 'http://shoerod.app/';
+  $absurl = 'http://www.breaker-shoes.com/';
 @endphp
 <div class="container">
   <div class="header">
     <a href="{{ url('/') }}" class="logo">
       <img src="{{ asset('images/logo_breaker.png') }}" alt="รองเท้า Breaker"/>
     </a>
-    <ul class="topnav">
-        @if(!request()->session()->has('memberData'))
-          <li class="login"><a href="{{ route('account_login') }}">เข้าสู่ระบบ</a></li>
-          <li class="register"><a href="{{ route('account_create') }}">ลงทะเบียน</a></li>
-        @else
-          <li class="dropdown member"><a href="#">บัญชีของฉัน</a>
-            <ul class="drop-nav">
-              <li><a href="{{ route('account_profile') }}">ข้อมูลส่วนตัว</a></li>
-              <li><a href="{{ route('account_address') }}">ข้อมูลสถานที่จัดส่ง</a></li>
-              <li><a href="{{ route('account_history') }}">ประวัติการสั่งซื้อ</a></li>
-              <li><a href="{{ route('account_wishlist') }}">สินค้าที่น่าสนใจ</a></li>
-              <li><a href="{{ route('client_logout') }}">ออกจากระบบ</a></li>
-            </ul>
-          </li>
-        @endif
-        <li class="cart">
-        <div id="dd" class="shopping-dropdown">
-          <span>{{ getCart()->count() }}</span>
-          <ul class="dropdown shopping-list">
-            @include('common.desktop.cart.list')
-            <li>
-              <a href="{{ route('cart') }}" class="btn-process">ดูตะกร้าสินค้า</a>
-            </li>
-          </ul>
-        </li>
-      </ul>
+    @include('common.desktop.mini_menu')
     <div class="social">
       <a href="https://www.facebook.com/Breakerfutsal" target="_blank"><img src="{{ asset('images/icon_facebook.png') }}" alt="facebook"/></a>
       <a href="https://www.youtube.com/channel/UCBKL_3XcOGj0TmJYL2Iy98A/videos" target="_blank">
@@ -45,7 +20,7 @@
   </div>
   <ul class="menum">
     <li><a href="{{ url('/') }}">HOME</a></li>
-    <li><a>PRODUCTS</a>
+    <li><a href="">PRODUCTS</a>
       @if(!empty($categoriesList))
         <ul class="submenu">
           @foreach($categoriesList as $category)
@@ -67,8 +42,8 @@
 </div><!-- .container -->
 <ul class="menu">
     <div class="container">
-    <li><a href="{{ $absurl }}">HOME</a></li>
-    <li><a>PRODUCTS</a>
+    <li><a href="{{ url('/') }}">HOME</a></li>
+    <li><a href="">PRODUCTS</a>
       @if(!empty($categoriesList))
         <div class="submenu">
           <div class="container">

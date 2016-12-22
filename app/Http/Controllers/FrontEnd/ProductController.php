@@ -30,7 +30,7 @@ class ProductController extends Controller
   public function show($id)
   {
     $variants = [];
-    $memberId = !empty(auth()->user()->id) ? auth()->user()->id : 1;
+    $memberId = request()->session()->get('memberData')['id'];
 
     $productClass           = new ST_Product;
     $productClass->memberId = $memberId;

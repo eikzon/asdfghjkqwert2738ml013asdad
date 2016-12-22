@@ -46,20 +46,30 @@
                     $grandTotal = $subTotal + $shippingPrice;
 
                     $image = '';
-                    if(!empty($imageProduct))
+                    if(!$imageProduct->isEmpty())
                     {
-                      $collectImage = collect($imageProduct)->where('fk_pd_id', $cart->fk_product_id)->first();
-                      $image        = $collectImage->image;
+                      // dd($imageProduct);
+                      $collectImage = $imageProduct->where('fk_pd_id', $cart->fk_product_id)->first();
+                      $image        = !empty($collectImage) ? $collectImage->image : '';
                     }
                   @endphp
                   <tr>
-                    <td data-title="สินค้า"><a href="{{ route('product_detail', $cart['products']->id) }}"><img src="{{ asset('images/products/' . $image) }}"></a></td>
+                    <td data-title="สินค้า">
+                      @if(!empty($image))
+                        <a href="{{ route('product_detail', $cart['products']->id) }}">
+                          <img src="{{ asset('images/products/' . $image) }}">
+                        </a>
+                      @endif
+                    </td>
                     <td data-title="รายละเอียด">
                       <a href="{{ route('product_detail', $cart['products']->id) }}">
                         <p>{{ $cart['products']->pd_name }}
                           <span>
                             Item Code : {{ $cart['products']->pd_code }}<br>
-                            {{ @getVariant($cart->products->id)->vr_text }}
+                            @php
+                              $resultVariants = \App\Model\ST_Variant::getVariant([$cart->products->size_vr_id]);
+                              echo !empty($resultVariants) ? 'Size : ' . $resultVariants[0]['vr_text'] : NULL;
+                            @endphp
                           </span>
                         </p>
                       </a>

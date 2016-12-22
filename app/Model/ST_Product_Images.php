@@ -17,4 +17,9 @@ class ST_Product_Images extends Model
       'fk_pd_code' => $product_code,
     ]);
   }
+
+  public static function getImage($pid)
+  {
+    return ST_Product_Images::where('fk_pd_id', $pid)->limit(1)->get(['image'])->toArray();
+  }
 }

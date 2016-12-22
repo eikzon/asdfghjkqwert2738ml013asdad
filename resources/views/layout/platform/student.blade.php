@@ -124,66 +124,35 @@ function MM_swapImage() { //v3.0
 </head>
 
 <body>
+@php
+  $absurl = 'http://www.breaker-shoes.com/';
+@endphp
 <ul class="header">
   <div class="overlight"></div><!-- .overlight -->
   <a href="../" class="logo"><img src="{{ asset('images/platform/logo_breaker.png') }}" alt="Breaker 4x4 สั่งได้ดั่งใจ"/></a>
-  <li><a href="#home">Home</a></li>
+  <li><a href="{{ $absurl }}">Home</a></li>
   <li><a href="#products">Products</a></li>
-  <li><a href="../csr/" target="_blank">CSR</a></li>
+  <li><a href="{{ $absurl }}csr/" target="_blank">CSR</a></li>
   <li><a href="#event" target="_blank">Event</a></li>
   <li><a href="#vdo">Video</a></li>
-  <li><a href="../about-us.php" target="_blank">About Us</a></li>
-  <li><a href="../contact-us.php" target="_blank">Contact Us</a></li>
+  <li><a href="{{ $absurl }}about-us.php" target="_blank">About Us</a></li>
+  <li><a href="{{ $absurl }}contact-us.php" target="_blank">Contact Us</a></li>
   <div class="social">
     <a href="https://www.facebook.com/breakerclub" target="_blank"><img src="{{ asset('images/platform/icon_facebook.png') }}" alt="Facebook"/></a>
     <a href="https://www.youtube.com/channel/UCBKL_3XcOGj0TmJYL2Iy98A/videos" target="_blank"><img src="{{ asset('images/platform/icon_youtube.png') }}" alt="Youtube"/></a>
     <a href="mailto:saleonlinescs@gamil.com"><img src="{{ asset('images/platform/icon_email.png') }}" alt="Email"/></a>
   </div><!-- .social -->
-  <ul class="topnav">
-    <li class="login"><a href="#">เข้าสู่ระบบ</a></li>
-    <li class="register"><a href="#">ลงทะเบียน</a></li>
-    <!--<li class="dropdown member"><a href="#">บัญชีของฉัน</a>
-      <ul class="drop-nav">
-        <li><a href="#">ข้อมูลส่วนตัว</a></li>
-        <li><a href="#">ข้อมูลสถานที่จัดส่ง</a></li>
-        <li><a href="#">ประวัติการสั่งซื้อ</a></li>
-        <li><a href="#">สินค้าที่น่าสนใจ</a></li>
-        <li><a href="#">ออกจากระบบ</a></li>
-      </ul>
-    </li>-->
-    <li class="cart"><div id="dd" class="shopping-dropdown">
-       <span>2</span>
-       <ul class="dropdown shopping-list">
-         <li><a href="#"><div class="product-img"><img src="../products/{{ asset('images/platform/BC-006_GN_4') }}.jpg"></div>
-            <div class="product-desc">
-              <div class="product-name">Breaker King Knit<br>BC006-GN / 39 / Multicolor<br>จำนวน: 1<span class="product-price">1,550 บาท</span></div>
-            </div>
-         </a></li>
-         <li><a href="#"><div class="product-img"><img src="../products/{{ asset('images/platform/BC-006_GN_4') }}.jpg"></div>
-            <div class="product-desc">
-              <div class="product-name">Breaker King Knit<br>BC006-GN / 39 / Multicolor<br>จำนวน: 1<span class="product-price">1,550 บาท</span></div>
-            </div>
-         </a></li>
-         <li>
-          <div class="shopping-txt">ค่าจัดส่ง<br>ราคารวม</div>
-          <div class="shopping-price">0.00 บาท<br>1,879 บาท</div>
-         </li>
-         <li>
-         <a href="#" class="btn-process">ดูตะกร้าสินค้า</a>
-         </li>
-       </ul>
-    </div></li>
-  </ul>
+  @include('common.desktop.mini_menu')
   <div class="overlight"></div><!-- .overlight -->
   <div class="mobilemenu"></div><!-- .mobilemenu -->
   <ul class="menum">
     <li><a href="#home">Home</a></li>
     <li><a href="#products">Products</a></li>
-    <li><a href="../csr/" target="_blank">CSR</a></li>
-    <li><a href="../news/" target="_blank">Event</a></li>
+    <li><a href="{{ $absurl }}csr/" target="_blank">CSR</a></li>
+    <li><a href="{{ $absurl }}news/" target="_blank">Event</a></li>
     <li><a href="#vdo">Video</a></li>
-    <li><a href="../about-us.php" target="_blank">About Us</a></li>
-    <li><a href="../contact-us.php" target="_blank">Contact Us</a></li>
+    <li><a href="{{ $absurl }}about-us.php" target="_blank">About Us</a></li>
+    <li><a href="{{ $absurl }}contact-us.php" target="_blank">Contact Us</a></li>
   </ul>
 </ul>
 <div class="container" id="home">
@@ -215,7 +184,7 @@ function MM_swapImage() { //v3.0
   </div><!-- .wraper -->
 </div><!-- .shoescolor -->
 
-@yield('content');
+@yield('content')
 
 </div><!-- .detailproducts2 -->
 </div><!-- .wraper -->
@@ -237,7 +206,7 @@ function MM_swapImage() { //v3.0
 </div><!-- .vdo -->
 <div class="event" id="event">
 <h2>Event</h2>
-<a href="news_2015-09-18.php" class="popuper"><img src="{{ asset('images/platform/n_2015-09') }}-18_cover.jpg"/></a>
+<a href="{{ $absurl }}news_2015-09-18.php" class="popuper"><img src="{{ asset('images/platform/n_2015-09') }}-18_cover.jpg"/></a>
 <div class="wraper">
 </div><!-- .wraper -->
 </div><!-- .vdo -->

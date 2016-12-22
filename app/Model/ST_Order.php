@@ -50,8 +50,13 @@ class ST_Order extends Model
 
   public function createOrder($request)
   {
+
+    $countOrderInThisMonth = ST_Order::where([['created_at', '>=', date('Y-m-') . '-01'],
+                                             ['created_at', '<=', date('Y-m-d') . '59:59:59'],
+                                             ['od_status', '!=', 0]])->count();
+
     $orderDetail = new ST_Order;
-    $orderDetail->od_code         = date('Ymd') . sprintf('%06d', rand(10, 999999));
+    $orderDetail->od_code         = date('ym') . sprintf('%05d', $countOrderInThisMonth + 1);
     $orderDetail->od_status       = 1;
     $orderDetail->fk_member_id    = request()->session()->get('memberData')['id'];
     $orderDetail->od_remark       = $request->input('order-remark');

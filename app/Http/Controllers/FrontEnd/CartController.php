@@ -146,6 +146,10 @@ class CartController extends Controller
 
   public function checkout(Request $request)
   {
+    $products = ST_Cart::where('fk_member_id', $request->session()->get('memberData')['id'])->get();
+    if($products->isEmpty())
+      return redirect()->route('cart');
+
     $orderClass    = new ST_Order;
     $orderCreateId = $orderClass->createOrder($request);
 
@@ -169,14 +173,13 @@ class CartController extends Controller
       $orderAddress  = new ST_Order_Address;
       $insertAddress = $orderAddress->create($reqAddress);
 
-      $products = ST_Cart::where('fk_member_id', $request->session()->get('memberData')['id'])->get();
       if(!$products->isEmpty())
       {
         $orderDetailClass = new ST_Order_Detail;
         foreach($products as $product)
         {
           $orderDetailClass->createOrderDetail($product, $orderCreateId);
-          @$priceTotal    += ($product['products']['pd_price'] * $product['ct_quantity']);
+          @$priceTotal    += ((!(empty($product['products']['pd_price_discount'])) ? $product['products']['pd_price_discount'] : $product['products']['pd_price']) * $product['ct_quantity']);
           @$discountTotal += $product['ct_discount'];
           @$shippingTotal += $product['ct_shipping'];
         }

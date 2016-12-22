@@ -16,7 +16,7 @@ class ST_Product extends Model
 
   protected $dates    = ['deleted_at'];
   protected $table    = 'st_product';
-  protected $fillable = ['pd_code', 'pd_name', 'pd_short_desc', 'pd_long_desc', 'pd_price', 'pd_discount', 'pd_price_discount', 'pd_badge', 'pd_status', 'pd_stock', 'fk_group_id', 'fk_category_id', 'keyGenerate'];
+  protected $fillable = ['pd_code', 'pd_name', 'pd_short_desc', 'pd_long_desc', 'pd_price', 'pd_discount', 'pd_price_discount', 'pd_badge', 'pd_status', 'pd_stock', 'fk_group_id', 'fk_category_id', 'keyGenerate', 'color_vr_id', 'size_vr_id'];
 
   public function index($conditions = [])
   {
@@ -286,6 +286,31 @@ class ST_Product extends Model
         $productReduce->save();
       }
     }
+  }
+
+  public static function groupVariant($groupId, $categoryId)
+  {
+    $response = self::where([
+                        ['fk_group_id', '=', $groupId],
+                        ['fk_category_id', '=', $categoryId],
+                        ['size_vr_id', '>', 0],
+                        ['pd_status', '>', 0],
+                      ])
+                      ->get(['id', 'size_vr_id', 'color_vr_id', 'pd_status']);
+    if(!$response->isEmpty())
+    {
+      $response = $response->toArray();
+      foreach($response as $index => $variant)
+      {
+        $result[$index]['variant'] = ST_Variant::getVariant([$variant['size_vr_id']]);
+        $result[$index]['sizeId']  = $variant['size_vr_id'];
+        $result[$index]['id']      = $variant['id'];
+        $result[$index]['status']  = $variant['pd_status'];
+      }
+      return $result;
+    }
+
+    return [];
   }
 
   public static function clearView()

@@ -8,7 +8,7 @@ class AddFieldRemark extends Migration
   public function up()
   {
     Schema::table('st_order', function($table){
-      $table->string('od_remark');
+      $table->string('od_remark')->nullable();
     });
   }
 

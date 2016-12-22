@@ -7,7 +7,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/favicon.png">
-<title>Elite Admin - is a responsive admin template</title>
+<title>Breaker shoes - Administrator</title>
 <!-- Bootstrap Core CSS -->
 <link href="{{ asset('css/sitecontrol.css') }}" rel="stylesheet">
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

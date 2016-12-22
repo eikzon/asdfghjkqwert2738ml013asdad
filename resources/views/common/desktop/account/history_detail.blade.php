@@ -57,11 +57,25 @@
                 @foreach($order[0]['productLists'] as $product)
                   <tr>
                     <td data-title="สินค้า">
-                      <a href="{{ route('product_detail', $product['id']) }}" title="{{ $product['pd_name'] }}">
-                        <img src="{{ asset('images/products/' . $product['images'][0]['image']) }}"/>
-                      </a>
+                      @if($image = \App\Model\ST_Product_Images::getImage($product['id']))
+                        @if(!empty($image[0]['image']))
+                          <a href="{{ route('product_detail', $product['id']) }}" title="{{ $product['pd_name'] }}">
+                            <img src="{{ asset('images/products/' . $image[0]['image']) }}"/>
+                          </a>
+                        @endif
+                      @endif
                     </td>
-                    <td data-title="รายละเอียด"><p>{{ $product['pd_name'] }}<span>Item Code : {{ $product['pd_code'] }}<br>Size : 39<br>Color : Multicolor</span></p></td>
+                    <td data-title="รายละเอียด">
+                      <p>{{ $product['pd_name'] }}
+                        <span>Item Code : {{ $product['pd_code'] }}
+                        <br>
+                        @php
+                          $resultVariants = \App\Model\ST_Variant::getVariant([$product['size_vr_id']]);
+                          echo !empty($resultVariants) ? '<br>Size : ' . $resultVariants[0]['vr_text'] : NULL;
+                        @endphp
+                        </span>
+                      </p>
+                    </td>
                     <td data-title="ราคาต่อหน่วย (บาท)">{{ number_format($product['od_price']/$product['od_quantity']) }}</td>
                     <td data-title="จำนวน">{{ $product['od_quantity'] }}</td>
                     <td data-title="ราคา (บาท)">{{ number_format($product['od_price'], 2) }}</td>
