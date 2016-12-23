@@ -54,14 +54,14 @@
                     <tbody>
                       @foreach($order->productLists as $productList)
                         @php
-                          $productPrice    = $productList->products->first()->pd_price;
-                          $productDiscount = $productList->products->first()->pd_price_discount;
+                          $productPrice    = $productList->products->pd_price;
+                          $productDiscount = $productList->products->pd_price_discount;
                           $pricePerUnit    = (!empty($productDiscount) ? $productDiscount : $productPrice);
                         @endphp
                         <tr>
-                          <td>{{ $productList->products->first()->pd_code }}</td>
+                          <td>{{ $productList->products->pd_code }}</td>
                           <td><img width="60" src="{{ asset('images/products/' . getImageCart($productList->id)->image) }}"></td>
-                          <td>{{ $productList->products->first()->pd_name }}</td>
+                          <td>{{ $productList->products->pd_name }}</td>
                           <td>{{ !empty(getVariant($productList->id)->vr_text) ? getVariant($productList->id)->vr_text : '' }}</td>
                           <td>{{ number_format((float)$pricePerUnit, 2) }}</td>
                           <td>{{ $productList->od_quantity }}</td>
