@@ -72,25 +72,38 @@
                 </table>
               </div>
               <div class="col-lg-12 col-md-12 col-sm-12">
-                  <h3 class="box-title m-t-40"><i class="ti-money"></i> Order Summary</h3>
-                  <div class="table-responsive">
-                      <table class="table">
-                          <tbody>
-                              <tr>
-                                  <td width="390">Total Price</td>
-                                  <td> ฿{{ number_format($order->od_price_total, 2) }} </td>
-                              </tr>
-                              <tr>
-                                  <td>Shipping Price</td>
-                                  <td> ฿{{ number_format($order->od_price_shipping, 2) }} </td>
-                              </tr>
-                              <tr>
-                                  <td>Grand Total Price</td>
-                                  <td> ฿{{ number_format($order->od_price_total + $order->od_price_shipping, 2) }} </td>
-                              </tr>
-                          </tbody>
-                      </table>
-                  </div>
+                <h3 class="box-title m-t-40"><i class="ti-money"></i> Order Summary</h3>
+                <div class="table-responsive">
+                  <table class="table">
+                    <tbody>
+                      <tr>
+                        <td width="390">Total Price</td>
+                        <td> ฿{{ number_format($order->od_price_total, 2) }} </td>
+                      </tr>
+                      <tr>
+                        <td>Shipping Price</td>
+                        <td> ฿{{ number_format($order->od_price_shipping, 2) }} </td>
+                      </tr>
+                      <tr>
+                        <td>Grand Total Price</td>
+                        <td> ฿{{ number_format($order->od_price_total + $order->od_price_shipping, 2) }} </td>
+                      </tr>
+                      @php
+                        $paidBy = '';
+                        if($order->od_payment_type === 1)
+                          $paidBy = 'ชำระเงินผ่าน PayPal หรือบัตรเครดิต';
+                        else if($order->od_payment_type === 2)
+                          $paidBy = 'ชำระเงินผ่าน Visa/MasterCard/Amex';
+                        else if($order->od_payment_type === 3)
+                          $paidBy = 'ชำระเงินโดยการโอนเงินเข้าบัญชีธนาคาร(เอทีเอ็ม / เคาน์เตอร์ธนาคาร)';
+                      @endphp
+                      <tr>
+                        <td>Paid By</td>
+                        <td>{{ $paidBy }} </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <h3 class="box-title m-t-40"><i class="ti-layout-list-thumb"></i> Order Flow</h3>
