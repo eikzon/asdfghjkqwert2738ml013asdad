@@ -40,7 +40,12 @@
                     <td data-title="รายละเอียด :">
                       <a href="{{ route('product_detail', $wishlist['products']['id']) }}" target="_blank">
                         <p>
-                          {{ $wishlist['products']['pd_name'] }}<span>Item Code : {{ $wishlist['products']['pd_code'] }}<br>Size : 3</span>
+                          {{ $wishlist['products']['pd_name'] }}<span>Item Code : {{ $wishlist['products']['pd_code'] }}
+                            @php
+                              $resultVariants = \App\Model\ST_Variant::getVariant([$wishlist['products']['size_vr_id']]);
+                              echo !empty($resultVariants) ? '<br>Size : ' . $resultVariants[0]['vr_text'] : NULL;
+                            @endphp
+                          </span>
                         </p>
                       </a>
                     </td>

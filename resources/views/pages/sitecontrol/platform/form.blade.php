@@ -42,6 +42,13 @@
                                     @if(!empty($platform[$image]))
                                       <img src="{{ asset('images/platform/items/' . $platform[$image]) }}"
                                            width="150">
+                                      <div class="pro-img-overlay">
+                                        <a style="cursor:pointer;"
+                                           data-url="{{ route('pt-destroyImage', [$image, $platform[$image]]) }}"
+                                           class="bg-danger action-image-delete">
+                                          <i class="ti-trash"></i>
+                                        </a>
+                                      </div>
                                     @endif
                                     <div class="fileupload btn btn-info waves-effect waves-light">
                                       <span>

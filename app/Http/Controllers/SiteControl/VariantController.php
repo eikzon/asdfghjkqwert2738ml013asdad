@@ -83,7 +83,9 @@ class VariantController extends Controller
 
   public function destroy($id)
   {
-    ST_Variant::destroy($id);
-    return redirect()->route('sitecontrol.variant.index', 'delete');
+    if(ST_Variant::destroy($id))
+      return response()->json(['status' => 'success']);
+
+    return false;
   }
 }

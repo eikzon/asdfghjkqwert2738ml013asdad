@@ -39,7 +39,7 @@ class ST_Product extends Model
   public function outOfStock()
   {
     return ST_Product::with('images')
-                      ->where([['pd_stock', '<', 50], ['pd_status', '=', 1]])
+                      ->where([['pd_stock', '<', config('website.product.outOfStock')], ['pd_status', '=', 1]])
                       ->orderBy('id', 'desc')
                       ->get();
   }
@@ -52,7 +52,11 @@ class ST_Product extends Model
                   ->where('id', '!=', $id)
                   ->where('pd_status', 1)
                   ->where('fk_category_id', $detailBelongsTo->fk_category_id)
-                  ->orwhere('pd_status', 2)->get();
+                  ->orwhere('pd_status', 2)
+                  ->groupBy('fk_group_id')
+                  ->orderBy('fk_group_id', 'asc')
+                  ->limit(8)
+                  ->get();
 
     return $products;
   }
@@ -298,7 +302,7 @@ class ST_Product extends Model
                         ['size_vr_id', '>', 0],
                         ['pd_status', '>', 0],
                       ])
-                      ->get(['id', 'size_vr_id', 'color_vr_id', 'pd_status']);
+                      ->get(['id', 'size_vr_id', 'color_vr_id', 'pd_status', 'pd_stock']);
     if(!$response->isEmpty())
     {
       $response = $response->toArray();
@@ -308,6 +312,7 @@ class ST_Product extends Model
         $result[$index]['sizeId']  = $variant['size_vr_id'];
         $result[$index]['id']      = $variant['id'];
         $result[$index]['status']  = $variant['pd_status'];
+        $result[$index]['stock']   = $variant['pd_stock'];
       }
       return $result;
     }

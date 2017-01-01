@@ -17,6 +17,7 @@
 /* <!--Morris JavaScript --> */
 //= include ../plugins/bower_components/raphael/raphael-min.js
 //= include ../plugins/bower_components/morrisjs/morris.js
+//= include ../plugins/bower_components/sweetalert/sweetalert.min.js
 /* <!-- Custom Theme JavaScript --> */
 //= include sitecontrol/custom.min.js
 /* <!-- Sparkline chart JavaScript --> */
@@ -24,7 +25,6 @@
 //= include ../plugins/bower_components/jquery-sparkline/jquery.charts-sparkline.js
 /* //= include sitecontrol/dashboard1.js */
 //= include ../plugins/bower_components/toast-master/js/jquery.toast.js
-
 //= include sitecontrol/toastr.js
 /* <!--Style Switcher --> */
 //= include ../plugins/bower_components/styleswitcher/jQuery.style.switcher.js

@@ -40,7 +40,7 @@
                       $label_status = 'label-danger';
                     }
                   @endphp
-                  <tr>
+                  <tr class="id-{{ $member->id }}">
                     <td>{{ (Request::get('page') * config('admin.perPage')) + ($index + 1) }}</td>
                     <td>{{ $member->first_name . ' ' . $member->last_name }}</td>
                     <td>{{ $member->email }}</td>
@@ -56,7 +56,12 @@
                       <a href="{{ action('SiteControl\MemberController@detail', ['id' => $member->id]) }}" class="text-inverse p-r-10" data-toggle="tooltip" title="View">
                         <i class="ti-eye"></i>
                       </a>
-                      <a href="javascript:void(0)" class="text-inverse js-delete" data-url="{{ action('SiteControl\MemberController@destroy', ['id' => $member->id]) }}" title="Delete" data-toggle="tooltip">
+                      <a style="cursor:pointer;"
+                         class="action-delete"
+                         data-name="{{ $member->first_name . ' ' . $member->last_name }}"
+                         data-id="{{ $member->id }}"
+                         data-url="{{ route('sitecontrol.member.destroy', $member->id) }}"
+                        >
                         <i class="ti-trash"></i>
                       </a>
                     </td>

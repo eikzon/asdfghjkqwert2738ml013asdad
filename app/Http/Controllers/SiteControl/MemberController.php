@@ -38,6 +38,9 @@ class MemberController extends Controller
 
   public function destroy(Request $request, $id)
   {
-    ST_Member::find($id)->delete();
+    if(ST_Member::destroy($id))
+      return response()->json(['status' => 'success']);
+
+    return false;
   }
 }

@@ -26,7 +26,7 @@
             <dt>ชื่อผู้รับสินค้า :</dt>
             <dd>{{ $address['oa_first_name'] . ' ' . $address['oa_last_name'] }}</dd>
             <dt>ที่อยู่ :</dt>
-            <dd>{{ $address['oa_address'] . ' ' . $address['oa_province']. ' ' . $address['oa_district']. ' ' . $address['oa_postcode'] }}</dd>
+            <dd>{{ $address['oa_address'] . ' ' . $address['oa_province']. ' ' . $address['oa_district']. '' . $address['oa_sub_district']. ' ' . $address['oa_postcode'] }}</dd>
           </dl>
         </div>
         <div class="order-address">
@@ -35,6 +35,8 @@
             <dd class="none">&nbsp;</dd>
             <dt>ชื่อผู้รับสินค้า :</dt>
             <dd>{{ $address['oa_first_name'] . ' ' . $address['oa_last_name'] }}</dd>
+            <dt>ชื่อ นามสกุล :</dt>
+            <dd>{{ $address['oa_billign_name'] }}</dd>
             <dt>ที่อยู่ :</dt>
             <dd>{{ $address['oa_billign_address'] }}</dd>
           </dl>

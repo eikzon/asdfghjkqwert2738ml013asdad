@@ -21,7 +21,7 @@
               </thead>
               <tbody>
                 @foreach($variants as $index => $variant)
-                  <tr>
+                  <tr class="id-{{ $variant['id'] }}">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $variant['vr_name'] }}</td>
                     <td>
@@ -39,12 +39,13 @@
                          title="Edit">
                         <i class="ti-marker-alt"></i>
                       </a>
-                      <a style="cursor:pointer;" onclick="$(this).find('form').submit();">
+                      <a style="cursor:pointer;"
+                         class="action-delete"
+                         data-name="{{ $variant['vr_text'] }}"
+                         data-id="{{ $variant['id'] }}"
+                         data-url="{{ route('sitecontrol.variant.destroy', $variant['id']) }}"
+                        >
                         <i class="ti-trash"></i>
-                        <form action="{{ route('sitecontrol.variant.destroy', $variant['id']) }}" method="POST" name="delete_item" style="display:none">
-                           <input type="hidden" name="_method" value="delete">
-                           <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        </form>
                       </a>
                     </td>
                   </tr>

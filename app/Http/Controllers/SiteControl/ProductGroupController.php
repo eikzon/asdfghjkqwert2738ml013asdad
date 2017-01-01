@@ -74,7 +74,9 @@ class ProductGroupController extends Controller
 
   public function destroy($id)
   {
-    ST_Product_Group::destroy($id);
-    return redirect()->route('sitecontrol.group.index', 'delete');
+    if(ST_Product_Group::destroy($id))
+      return response()->json(['status' => 'success']);
+
+    return false;
   }
 }

@@ -93,8 +93,11 @@ class ProductController extends Controller
 
   public function destroy($id)
   {
-    ST_Product::destroy($id);
-    return redirect()->route('sitecontrol.product.index', 'delete');
+    if(ST_Product::destroy($id))
+      return response()->json(['status' => 'success']);
+
+    return false;
+    // redirect()->route('sitecontrol.product.index', 'delete');
   }
 
   public function uploadImages(Request $request)

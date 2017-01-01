@@ -50,11 +50,9 @@ class ST_Order extends Model
 
   public function createOrder($request)
   {
-
-    $countOrderInThisMonth = ST_Order::where([['created_at', '>=', date('Y-m-') . '-01'],
-                                             ['created_at', '<=', date('Y-m-d') . '59:59:59'],
+    $countOrderInThisMonth = ST_Order::where([['created_at', '>=', date('Y-m') . '-01'],
+                                             ['created_at', '<=', date('Y-m-d') . ' 23:59:59'],
                                              ['od_status', '!=', 0]])->count();
-
     $orderDetail = new ST_Order;
     $orderDetail->od_code         = date('ym') . sprintf('%05d', $countOrderInThisMonth + 1);
     $orderDetail->od_status       = 1;

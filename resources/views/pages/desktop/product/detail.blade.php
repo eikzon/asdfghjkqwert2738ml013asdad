@@ -46,17 +46,17 @@
             <div class="shortdesc">
               @if(count($groupVariants) > 1)
                 Size :
-                {{-- {{ $variants[0]['pg_name'] }} : --}}
-                {{-- {{ dd($groupVariants) }} --}}
                 <select class="select-size js-variant-change-option" data-url="{{ url('/') }}">
                   @foreach($groupVariants as $variant)
                     @if(!empty($variant['variant']))
-                      <option @if($variant['status'] == 2) disabled="disabled" @endif
+                      <option @if($variant['status'] == 2 || empty($variant['stock'])) disabled="disabled" @endif
                               @if($variant['id'] == $product['id']) selected @endif
                               data-pid="{{ $variant['id'] }}"
                               value="{{ $variant['id'] }}">
                         {{ $variant['variant'][0]['vr_text'] }}
-                        @if($variant['status'] == 2) [Out of Stock] @endif
+                        @if($variant['status'] == 2 || empty($variant['stock']))
+                          [Out of Stock]
+                        @endif
                       </option>
                     @endif
                   @endforeach
@@ -137,8 +137,9 @@
         <ul class="related-products swiper-wrapper">
           @foreach($relatedItems as $item)
             @include('common.desktop.product.list', [
-              'product' => $item,
-              'slide'   => ($count > 4) ? true : false
+              'product'      => $item,
+              'slide'        => ($count > 4) ? true : false,
+              'categoryName' => title_case($product['category']['ct_name'])
             ])
           @endforeach
         </ul>

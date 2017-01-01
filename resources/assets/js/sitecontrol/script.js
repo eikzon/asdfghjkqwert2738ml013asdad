@@ -1,5 +1,80 @@
 $(function(){
 
+  $('.action-logout').click(function(){
+    url = $(this).data('url');
+    swal({
+      title: 'Are you sure?',
+      text: "You want to logout ?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes!'
+    }).then(function () {
+      window.location = url;
+    }).catch(swal.noop);
+	});
+
+  $('.action-image-delete').click(function(){
+    url = $(this).data('url');
+    swal({
+      title: 'Are you sure?',
+      text: "You want to delete image ?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes!'
+    }).then(function () {
+      window.location = url;
+    }).catch(swal.noop);
+  });
+
+  $('.action-delete').click(function(){
+    name = $(this).data('name');
+    id   = $(this).data('id');
+    url  = $(this).data('url');
+
+    swal({
+      title: 'Are you sure?',
+      text: "You want to delete '" + name + "' ?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(function () {
+      $.ajax({
+        type: 'POST',
+        url: url,
+        cache: false,
+        data: {
+          _method: 'delete'
+        },
+        datatype: 'json',
+        success: function(response) {
+          if(response.status == 'success')
+          {
+            swal(
+              'Deleted!',
+              '"' + name + '" has been deleted.',
+              'success'
+            );
+            $('.id-' + id).hide();
+          }
+          else
+          {
+            swal(
+              'Fail!',
+              '"' + name + '" can not delete',
+              'error'
+            );
+          }
+        }
+      });
+    }).catch(swal.noop);
+  });
+
 	var dropbox = $('#dropbox'),
 		message = $('.message', dropbox);
 

@@ -23,7 +23,7 @@
                             . 'Postcode : ' . $orderAddress->oa_postcode . '<br>'
                             . 'Tel : ' . $orderAddress->oa_tel;
 
-                  $billing = 'Address : ' . (!empty($orderAddress->oa_isbilling_address) ? $orderAddress->oa_billign_address : $shipping)
+                  $billing = 'Name : ' . $orderAddress->oa_billing_name . '<br>Address : ' . (!empty($orderAddress->oa_isbilling_address) ? $orderAddress->oa_billign_address : $shipping)
                              . '<br>' . 'Tax Id : ' . $orderAddress->oa_tax_id;
                 }
               @endphp

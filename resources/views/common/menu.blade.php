@@ -8,7 +8,11 @@
         <ul class="dropdown-menu animated flipInY">
           {{-- <li><a href=""><i class="ti-settings"></i> Account Setting</a></li> --}}
           <li role="separator" class="divider"></li>
-          <li><a href="{{ route('st-logout') }}"><i class="fa fa-power-off"></i> Logout</a></li>
+          <li>
+            <a data-url="{{ route('st-logout') }}" class="action-logout">
+              <i class="fa fa-power-off"></i> Logout
+            </a>
+          </li>
         </ul>
       </div>
     </div>
@@ -101,7 +105,9 @@
               </span>
             </a>
           </li>
-          <li><a href="{{ route('st-logout') }}" class="waves-effect"><i class="icon-logout fa-fw"></i> <span class="hide-menu">Log out</span></a></li>
+          <li>
+            <a data-url="{{ route('st-logout') }}" class="action-logout waves-effect"><i class="icon-logout fa-fw"></i> <span class="hide-menu">Log out</span></a>
+          </li>
       </ul>
   </div>
 </div>

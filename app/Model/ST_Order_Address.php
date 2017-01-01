@@ -19,6 +19,7 @@ class ST_Order_Address extends Model
                          'oa_postcode',
                          'oa_sub_district',
                          'oa_isbilling_address',
+                         'oa_billing_name',
                          'oa_billign_address',
                          'oa_tax_id',
                          'fk_order_id',

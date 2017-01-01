@@ -55,9 +55,11 @@
             <h3>ที่อยู่ใบกำกับภาษี</h3>
             <div class="form-style-2">
               <form method="post" action="{{ route('account_update_billing', $member->id) }}" class="form-style">
-                <label for="user-address-no">ชื่อและที่อยู่ใบกำกับภาษี<span>*</span></label>
+                <label for="user-address-village">ชื่อ นามสกุล</label>
+                <input type="text" name="billing_name" id="billing_name" value="{{ $member->billing_name }}">
+                <label for="user-address-no">ที่อยู่ใบกำกับภาษี<span>*</span></label>
                 <textarea name="billign_address" id="tax-address">{{ $member->billign_address }}</textarea>
-                <label for="user-address-village">เลขประจำตัวบัตรประชาชน / Tax Id</label>
+                <label for="user-address-village">เลขประจำตัวบัตรประชาชน</label>
                 <input type="text" name="user_tax_Id" id="user-address-village" maxlength="13" value="{{ $member->user_tax_Id }}">
                 {{ csrf_field() }}
                 <input type="submit" name="save-pass" id="save-pass" value="บันทึกข้อมูล">

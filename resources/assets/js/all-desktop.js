@@ -7,3 +7,4 @@
 //= include desktop/galleria-1.4.1.min.js
 //= include desktop/source/buttons.js
 //= include desktop/swiper.js
+//= include desktop/jquery-ui.js

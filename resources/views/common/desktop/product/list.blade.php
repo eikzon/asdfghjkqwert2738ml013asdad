@@ -1,5 +1,17 @@
 <li @if(!empty($slide)) class="swiper-slide" @endif>
-  <div class="{{ config('website.product.badges')[$product['pd_badge']] }}"></div>
+  @if(!empty($product['pd_stock']) && $product['pd_status'] == 1)
+    @if($product['pd_badge'] == 1)
+      <div class="{{ config('website.product.badges')[$product['pd_badge']] }}"></div>
+    @elseif($product['pd_badge'] == 2)
+      <div class="sale">
+        <p>{{ $product['pd_discount'] }}Off</p>
+      </div>
+    @endif
+  @elseif($product['pd_status'] != config('website.product.status.displayOnly'))
+    <div class="sale">
+      <p>Sold Out</p>
+    </div>
+  @endif
   <div class="frame">
     @if(!$product['images']->isEmpty())
       @if(!empty($product['images'][0]['image']))
@@ -23,7 +35,7 @@
     {{-- @if(!empty($product['sku']['pg_name']))
       {{ $product['sku']['pg_name'] }} |
     @endif --}}
-    Men's {{ title_case(@$category->ct_name) }} Boots |
+    Men's {{ !empty($categoryName) ? $categoryName : title_case(@$category->ct_name) }} Boots |
     @if(!empty($product['pd_stock']) && $product['pd_status'] == 1)
       In Stock
     @else

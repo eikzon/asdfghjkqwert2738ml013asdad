@@ -33,7 +33,7 @@
                     <label for="user-lastname">นามสกุล<span>*</span></label>
                     <input type="text" name="lastname" required id="user-lastname">
                     <label for="user-birthday">วันเกิด<span>*</span></label>
-                    <input type="date" name="birthday" required id="user-birthday">
+                    <input type="text" id="datepicker" readonly name="birthday" required id="user-birthday">
                     <label for="user-gender">เพศ<span>*</span></label>
                     <select name="gender" required id="user-gender">
                         <option value="">กรุณาเลือกเพศ</option>
@@ -44,12 +44,8 @@
                     <input type="tel" name="mobile" maxlength="10" required id="user-mobile">
                 </div>
                 <div class="form-right">
-                    <label for="user-address-no">ที่อยู่ เลขที่</label>
-                    <input type="text" name="user-address-no" id="user-address-no">
-                    <label for="user-address-village">อาคาร / หมู่บ้าน</label>
-                    <input type="text" name="user-address-village" id="user-address-village">
-                    <label for="user-address-road">ซอย / ถนน</label>
-                    <input type="text" name="user-address-road" id="user-address-road">
+                    <label for="user-address-no">ที่อยู่ (เลขที่, อาคาร/หมู่บ้าน, ซอย/ถนน)</label>
+                    <input type="text" name="address" id="user-address-no">
                     <label for="user-province">จังหวัด</label>
                     <select name="user-province" id="user-province" class="js-option-provinces" data-url="{{ route('option_province') }}" required>
                       <option value="0">กรุณาเลือกจังหวัด</option>
@@ -79,4 +75,15 @@
         </div>
     </div>
   </div>
+@endsection
+@section('script_footer')
+  <script type="text/javascript">
+    $(function() {
+      $( "#datepicker" ).datepicker({
+        dateFormat: "yy-mm-dd",
+        changeMonth: true,
+        changeYear: true
+      });
+    });
+  </script>
 @endsection

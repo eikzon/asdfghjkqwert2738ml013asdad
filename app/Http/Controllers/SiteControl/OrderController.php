@@ -40,7 +40,10 @@ class OrderController extends Controller
 
   public function destroy(Request $request, $id)
   {
-    ST_Order::find($id)->delete();
-    return redirect()->route('sitecontrol.order.index', 'delete');
+    if(ST_Order::destroy($id))
+      return response()->json(['status' => 'success']);
+
+    return false;
+    // return redirect()->route('sitecontrol.order.index', 'delete');
   }
 }

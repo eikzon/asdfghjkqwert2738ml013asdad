@@ -13,7 +13,7 @@ class HomeController extends Controller
 {
   public function index()
   {
-    $orders = ST_Order::orderBy('id', 'desc')->limit(5)->get();
+    $orders = ST_Order::orderBy('id', 'desc')->limit(20)->get();
 
     return view('pages.sitecontrol.dashboard', [
       'order'              => 0,
@@ -21,7 +21,7 @@ class HomeController extends Controller
       'productsOutOfStock' => (new ST_Product)->outOfStock(),
       'productsDescView'   => ST_Product::where([['pd_status', '!=', 0]])
                                           ->orderBy('count_view', 'desc')
-                                          ->limit(3)
+                                          ->limit(5)
                                           ->get(),
       'ordersLatest'       => $orders
     ]);

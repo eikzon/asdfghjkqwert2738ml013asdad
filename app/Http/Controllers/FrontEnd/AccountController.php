@@ -220,7 +220,8 @@ class AccountController extends Controller
   public function updateBilling(Request $request, $id)
   {
     $member      = ST_Member::find($id);
-    $requestData = ['billign_address' => $request->input('billign_address'),
+    $requestData = ['billing_name'    => $request->input('billing_name'),
+                    'billign_address' => $request->input('billign_address'),
                     'user_tax_Id'     => $request->input('user_tax_Id')
                    ];
 

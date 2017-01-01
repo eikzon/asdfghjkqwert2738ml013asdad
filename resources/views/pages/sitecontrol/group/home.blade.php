@@ -20,7 +20,7 @@
               </thead>
               <tbody>
                 @foreach($groups as $index => $group)
-                  <tr>
+                  <tr class="id-{{ $group['id'] }}">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $group['pg_name'] }}</td>
                     <td>
@@ -35,12 +35,13 @@
                          title="Edit">
                         <i class="ti-marker-alt"></i>
                       </a>
-                      <a style="cursor:pointer;" onclick="$(this).find('form').submit();">
+                      <a style="cursor:pointer;"
+                         class="action-delete"
+                         data-name="{{ $group['pg_name'] }}"
+                         data-id="{{ $group['id'] }}"
+                         data-url="{{ route('sitecontrol.group.destroy', $group['id']) }}"
+                        >
                         <i class="ti-trash"></i>
-                        <form action="{{ route('sitecontrol.group.destroy', $group['id']) }}" method="POST" name="delete_item" style="display:none">
-                           <input type="hidden" name="_method" value="delete">
-                           <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        </form>
                       </a>
                     </td>
                   </tr>

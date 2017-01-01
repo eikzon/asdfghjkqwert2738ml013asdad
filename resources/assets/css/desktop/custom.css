@@ -1,0 +1,7 @@
+.infomation ul, .infomation ul li {
+  list-style: inherit;
+}
+
+.infomation ul {
+  padding-left: 2em;
+}

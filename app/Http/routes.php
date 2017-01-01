@@ -25,6 +25,7 @@ Route::group(['prefix' => 'sitecontrol', 'namespace' => 'SiteControl'], function
     Route::resource('product', 'ProductController', ['except' => 'show']);
     Route::post('product/uploadimages', 'ProductController@uploadImages');
     Route::get('product/destroyimg/{pid}/{idImg}', 'ProductController@destroyImage')->name('st-destroyImage');
+    Route::get('platform/destroyimg/{key}/{imageName}', 'PlatformController@destroyImage')->name('pt-destroyImage');
     Route::resource('order', 'OrderController');
     Route::resource('member', 'MemberController');
     Route::get('member/detail/{id}', 'MemberController@detail')->name('member_detail');

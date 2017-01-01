@@ -47,7 +47,7 @@
       </div>
       <ul class="nav navbar-top-links navbar-right pull-right">
         <li class="dropdown">
-          <a class="waves-effect waves-light" href="{{ route('st-logout') }}">
+          <a class="waves-effect waves-light action-logout" data-url="{{ route('st-logout') }}">
             <span class="hidden-xs">Logout</span> &nbsp;<i class="icon-logout"></i>
           </a>
         </li>

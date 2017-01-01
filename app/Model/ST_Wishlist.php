@@ -44,7 +44,7 @@ class ST_Wishlist extends Model
 
   public function images()
   {
-    return $this->hasMany(ST_Product_Images::class, 'fk_pd_id', 'fk_product_id')->limit(1);
+    return $this->hasMany(ST_Product_Images::class, 'fk_pd_id', 'fk_product_id');
   }
 
   public function products()

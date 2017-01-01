@@ -22,8 +22,8 @@
                 <input type="text" name="user-name" id="user-name" value="{{ $member->first_name }}">
                 <label for="user-lastname">นามสกุล<span>*</span></label>
                 <input type="text" name="user-lastname" id="user-lastname" value="{{ $member->last_name }}">
-                <label for="user-birthday">วันเกิด<span>*</span></label>
-                <input type="text" name="user-birthday" id="user-birthday" value="{{ date('m/d/Y', strtotime($member->birthday)) }}">
+                <label>วันเกิด<span>*</span></label>
+                <input type="text" readonly name="user-birthday" id="datepicker" value="{{ date('Y-m-d', strtotime($member->birthday)) }}">
                 <label for="user-gender">เพศ<span>*</span></label>
                 <select name="user-gender" id="user-gender">
                     <option value="">กรุณาเลือกเพศ</option>
@@ -63,5 +63,12 @@
       alert('{{ $messageShow }}');
       window.location = '{{ route('account_profile') }}';
     @endif
+    $(function() {
+      $( "#datepicker" ).datepicker({
+        dateFormat: "yy-mm-dd",
+        changeMonth: true,
+        changeYear: true
+      });
+    });
   </script>
 @endsection

@@ -6,5 +6,6 @@ return [
     'color'       => ['danger', 'success', 'warning'],
     'displayOnly' => 2
   ],
-  'badges' => ['none', 'new', 'Promotion'],
+  'badges'     => ['none', 'new', 'promotion'],
+  'outOfStock' => 5
 ];

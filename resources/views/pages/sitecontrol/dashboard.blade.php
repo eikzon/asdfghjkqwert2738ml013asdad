@@ -36,7 +36,7 @@
         <div class="white-box">
           <h3 class="box-title">
             <i class="linea-icon linea-ecommerce fa-fw" data-icon="P"></i>
-            PRODUCT MOST VIEW OF THE WEEK
+            5 PRODUCT MOST VIEW OF THE WEEK
           </h3>
           <div class="table-responsive">
             <table class="table">
@@ -68,7 +68,7 @@
       </div>
       <div class="col-sm-6">
         <div class="white-box">
-          <h3 class="box-title"><i class="ti-user fa-fw"></i> MEMBER IN THIS WEEK</h3>
+          <h3 class="box-title"><i class="ti-user fa-fw"></i> 5 MEMBER IN THIS WEEK</h3>
           <div class="table-responsive">
             <table class="table table-hover">
               <thead>
@@ -169,7 +169,7 @@
     <div class="row">
       <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
         <div class="white-box">
-          <h3 class="box-title"><i class="linea-icon linea-ecommerce fa-fw" data-icon="A"></i> Five Orders Latest</h3>
+          <h3 class="box-title"><i class="linea-icon linea-ecommerce fa-fw" data-icon="A"></i> 20 Orders Latest</h3>
           <div class="table-responsive">
             <table class="table product-overview" id="myTable">
               <thead>
@@ -189,7 +189,7 @@
                     @php
                       $status = config('website.order.status.' . $order->od_flow_status);
                     @endphp
-                    <tr>
+                    <tr class="id-{{ $order->id }}">
                       <td>{{ $order['members']['first_name'] . ' ' . $order['members']['last_name'] }}</td>
                       <td>{{ $order->od_code }}</td>
                       <td>{{ number_format((float)$order->od_price_total, 2) }}</td>
@@ -200,7 +200,12 @@
                         <a href="{{ action('SiteControl\OrderController@show', ['id' => $order->id]) }}" class="text-inverse p-r-10" data-toggle="tooltip" title="Edit">
                           <i class="ti-eye"></i>
                         </a>
-                        <a href="javascript:void(0)" class="text-inverse js-delete" data-url="{{ action('SiteControl\OrderController@destroy', ['id' => $order->id]) }}" title="Delete" data-toggle="tooltip">
+                        <a style="cursor:pointer;"
+                           class="action-delete"
+                           data-name="Order : {{ $order->od_code }}"
+                           data-id="{{ $order->id }}"
+                           data-url="{{ route('sitecontrol.order.destroy', $order->id) }}"
+                          >
                           <i class="ti-trash"></i>
                         </a>
                       </td>

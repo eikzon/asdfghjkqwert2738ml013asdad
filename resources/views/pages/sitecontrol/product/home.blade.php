@@ -25,7 +25,7 @@
               <tbody>
                 @if($products->total())
                   @foreach($products as $product)
-                    <tr>
+                    <tr class="id-{{ $product['id'] }}">
                       <td>{{ $product['pd_code'] }}</td>
                       <td>{{ $product['pd_name'] }}</td>
                       <td>
@@ -48,12 +48,13 @@
                            title="Edit">
                           <i class="ti-marker-alt"></i>
                         </a>
-                        <a style="cursor:pointer;" onclick="$(this).find('form').submit();">
+                        <a style="cursor:pointer;"
+                           class="action-delete"
+                           data-name="{{ $product['pd_name'] }}"
+                           data-id="{{ $product['id'] }}"
+                           data-url="{{ route('sitecontrol.product.destroy', $product['id']) }}"
+                          >
                           <i class="ti-trash"></i>
-                          <form action="{{ action('SiteControl\ProductController@destroy', $product['id']) }}" method="POST" name="delete_item" style="display:none">
-                             <input type="hidden" name="_method" value="delete">
-                             <input type="hidden" name="_token" value="{{csrf_token()}}">
-                          </form>
                         </a>
                       </td>
                     </tr>

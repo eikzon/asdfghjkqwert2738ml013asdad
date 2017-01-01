@@ -10,6 +10,8 @@ use App\Http\Requests;
 use App\Model\ST_Platform;
 use App\Model\ST_Product_Group;
 
+use File;
+
 class PlatformController extends Controller
 {
   public function edit($id)
@@ -32,6 +34,17 @@ class PlatformController extends Controller
     // }
 
     if((new ST_Platform)->updatePlatform($request))
-      return redirect()->route('sitecontrol.platform.edit', [1, 'update']);
+      return redirect()->route('sitecontrol.platform.edit', [config('website.platform.id'), 'update']);
   }
+
+  public function destroyImage($key, $imageName)
+  {
+    File::delete($imageName);
+    $platform       = ST_Platform::find(config('website.platform.id'));
+    $platform->$key = '';
+    $platform->save();
+
+    return redirect()->route('sitecontrol.platform.edit', [config('website.platform.id')]);
+  }
+
 }

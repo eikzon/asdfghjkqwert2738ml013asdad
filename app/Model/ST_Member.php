@@ -31,6 +31,7 @@ class ST_Member extends Model
                            'shipping_district',
                            'shipping_sub_district',
                            'shipping_postcode',
+                           'billing_name',
                            'billign_address',
                            'user_tax_Id'
                           ];
