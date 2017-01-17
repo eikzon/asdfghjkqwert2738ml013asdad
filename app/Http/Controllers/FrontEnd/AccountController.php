@@ -168,16 +168,29 @@ class AccountController extends Controller
       $registerMember->status     = 1;
 
       $registerMember->shipping_address      = $request->input('address');
-      $registerMember->shipping_province     = $request->input('province');
-      $registerMember->shipping_district     = $request->input('city');
-      $registerMember->shipping_sub_district = $request->input('district');
-      $registerMember->shipping_postcode     = $request->input('postcode');
+      $registerMember->shipping_province     = $request->input('user-province');
+      $registerMember->shipping_district     = $request->input('user-district');
+      $registerMember->shipping_sub_district = $request->input('user-subdistrict');
+      $registerMember->shipping_postcode     = $request->input('user-postcode');
       $registerMember->notification          = !empty($request->input('subscribe')) ? $request->input('subscribe') : 0;
 
       if($registerMember->save())
+      {
+        Mail::send('pages.desktop.mail.register', [
+          'request' => $request,
+        ], function ($mail) use ($request){
+          $mail->from(config('website.common.email.register.from'), config('website.common.email.register.title'));
+          $mail->to(e($request->input('email')),
+           "$request->input('firstname') $request->input('lastname')")
+            ->subject(config('website.common.email.register.subject'));
+        });
+
         return redirect()->route('account_login', 'forLogin');
+      }
       else
+      {
         return redirect()->route('account_create', 'fail');
+      }
     }
     else
     {
@@ -251,7 +264,7 @@ class AccountController extends Controller
 
         if($response)
         {
-          $this->user      = $user;
+          $this->user = $user;
           Mail::send('pages.desktop.mail.forget_password', [
                   'user'     => $user,
                   'password' => $newPassword

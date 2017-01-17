@@ -34,6 +34,12 @@ Route::group(['prefix' => 'sitecontrol', 'namespace' => 'SiteControl'], function
     Route::resource('category', 'CategoryController');
     Route::get('logout', 'AccountController@logout')->name('st-logout');
     Route::resource('platform', 'PlatformController', ['except' => 'show']);
+    Route::group(['prefix' => 'report'], function(){
+      Route::get('/', 'ReportController@index')->name('st-report-home');
+      Route::post('order', 'ReportController@order')->name('st-report-order');
+      Route::post('product', 'ReportController@product')->name('st-report-product');
+      Route::post('sales', 'ReportController@sales')->name('st-report-sales');
+    });
   });
 });
 

@@ -8,7 +8,7 @@
                 <div class="panel-heading"> Create/Edit Product</div>
                 <div class="panel-wrapper collapse in" aria-expanded="true">
                     <div class="panel-body">
-                        <form action="{{ action('SiteControl\ProductController@' . $state, $product['id']) }}" method="POST" enctype="multipart/form-data">
+                      <form action="{{ action('SiteControl\ProductController@' . $state, $product['id']) }}" method="POST" enctype="multipart/form-data" id="product-form">
                             <div class="form-body">
                               <div class="row">
                                 <div class="col-md-6">
@@ -100,7 +100,7 @@
                                   </div>
                                   <div class="col-md-6">
                                     <div class="form-group">
-                                      <label class="control-label">Stock <span class="text-danger">(when below 50 ea, just notify in dashboard page)</span></label>
+                                      <label class="control-label">Stock <span class="text-danger">(when below {{ config('website.product.outOfStock') }} ea, just notify in dashboard page)</span></label>
                                       <input type="text" name="stock" id="stock" required="" class="form-control" placeholder="Quantity Per Stock" value="{{ $product['pd_stock'] or '' }}">
                                     </div>
                                   </div>
@@ -184,7 +184,7 @@
                                   <div class="col-md-6">
                                     <div class="form-group">
                                       <label class="control-label">Select Group SKU</label>
-                                      <select class="form-control" name="group" data-placeholder="Choose a Group" tabindex="1">
+                                      <select class="form-control" required name="group" data-placeholder="Choose a Group" tabindex="1">
                                           <option value="0">None Group</option>
                                           @if(!empty($groups))
                                             @foreach($groups as $group)
@@ -241,7 +241,7 @@
                                   <div class="col-md-6">
                                     <div class="form-group">
                                       <label class="control-label">Select Variant Size</label>
-                                      <select class="form-control" name="variant[]" data-placeholder="Choose a Category" tabindex="1">
+                                      <select class="form-control" required name="variant[]" data-placeholder="Choose a Category" tabindex="1">
                                         <option value="">None</option>
                                         @if(!empty($variantsResult['text']))
                                           @foreach($variantsResult['text'] as $text)
@@ -321,4 +321,9 @@
         </div>
     </div>
   </div>
+@endsection
+@section('script_footer')
+  <script>
+    var countOldImages = {{ count($product['images']) }};
+  </script>
 @endsection

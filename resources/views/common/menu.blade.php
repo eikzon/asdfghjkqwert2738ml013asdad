@@ -66,6 +66,14 @@
             </a>
           </li>
           <li>
+            <a href="{{ action('SiteControl\ReportController@index') }}" class="waves-effect">
+              <i class="ti-bar-chart-alt fa-fw"></i>
+              <span class="hide-menu">
+                Report
+              </span>
+            </a>
+          </li>
+          <li>
               <div class="hide-menu t-earning">
                 <small class="db">Optional</small>
               </div>

@@ -4,6 +4,8 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Model\ST_Cart;
+
 class ST_Wishlist extends Model
 {
   protected $table    = 'st_wishlist';
@@ -40,6 +42,18 @@ class ST_Wishlist extends Model
       ]);
 
     return $result;
+  }
+
+  public static function clearWishlist()
+  {
+    $productInCart = ST_Cart::where('fk_member_id', request()->session()->get('memberData')['id'])->get(['fk_product_id']);
+    $productInCart = $productInCart->toArray();
+
+    foreach($productInCart as $product)
+      ST_Wishlist::where([
+              ['fk_product_id', '=', $product['fk_product_id']],
+              ['fk_member_id', '=', request()->session()->get('memberData')['id']]
+            ])->delete();
   }
 
   public function images()

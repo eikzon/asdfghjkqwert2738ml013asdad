@@ -7,8 +7,6 @@
       $pricePerUnit  = !empty($productDiscount) ? $productDiscount : $productPrice;
       $totalPrice    = $pricePerUnit * $cart->ct_quantity;
       @$subTotal    += $totalPrice;
-      $shippingPrice = ($subTotal < 1000) ? 50 : 0;
-      $grandTotal    = $subTotal + $shippingPrice;
     @endphp
     <li>
       <a href="{{ route('product_detail', $cart['products']->id) }}">
@@ -32,8 +30,12 @@
     </li>
   @endforeach
   <li>
+    @php
+      $shippingPrice = @setShippingPrice($subTotal);
+      $grandTotal    = $subTotal + $shippingPrice;
+    @endphp
     <div class="shopping-txt">ค่าจัดส่ง<br>ราคารวม</div>
-    <div class="shopping-price">{{ !empty($shippingPrice) ? number_format((float)$shippingPrice, 2) : '0.00' }} บาท<br>{{ !empty($grandTotal) ? number_format((float)$grandTotal, 2) : '0.00' }} บาท</div>
+    <div class="shopping-price">{{ number_format($shippingPrice, 2) }} บาท<br>{{ !empty($grandTotal) ? number_format((float)$grandTotal, 2) : '0.00' }} บาท</div>
   </li>
 @else
   <li>

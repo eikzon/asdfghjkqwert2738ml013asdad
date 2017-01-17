@@ -1,9 +1,9 @@
 @php
-  $absurl = 'http://www.breaker-shoes.com/';
+  $absurl = 'http://all-we-design.com/breakershoes/';
 @endphp
 <div class="container">
   <div class="header">
-    <a href="{{ url('/') }}" class="logo">
+    <a href="{{ $absurl }}" class="logo">
       <img src="{{ asset('images/logo_breaker.png') }}" alt="รองเท้า Breaker"/>
     </a>
     @include('common.desktop.mini_menu')
@@ -19,7 +19,7 @@
     <div class="mobilemenu"></div>
   </div>
   <ul class="menum">
-    <li><a href="{{ url('/') }}">HOME</a></li>
+    <li><a href="{{ $absurl }}">HOME</a></li>
     <li><a href="">PRODUCTS</a>
       @if(!empty($categoriesList))
         <ul class="submenu">
@@ -42,7 +42,7 @@
 </div><!-- .container -->
 <ul class="menu">
     <div class="container">
-    <li><a href="{{ url('/') }}">HOME</a></li>
+    <li><a href="{{ $absurl }}">HOME</a></li>
     <li><a href="">PRODUCTS</a>
       @if(!empty($categoriesList))
         <div class="submenu">

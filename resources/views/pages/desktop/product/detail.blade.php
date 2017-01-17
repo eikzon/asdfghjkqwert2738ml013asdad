@@ -35,12 +35,13 @@
               {{ number_format($product['pd_price']) }} Baht
             @endif
           </div>
-          <div class="shortdesc">
-            Item Code : {{ $product['pd_code'] }}
-          </div>
+          @if(!empty($product['pd_code']))
+            <div class="shortdesc">
+              Item Code : {{ $product['pd_code'] }}
+            </div>
+          @endif
           @php
             $groupVariants = \App\Model\ST_Product::groupVariant($product['fk_group_id'], $product['fk_category_id']);
-
           @endphp
           @if(!empty($groupVariants))
             <div class="shortdesc">
@@ -49,8 +50,12 @@
                 <select class="select-size js-variant-change-option" data-url="{{ url('/') }}">
                   @foreach($groupVariants as $variant)
                     @if(!empty($variant['variant']))
-                      <option @if($variant['status'] == 2 || empty($variant['stock'])) disabled="disabled" @endif
-                              @if($variant['id'] == $product['id']) selected @endif
+                      <option @if($variant['status'] == 2 || empty($variant['stock']))
+                                disabled="disabled"
+                              @endif
+                              @if($variant['id'] == $product['id'])
+                                selected
+                              @endif
                               data-pid="{{ $variant['id'] }}"
                               value="{{ $variant['id'] }}">
                         {{ $variant['variant'][0]['vr_text'] }}
@@ -90,30 +95,34 @@
           @if(!empty($errorMsg))
             {{ d($errorMsg) }}
           @endif
-          <div class="shortdesc">{!! $product['pd_short_desc'] !!}</div><!-- .shortdesc -->
-          <div class="shortdesc">
-            @if(!empty($product['pd_stock']))
-              <input type="text" name="ct_quantity" id="quantity" value="1" size="1" class="box-qty">
-              <input type="hidden" name="fk_product_id" id="quantity" value="{{ $product['id'] }}" size="1" class="box-qty">
-              {{ csrf_field() }}
-              @if(request()->session()->has('memberData'))
-                <input type="submit" name="addcart" id="addcart" value="สั่งซื้อสินค้า" title="สั่งซื้อสินค้า" class="btn-addcart" data-url="{{ route('add_to_cart') }}" data-pid="{{ $product['id'] }}">
-              @else
-                <input type="button" class="btn-addcart" value="สั่งซื้อสินค้า" title="สั่งซื้อสินค้า" onclick="alert('กรุณาทำการสมัครสมาชิก และเข้าสู่ระบบเพื่อซื้อสินค้า');">
-              @endif
-            @endif
-            @if(request()->session()->has('memberData'))
-              <a
-                @if(!empty($product['wishlist']))
-                  href="{{ route('account_wishlist_delete', [$product['id'], $product['wishlist']->id]) }}"
+          @if(!empty($product['pd_short_desc']))
+            <div class="shortdesc">
+              {!! $product['pd_short_desc'] !!}
+            </div>
+          @endif
+          @if(request()->session()->has('memberData') || (!empty($product['pd_stock']) && $product['pd_status'] == 1))
+            <div class="shortdesc">
+              @if(!empty($product['pd_stock']) && $product['pd_status'] == 1)
+                <input type="text" name="ct_quantity" id="quantity" value="1" size="1" class="box-qty">
+                <input type="hidden" name="fk_product_id" id="quantity" value="{{ $product['id'] }}" size="1" class="box-qty">
+                {{ csrf_field() }}
+                @if(request()->session()->has('memberData'))
+                  <input type="submit" name="addcart" id="addcart" value="สั่งซื้อสินค้า" title="สั่งซื้อสินค้า" class="btn-addcart" data-url="{{ route('add_to_cart') }}" data-pid="{{ $product['id'] }}">
+                  <a
+                    @if(!empty($product['wishlist']))
+                      href="{{ route('account_wishlist_delete', [$product['id'], $product['wishlist']->id]) }}"
+                    @else
+                      href="{{ route('account_wishlist_add', $product['id']) }}"
+                    @endif
+                    class="btn-wishlist @if(!empty($product['wishlist'])) active @endif">
+                    สินค้าที่น่าสนใจ
+                  </a>
                 @else
-                  href="{{ route('account_wishlist_add', $product['id']) }}"
+                  <input type="button" class="btn-addcart" value="สั่งซื้อสินค้า" title="สั่งซื้อสินค้า" onclick="alert('กรุณาทำการสมัครสมาชิก และเข้าสู่ระบบเพื่อซื้อสินค้า');">
                 @endif
-                class="btn-wishlist @if(!empty($product['wishlist'])) active @endif">
-                สินค้าที่น่าสนใจ
-              </a>
-            @endif
-          </div>
+              @endif
+            </div>
+          @endif
           <div class="social">
             <span class='st_facebook_vcount' displayText='Facebook'></span>
             <span class='st_twitter_vcount' displayText='Tweet'></span>

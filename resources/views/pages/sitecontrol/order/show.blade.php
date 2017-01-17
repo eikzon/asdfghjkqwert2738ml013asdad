@@ -23,7 +23,7 @@
                             . 'Postcode : ' . $orderAddress->oa_postcode . '<br>'
                             . 'Tel : ' . $orderAddress->oa_tel;
 
-                  $billing = 'Name : ' . $orderAddress->oa_billing_name . '<br>Address : ' . (!empty($orderAddress->oa_isbilling_address) ? $orderAddress->oa_billign_address : $shipping)
+                  $billing = 'Name : ' . $orderAddress->oa_billing_name . '<br>Address : ' . (empty($orderAddress->oa_isbilling_address) ? @$orderAddress->oa_billign_address : $shipping)
                              . '<br>' . 'Tax Id : ' . $orderAddress->oa_tax_id;
                 }
               @endphp
@@ -37,6 +37,14 @@
                   <h4 class="box-title m-t-40"><i class="ti-home"></i> Billing Address </h4>
                   <p>{!! $billing !!}</p>
               </div>
+              @if(!empty($order->od_remark))
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <h3 class="box-title m-t-40">
+                    <i class="ti-comment-alt"></i> Remark from Customer
+                  </h3>
+                  <p>{!! $order->od_remark !!}</p>
+                </div>
+              @endif
               <div class="col-lg-12 col-md-12 col-sm-12">
                   <h3 class="box-title m-t-40"><i class="ti-gift"></i> Products In Order</h3>
                   <table class="table product-overview" id="myTable">
@@ -45,7 +53,7 @@
                           <th>Code</th>
                           <th>Image</th>
                           <th>Name</th>
-                          <th>Variant</th>
+                          <th>Size</th>
                           <th>Price/Quantity</th>
                           <th>Quantity</th>
                           <th>Summary</th>
@@ -57,12 +65,17 @@
                           $productPrice    = $productList->products->pd_price;
                           $productDiscount = $productList->products->pd_price_discount;
                           $pricePerUnit    = (!empty($productDiscount) ? $productDiscount : $productPrice);
+                          $resultVariants  = \App\Model\ST_Variant::getVariant([$productList->products->size_vr_id]);
                         @endphp
                         <tr>
                           <td>{{ $productList->products->pd_code }}</td>
-                          <td><img width="60" src="{{ asset('images/products/' . getImageCart($productList->id)->image) }}"></td>
+                          <td>
+                            <img width="60" src="{{ asset('images/products/' . @getImageCart($productList->id)->image) }}">
+                          </td>
                           <td>{{ $productList->products->pd_name }}</td>
-                          <td>{{ !empty(getVariant($productList->id)->vr_text) ? getVariant($productList->id)->vr_text : '' }}</td>
+                          <td>
+                            {{ @$resultVariants[0]['vr_text'] }}
+                          </td>
                           <td>{{ number_format((float)$pricePerUnit, 2) }}</td>
                           <td>{{ $productList->od_quantity }}</td>
                           <td>{{ number_format($productList->od_price, 2) }}</td>
@@ -78,7 +91,7 @@
                     <tbody>
                       <tr>
                         <td width="390">Total Price</td>
-                        <td> ฿{{ number_format($order->od_price_total, 2) }} </td>
+                        <td> ฿{{ number_format(($order->od_price_total - $order->od_price_shipping), 2) }} </td>
                       </tr>
                       <tr>
                         <td>Shipping Price</td>
@@ -86,7 +99,7 @@
                       </tr>
                       <tr>
                         <td>Grand Total Price</td>
-                        <td> ฿{{ number_format($order->od_price_total + $order->od_price_shipping, 2) }} </td>
+                        <td> ฿{{ number_format($order->od_price_total, 2) }} </td>
                       </tr>
                       @php
                         $paidBy = '';
@@ -109,7 +122,8 @@
                 <h3 class="box-title m-t-40"><i class="ti-layout-list-thumb"></i> Order Flow</h3>
                 <div class="table-responsive">
                   @php
-                    $status = ['Cancel', 'Waiting Payment', 'Receive', 'Confirmed', 'Delivery', 'Processing', 'Done'];
+                    $status = config('website.order.status');
+                    krsort($status);
                   @endphp
                   <table class="table">
                     <tbody>

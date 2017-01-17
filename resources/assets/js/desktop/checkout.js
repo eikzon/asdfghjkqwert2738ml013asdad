@@ -38,15 +38,15 @@ $(document).ready(function () {
     else if($sub_district == 0) {
       $('select[name="oa_sub_district"]').focus();
     }
-    else if($postcode == '') {
+    else if($postcode == '' || $postcode.length < 5) {
       $('input[name="oa_postcode"]').focus();
     }
-    else if($('input[name="oa_isbilling_address"]').is(':checked')) {
-      $('#js-checkout').submit();
-    }
-    else if($billign_address == '') {
-      $('textarea[name="oa_billign_address"]').focus();
-    }
+    // else if($('input[name="oa_isbilling_address"]').is(':checked')) {
+    //   $('#js-checkout').submit();
+    // }
+    // else if($billign_address == '') {
+    //   $('textarea[name="oa_billign_address"]').focus();
+    // }
     else
     {
       $('#js-checkout').submit();

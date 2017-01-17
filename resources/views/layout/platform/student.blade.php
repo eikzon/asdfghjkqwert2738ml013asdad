@@ -7,7 +7,6 @@
 <title>รองเท้านักเรียน เบรกเกอร์ | Breaker 4x4 สั่งได้ดั่งใจ</title>
 <meta name="Keywords" content="breaker,เบรกเกอร์,รองเท้าผ้าใบ,รองเท้านักเรียน" />
 <meta name="Description" content="รองเท้าผ้าใบ BREAKER กระชับเท้า คล่องตัว บังคับทิศทางได้อย่างใจ" />
-<meta name="author" content="www.watana-design.com"/>
 <link rel="stylesheet" media="all" href="{{ asset('css/platform/style.css') }}"/>
 <link rel="stylesheet" media="all" href="{{ asset('css/platform/more.css') }}"/>
 <!--[if lt IE 9]>
@@ -125,7 +124,7 @@ function MM_swapImage() { //v3.0
 
 <body>
 @php
-  $absurl = 'http://www.breaker-shoes.com/';
+  $absurl = 'http://all-we-design.com/breakershoes/';
 @endphp
 <ul class="header">
   <div class="overlight"></div><!-- .overlight -->

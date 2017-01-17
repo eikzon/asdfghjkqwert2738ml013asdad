@@ -14,7 +14,7 @@
       @if(count($carts) == 0)
         <div class="cart-empty">
             <p>ยังไม่มีสินค้าในตะกร้าช้อปปิ้งของคุณ</p>
-            <a href="#" class="continue-shopping">เลือกซื้อสินค้าต่อ</a>
+            <a href="javascript:history.back()" class="continue-shopping">เลือกซื้อสินค้าต่อ</a>
         </div>
       @else
         <div class="cart-summary">

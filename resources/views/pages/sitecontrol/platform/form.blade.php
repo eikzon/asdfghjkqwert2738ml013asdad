@@ -1,6 +1,6 @@
 @extends('layout.sitecontrol')
 @section('content')
-  <div class="container-fluid">
+  <div id="platform" class="container-fluid">
       @include('common.sitecontrol.breadcrumb', ['page' => 'Plat Form'])
       <!-- /.row -->
       <div class="row">

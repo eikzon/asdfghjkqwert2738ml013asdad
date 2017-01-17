@@ -75,6 +75,22 @@ $(function(){
     }).catch(swal.noop);
   });
 
+  $('#product-form').submit(function(e){
+    var countUploadFile = 0;
+    $('.imageHolder').each(function (index, value){
+      ++countUploadFile;
+    });
+    if(countUploadFile == 0 && countOldImages == 0)
+    {
+      e.preventDefault();
+      swal(
+            'Required...',
+            'Please insert image for this product!',
+            'error'
+          );
+    }
+  });
+
 	var dropbox = $('#dropbox'),
 		message = $('.message', dropbox);
 

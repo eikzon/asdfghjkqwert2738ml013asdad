@@ -27,4 +27,6 @@
 //= include ../plugins/bower_components/toast-master/js/jquery.toast.js
 //= include sitecontrol/toastr.js
 /* <!--Style Switcher --> */
+//= include ../plugins/bower_components/moment/moment.js
 //= include ../plugins/bower_components/styleswitcher/jQuery.style.switcher.js
+//= include ../plugins/bower_components/bootstrap-daterangepicker/daterangepicker.js

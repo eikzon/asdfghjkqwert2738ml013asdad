@@ -84,3 +84,8 @@ function random_str($length, $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzAB
     }
     return $str;
 }
+
+function setShippingPrice($subTotal)
+{
+  return ($subTotal < config('website.common.shipping')) ? config('website.common.price_shipping') : 0;
+}

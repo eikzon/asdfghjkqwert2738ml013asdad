@@ -39,7 +39,9 @@
                                     <td data-title="สถานะ :">
                                       {{ config('website.order.status.' . $order['od_flow_status']) }}
                                     </td>
-                                    <td data-title="การชำระเงิน :">@if($order['od_payment_type'] != 3) Paypal - Credit Card @else Bank Transfer @endif</td>
+                                    <td data-title="การชำระเงิน :">
+                                      {{ config('website.order.type.' . $order['od_payment_type']) }}
+                                    </td>
                                     <td data-title="สถานะชำระเงิน :">
                                       @if($order['od_status'] == 1)
                                         รอชำระเงิน

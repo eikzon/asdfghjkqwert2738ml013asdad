@@ -66,7 +66,7 @@ class ST_Member extends Model
 
   public function orders()
   {
-    return $this->hasMany(ST_Order_History::class, 'fk_member_id');
+    return $this->hasMany(ST_Order_History::class, 'fk_member_id')->orderBy('id', 'desc');
   }
 
   public function scopeNow($query)

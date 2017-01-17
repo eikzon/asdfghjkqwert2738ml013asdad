@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\SiteControl;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use App\Http\Controllers\Controller;
 use App\Model\ST_Product;
 use App\Model\ST_Product_Group;
@@ -12,7 +13,7 @@ use App\Model\ST_Product_Images;
 
 use App\Traits\UploadImageTrait;
 
-use Illuminate\Support\Facades\Input;
+use Excel;
 
 class ProductController extends Controller
 {

@@ -35,8 +35,8 @@
                   <thead>
                     <tr>
                         <th>Order ID</th>
+                        <th>Shipping Price</th>
                         <th>Total Price</th>
-                        <th>Total Shipping</th>
                         <th>Order Flow</th>
                         <th>Date</th>
                         <th>Actions</th>
@@ -49,8 +49,8 @@
                     @foreach($member->orders as $order)
                       <tr>
                         <td>{{ $order->od_code }}</td>
-                        <td>{{ number_format((float)$order->od_price_total, 2) }}</td>
                         <td>{{ number_format((float)$order->od_price_shipping, 2) }}</td>
+                        <td>{{ number_format((float)$order->od_price_total, 2) }}</td>
                         <td>{{ $status[$order->od_flow_status] }}</td>
                         <td>{{ date('d-m-Y H:i:s', strtotime($order->created_at)) }}</td>
                         <td>

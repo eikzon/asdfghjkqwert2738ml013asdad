@@ -12,7 +12,8 @@
                     <th>Customer</th>
                     <th>Order ID</th>
                     <th>Total Price</th>
-                    <th>Total Shipping</th>
+                    <th>Shipping Price</th>
+                    <th>Order Type</th>
                     <th>Order Flow</th>
                     <th>Date</th>
                     <th>Actions</th>
@@ -28,6 +29,7 @@
                     <td>{{ $order->od_code }}</td>
                     <td>{{ number_format((float)$order->od_price_total, 2) }}</td>
                     <td>{{ number_format((float)$order->od_price_shipping, 2) }}</td>
+                    <td>{{ config('website.order.type.' . $order['od_payment_type']) }}</td>
                     <td>{{ $status }}</td>
                     <td>{{ date('d-m-Y H:i:s', strtotime($order->created_at)) }}</td>
                     <td>

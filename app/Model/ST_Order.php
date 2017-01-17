@@ -21,7 +21,9 @@ class ST_Order extends Model
                            'od_flow_status',
                            'fk_member_id',
                            'fk_quest_id',
-                           'od_ems_track'
+                           'od_ems_track',
+                           'od_remark',
+                           'od_payment_type'
                           ];
 
   protected static function boot()
@@ -56,6 +58,7 @@ class ST_Order extends Model
     $orderDetail = new ST_Order;
     $orderDetail->od_code         = date('ym') . sprintf('%05d', $countOrderInThisMonth + 1);
     $orderDetail->od_status       = 1;
+    $orderDetail->od_flow_status  = 1;
     $orderDetail->fk_member_id    = request()->session()->get('memberData')['id'];
     $orderDetail->od_remark       = $request->input('order-remark');
     $orderDetail->od_payment_type = $request->input('paymentselect');
@@ -81,11 +84,38 @@ class ST_Order extends Model
     return $query;
   }
 
+  public function scopeByReport($query, $condition = [])
+  {
+    if(!empty($condition['daterange']))
+    {
+      $date = explode(' - ', $condition['daterange']);
+      $query->where([
+                      ['created_at', '>=', date('Y-m-d', strtotime($date[0])) . ' 00:00:00'],
+                      ['created_at', '<=', date('Y-m-d', strtotime($date[1])) . ' 23:59:59']
+                    ]);
+    }
+    if(is_numeric($condition['type']))
+      $query->where('od_payment_type', $condition['type']);
+    if(is_numeric($condition['status']))
+      $query->where('od_flow_status', $condition['status']);
+
+    return $query;
+  }
+
   public function scopeByMember($query, $memberId)
   {
     $query->where([
               ['fk_member_id', '=', $memberId],
+              ['od_status', '>', 1],
+              ['od_flow_status', '>', 0],
+              ['od_payment_type', '!=', 3],
+              ['od_payment_type', '!=', 0],
+            ])
+          ->orWhere([
+              ['fk_member_id', '=', $memberId],
               ['od_status', '>', 0],
+              ['od_flow_status', '>', 0],
+              ['od_payment_type', '=', 3],
             ])
           ->orderBy('id', 'desc');
     return $query;

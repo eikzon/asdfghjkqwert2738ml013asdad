@@ -13,7 +13,18 @@ class HomeController extends Controller
 {
   public function index()
   {
-    $orders = ST_Order::orderBy('id', 'desc')->limit(20)->get();
+    $orders = ST_Order::where([
+                          ['od_status', '>', 1],
+                          ['od_flow_status', '>', 0],
+                          ['od_payment_type', '!=', 3],
+                          ['od_payment_type', '!=', 0],
+                        ])
+                        ->orWhere([
+                          ['od_status', '>', 0],
+                          ['od_flow_status', '>', 0],
+                          ['od_payment_type', '=', 3],
+                        ])
+                        ->orderBy('id', 'desc')->limit(20)->get();
 
     return view('pages.sitecontrol.dashboard', [
       'order'              => 0,

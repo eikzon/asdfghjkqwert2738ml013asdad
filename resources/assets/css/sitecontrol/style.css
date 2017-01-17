@@ -6176,6 +6176,10 @@ ul.list-icons li i {
   margin: 10% 5px;
 }
 
+#platform .product-img .pro-img-overlay a {
+  margin: 5% 5px 5% -35%;
+}
+
 .product-img .pro-img-overlay a:hover {
   background: #4c5667 !important;
 }

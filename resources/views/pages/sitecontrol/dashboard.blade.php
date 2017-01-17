@@ -101,7 +101,7 @@
     <div class="row">
       <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
         <div class="white-box">
-          <h3 class="box-title"><i class="linea-icon linea-elaborate fa-fw" data-icon="&#xe02f;"></i> Before Out of Stock <span class="text-danger">(below 50 ea just display)</span></h3>
+          <h3 class="box-title"><i class="linea-icon linea-elaborate fa-fw" data-icon="&#xe02f;"></i> Before Out of Stock <span class="text-danger">(below {{ config('website.product.outOfStock') }} ea just display)</span></h3>
           <div class="table-responsive">
             <table class="table product-overview">
               <thead>
@@ -176,8 +176,8 @@
                 <tr>
                     <th>Customer</th>
                     <th>Order ID</th>
+                    <th>Shipping Price</th>
                     <th>Total Price</th>
-                    <th>Total Shipping</th>
                     <th>Order Flow</th>
                     <th>Date</th>
                     <th>Actions</th>
@@ -192,8 +192,8 @@
                     <tr class="id-{{ $order->id }}">
                       <td>{{ $order['members']['first_name'] . ' ' . $order['members']['last_name'] }}</td>
                       <td>{{ $order->od_code }}</td>
-                      <td>{{ number_format((float)$order->od_price_total, 2) }}</td>
                       <td>{{ number_format((float)$order->od_price_shipping, 2) }}</td>
+                      <td>{{ number_format((float)$order->od_price_total, 2) }}</td>
                       <td>{{ $status }}</td>
                       <td>{{ date('d-m-Y H:i:s', strtotime($order->created_at)) }}</td>
                       <td>

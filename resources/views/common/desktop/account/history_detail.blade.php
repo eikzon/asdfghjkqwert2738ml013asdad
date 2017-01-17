@@ -26,17 +26,16 @@
             <dt>ชื่อผู้รับสินค้า :</dt>
             <dd>{{ $address['oa_first_name'] . ' ' . $address['oa_last_name'] }}</dd>
             <dt>ที่อยู่ :</dt>
-            <dd>{{ $address['oa_address'] . ' ' . $address['oa_province']. ' ' . $address['oa_district']. '' . $address['oa_sub_district']. ' ' . $address['oa_postcode'] }}</dd>
+            <dd>{{ $address['oa_address'] . ' ' . $address['oa_sub_district']. ' ' . $address['oa_district']. '' . $address['oa_province']. ' ' . $address['oa_postcode'] }}</dd>
           </dl>
         </div>
         <div class="order-address">
           <dl>
             <dt>ที่อยู่ใบกำกับภาษี</dt>
             <dd class="none">&nbsp;</dd>
-            <dt>ชื่อผู้รับสินค้า :</dt>
-            <dd>{{ $address['oa_first_name'] . ' ' . $address['oa_last_name'] }}</dd>
-            <dt>ชื่อ นามสกุล :</dt>
-            <dd>{{ $address['oa_billign_name'] }}</dd>
+            <dt>ชื่อผู้รับ :</dt>
+            <dd>{{ $address['oa_billing_name'] }}</dd>
+            {{ empty($address['oa_billing_name']) ? '<br>' : '' }}
             <dt>ที่อยู่ :</dt>
             <dd>{{ $address['oa_billign_address'] }}</dd>
           </dl>
@@ -89,14 +88,14 @@
               <tr>
                 <td colspan="2" rowspan="3" class="comment">
                   <p>หมายเหตุ</p>
-                  {{ $order[0]['od_comment'] }}
+                  {{ $order[0]['od_remark'] }}
                 </td>
                 <td>ราคาสินค้า</td>
-                <td colspan="2">{{ number_format(($order[0]['od_price_total'] + $order[0]['od_price_shipping'] + $order[0]['od_price_discount']), 2) }} บาท</td>
+                <td colspan="2">{{ number_format((($order[0]['od_price_total'] - $order[0]['od_price_shipping']) + $order[0]['od_price_discount']), 2) }} บาท</td>
               </tr>
               <tr>
                 <td>ค่าจัดส่ง</td>
-                <td colspan="2">{{ !empty($order[0]['od_price_shipping']) ? $order[0]['od_price_shipping'] : 'ฟรี' }}</td>
+                <td colspan="2">{{ !empty($order[0]['od_price_shipping']) ? number_format($order[0]['od_price_shipping'], 2) . ' บาท' : 'ฟรี' }}</td>
               </tr>
               <tr>
                 <td>ราคารวม</td>

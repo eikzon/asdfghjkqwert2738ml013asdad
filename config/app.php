@@ -159,6 +159,7 @@ return [
 
         Intervention\Image\ImageServiceProvider::class,
         Anouar\Paypalpayment\PaypalpaymentServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -211,6 +212,7 @@ return [
 
         'Image' => Intervention\Image\Facades\Image::class,
         'Paypalpayment'   => Anouar\Paypalpayment\Facades\PaypalPayment::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];

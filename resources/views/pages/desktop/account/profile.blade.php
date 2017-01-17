@@ -66,8 +66,11 @@
     $(function() {
       $( "#datepicker" ).datepicker({
         dateFormat: "yy-mm-dd",
+        yearRange: "{{ date('Y', strtotime(date('Y') . ' -70 year')) . ' : ' . date('Y', strtotime(date('Y') . ' -3 year')) }}",
         changeMonth: true,
-        changeYear: true
+        changeYear: true,
+        maxDate: '0',
+        defaultDate: '{{ date('Y', strtotime(date('Y') . ' -3 year')) }}-01-01'
       });
     });
   </script>

@@ -54,7 +54,7 @@ class ST_Product extends Model
                   ->where('fk_category_id', $detailBelongsTo->fk_category_id)
                   ->orwhere('pd_status', 2)
                   ->groupBy('fk_group_id')
-                  ->orderBy('fk_group_id', 'asc')
+                  ->orderBy('fk_group_id', 'desc')
                   ->limit(8)
                   ->get();
 
@@ -318,6 +318,22 @@ class ST_Product extends Model
     }
 
     return [];
+  }
+
+  public function scopeByReport($query, $condition = [])
+  {
+    if(!empty($condition['daterange']))
+    {
+      $date = explode(' - ', $condition['daterange']);
+      $query->where([
+                      ['created_at', '>=', date('Y-m-d', strtotime($date[0])) . ' 00:00:00'],
+                      ['created_at', '<=', date('Y-m-d', strtotime($date[1])) . ' 23:59:59']
+                    ]);
+    }
+    if(is_numeric($condition['type']))
+      $query->where('pd_status', $condition['type']);
+
+    return $query;
   }
 
   public static function clearView()

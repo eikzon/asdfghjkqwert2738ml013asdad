@@ -51,11 +51,11 @@
             <label for="receiver-postcode">รหัสไปรษณีย์<span>*</span></label>
             <input type="text" name="oa_postcode" id="receiver-postcode" maxlength="5" value="{{ $member->shipping_postcode }}" required>
             <h3>ที่อยู่ใบกำกับภาษี</h3>
-            <label><input type="checkbox" name="oa_isbilling_address" id="same-address" value="1">ใช้ที่อยู่เดียวกับที่อยู่จัดส่ง</label>
-            <label for="tax-id">ชื่อ นามสกุล<span>*</span></label>
+            <label><input type="checkbox" checked name="oa_isbilling_address" id="same-address" value="1">ใช้ที่อยู่เดียวกับที่อยู่จัดส่ง</label>
+            <label for="tax-id">ชื่อ นามสกุล</label>
             <input type="text" name="oa_billing_name" id="oa_billing_name" value="{{ $member->billing_name }}">
             <div class="js-show-billing">
-              <label for="tax-address">ที่อยู่ใบกำกับภาษี<span>*</span></label>
+              <label for="tax-address">ที่อยู่ใบกำกับภาษี</label>
               <textarea name="oa_billign_address" id="tax-address" rows="5">{{ $member->billign_address }}</textarea>
             </div>
             <label for="tax-id">เลขประจำตัวบัตรประชาชน</label>
@@ -74,8 +74,12 @@
             <h2>3. สรุปการสั่งซื้อ</h2>
             <ul class="summary-list">
               @include('common.desktop.cart.list')
+              <li>
+                <label for="order-remark">หมายเหตุ</label>
+                <textarea name="order-remark" id="order-remark"></textarea>
+              </li>
             </ul>
-            <button type="submit" class="btn continue-proceed">ดำเนินการชำระเงิน</button>
+            <button type="button" class="btn continue-proceed js-order-create">ดำเนินการชำระเงิน</button>
           </div>
           {{ csrf_field() }}
         </form>

@@ -15,8 +15,10 @@ use App\Model\ST_Order_Address;
 use App\Model\ST_Order_Detail;
 use App\Model\ST_Member;
 use App\Model\ST_Variant_Map;
+use App\Model\ST_Wishlist;
 
 use Crypt;
+use Mail;
 
 class CartController extends Controller
 {
@@ -136,6 +138,9 @@ class CartController extends Controller
       $memberID = $request->session()->get('memberData');
       $member   = ST_Member::find($memberID)->first();
 
+      if(empty(getCart()->all()))
+        return redirect()->route('cart');
+
       return view('pages.desktop.cart.shipping', ['member' => $member]);
     }
     else
@@ -153,24 +158,26 @@ class CartController extends Controller
     $orderClass    = new ST_Order;
     $orderCreateId = $orderClass->createOrder($request);
 
-    if($request->has('oa_isbilling_address'))
-      $billingAddress = $request->input('oa_address') . ' ' . $request->input('oa_province') . ' ' . $request->input('oa_district') . ' ' . $request->input('oa_sub_district') . ' ' . $request->input('oa_postcode');
+    if(!empty($request->input('oa_isbilling_address')))
+    {
+      $billingAddress = $request->input('oa_address') . ' ' . $request->input('oa_sub_district') . ' ' . $request->input('oa_district') . ' ' . $request->input('oa_province') . ' ' . $request->input('oa_postcode');
       $billingName = $request->input('oa_first_name') . ' ' . $request->input('oa_last_name');
+    }
 
     $reqAddress = [
-                    'oa_first_name' => $request->input('oa_first_name'),
-                    'oa_last_name' => $request->input('oa_last_name'),
-                    'oa_tel' => $request->input('oa_tel'),
-                    'oa_address' => $request->input('oa_address'),
-                    'oa_province' => $request->input('oa_province'),
-                    'oa_district' => $request->input('oa_district'),
-                    'oa_sub_district' => $request->input('oa_sub_district'),
-                    'oa_postcode' => $request->input('oa_postcode'),
+                    'oa_first_name'        => $request->input('oa_first_name'),
+                    'oa_last_name'         => $request->input('oa_last_name'),
+                    'oa_tel'               => $request->input('oa_tel'),
+                    'oa_address'           => $request->input('oa_address'),
+                    'oa_province'          => $request->input('oa_province'),
+                    'oa_district'          => $request->input('oa_district'),
+                    'oa_sub_district'      => $request->input('oa_sub_district'),
+                    'oa_postcode'          => $request->input('oa_postcode'),
                     'oa_isbilling_address' => !empty($request->input('oa_isbilling_address')) ? $request->input('oa_isbilling_address') : 0,
-                    'oa_billing_name'    => !empty($billingName) ? $billingName : $request->input('oa_billing_name'),
-                    'oa_billign_address' => !empty($billingAddress) ? $billingAddress : $request->input('oa_billign_address'),
-                    'oa_tax_id' => $request->input('oa_tax_id'),
-                    'fk_order_id' => $orderCreateId
+                    'oa_billing_name'      => !empty($billingName) ? $billingName : $request->input('oa_billing_name'),
+                    'oa_billign_address'   => !empty($billingAddress) ? $billingAddress : $request->input('oa_billign_address'),
+                    'oa_tax_id'            => $request->input('oa_tax_id'),
+                    'fk_order_id'          => $orderCreateId
                   ];
 
     if($orderCreateId)
@@ -186,21 +193,21 @@ class CartController extends Controller
           $orderDetailClass->createOrderDetail($product, $orderCreateId);
           @$priceTotal    += ((!(empty($product['products']['pd_price_discount'])) ? $product['products']['pd_price_discount'] : $product['products']['pd_price']) * $product['ct_quantity']);
           @$discountTotal += $product['ct_discount'];
-          @$shippingTotal += $product['ct_shipping'];
         }
 
         $items['list']       = $orderDetailClass->relateProduct($orderCreateId)->toArray();
         $items['orderId']    = $orderCreateId;
-        $items['priceTotal'] = $priceTotal;
-        $items['shipping']   = $shippingTotal;
+        $items['priceTotal'] = $priceTotal + setShippingPrice($priceTotal);
+        $items['shipping']   = setShippingPrice($priceTotal);
       }
 
       $orderUpdateStatus = $orderClass->updateOrder([
                               'od_price_discount' => !empty($discountTotal) ? $discountTotal : 0,
-                              'od_price_shipping' => !empty($shippingTotal) ? $shippingTotal : 0,
-                              'od_price_total'    => !empty($priceTotal) ? $priceTotal : 0
+                              'od_price_shipping' => setShippingPrice($priceTotal),
+                              'od_price_total'    => (!empty($priceTotal) ? $priceTotal : 0) + setShippingPrice($priceTotal)
                             ], $orderCreateId);
 
+      ST_Wishlist::clearWishlist();
       ST_Cart::clearItems();
       ST_Product::clearStock($products);
 
@@ -230,14 +237,27 @@ class CartController extends Controller
     $orderClass = new ST_Order;
     if($orderClass->updatePayment($type, $id))
     {
-      $order = $orderClass::ByDetail(request()->session()->get('memberData')['id'], $id)->get();
-      if($order->isEmpty())
+      $orderDetail = $orderClass::ByDetail(request()->session()->get('memberData')['id'], $id)->get();
+      if($orderDetail->isEmpty())
+      {
         return view('pages.desktop.cart.not_complete');
+      }
       else
+      {
+        $order = $orderClass::find($id);
+        Mail::send('pages.desktop.mail.order_complete', [
+          'order' => $order
+        ], function ($mail) use ($order) {
+          $mail->from(config('website.common.email.order_complete.from'), config('website.common.email.order_complete.title'));
+          $mail->to($order->members->email,
+           "$order->members->first_name $order->members->last_name")
+            ->subject('รายการสั่งซื้อ Breaker Shoe ' . $order->od_code . ' ของคุณ');
+        });
         if($type == 3)
-          return view('pages.desktop.cart.transfer', ['order' => $order]);
+          return view('pages.desktop.cart.transfer', ['order' => $orderDetail]);
         else
-          return view('pages.desktop.cart.complete', ['order' => $order]);
+          return view('pages.desktop.cart.complete', ['order' => $orderDetail]);
+      }
     }
 
     return view('pages.desktop.cart.not_complete');

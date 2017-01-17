@@ -7,7 +7,7 @@
         <p>{{ $product['pd_discount'] }}Off</p>
       </div>
     @endif
-  @elseif($product['pd_status'] != config('website.product.status.displayOnly'))
+  @elseif($product['pd_status'] == config('website.product.status.displayOnly'))
     <div class="sale">
       <p>Sold Out</p>
     </div>

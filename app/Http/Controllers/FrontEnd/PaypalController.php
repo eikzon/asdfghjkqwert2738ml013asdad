@@ -59,28 +59,28 @@ class PaypalController extends Controller {
 
       foreach($items['list'] as $index => $product)
       {
+        $price = !empty($product['products']['pd_price_discount']) ? $product['products']['pd_price_discount'] : $product['products']['pd_price'];
         $item = Paypalpayment::item();
         $item->setName($product['products']['pd_name'])
-                ->setDescription($product['products']['pd_short_desc'])
+                ->setDescription('Code : ' . $product['products']['pd_code'])
                 ->setCurrency('THB')
                 ->setQuantity($product['od_quantity'])
                 ->setTax(0)
-                ->setPrice($product['products']['pd_price']);
+                ->setPrice($price);
         $lists[] = $item;
       }
 
       $itemList = Paypalpayment::itemList();
       $itemList->setItems($lists);
 
-      $shipping = !empty($items['shipping']) ? $items['shipping'] : 0;
-      $subTotal = ($items['priceTotal'] - $items['shipping']);
-      $details = Paypalpayment::details();
-      $details->setShipping("{$shipping}")
+      $subTotal = $items['priceTotal'] - $items['shipping'];
+      $details  = Paypalpayment::details();
+      $details->setShipping("{$items['shipping']}")
               ->setTax('0')
               ->setSubtotal("{$subTotal}");
 
       $details = Paypalpayment::details();
-      $details->setShipping($shipping)
+      $details->setShipping($items['shipping'])
               ->setTax(0)
               ->setSubtotal($subTotal);
 
@@ -90,7 +90,7 @@ class PaypalController extends Controller {
       // such as shipping, tax.
       $amount = Paypalpayment::amount();
       $amount->setCurrency("THB")
-          ->setTotal($items['priceTotal'])
+          ->setTotal("{$items['priceTotal']}")
           ->setDetails($details);
 
       // ### Transaction
@@ -107,7 +107,7 @@ class PaypalController extends Controller {
       // Set the urls that the buyer must be redirected to after
       // payment approval/ cancellation.
       $redirectUrls = Paypalpayment::redirectUrls();
-      $redirectUrls->setReturnUrl(route('cart_complete', [1, Crypt::encrypt($items['orderId'])]))
+      $redirectUrls->setReturnUrl(route('cart_complete', [2, Crypt::encrypt($items['orderId'])]))
                    ->setCancelUrl(route('cart_error', [0, Crypt::encrypt($items['orderId'])]));
 
       // ### Payment
